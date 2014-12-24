@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="menu_item_padding">2dp</dimen>
+</resources>
