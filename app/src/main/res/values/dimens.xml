@@ -1,3 +1,5 @@
 <resources>
     <dimen name="menu_item_padding">2dp</dimen>
+    <dimen name="text_right_padding">20dp</dimen>
+    <dimen name="text_right_translation">8dp</dimen>
 </resources>

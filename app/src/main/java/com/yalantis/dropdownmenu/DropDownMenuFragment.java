@@ -18,6 +18,7 @@ import java.util.List;
 public class DropDownMenuFragment extends Fragment implements MenuAdapter.OnItemClickListener {
 
     private LinearLayout mWrapperButtons;
+    private LinearLayout mWrapperText;
     private Button mButtonMenu;
 
     private MenuAdapter mDropDownMenuAdapter;
@@ -34,16 +35,17 @@ public class DropDownMenuFragment extends Fragment implements MenuAdapter.OnItem
     private void initViews(View view) {
         mButtonMenu = (Button) view.findViewById(R.id.button_menu);
         mWrapperButtons = (LinearLayout) view.findViewById(R.id.wrapper_buttons);
+        mWrapperText = (LinearLayout) view.findViewById(R.id.wrapper_text);
     }
 
     private void initDropDownMenuAdapter() {
         List<MenuObject> menuObjects = new ArrayList<>();
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_1),"Icon1"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_2),"Icon2"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_3),"Icon3"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_4),"Icon4"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_1)));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_2),"Very Importanr Icon2"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_3),"Very Importanr Icon3"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_4),"Very Importanr Icon4"));
 
-        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons,menuObjects, this);
+        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText ,menuObjects, this);
     }
 
     private void setOnClickListeners(){
