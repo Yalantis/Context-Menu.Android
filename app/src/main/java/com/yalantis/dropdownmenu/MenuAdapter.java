@@ -61,7 +61,7 @@ public class MenuAdapter {
     private void setViews() {
         for (MenuObject menuObject : mMenuObjects) {
             mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject.getTitle(), mActionBarSize));
-            mMenuWrapper.addView(Utils.getItemImageButton(mContext, mActionBarSize, menuObject.getDrawable(), clickItem));
+            mMenuWrapper.addView(Utils.getImageWrapper(mContext,mActionBarSize,menuObject.getDrawable(),clickItem));
         }
     }
 
@@ -89,7 +89,6 @@ public class MenuAdapter {
         }
         ViewHelper.setPivotX(view, view.getMeasuredHeight());
         ViewHelper.setPivotY(view, view.getMeasuredHeight() / 2);
-
     }
 
     /**
@@ -115,8 +114,8 @@ public class MenuAdapter {
     }
 
     /**
-    *   Creates Open / Close AnimatorSet
-    */
+     * Creates Open / Close AnimatorSet
+     */
     private AnimatorSet setOpenCloseAnimation(boolean isCloseAnimation) {
         List<Animator> textAnimations = new ArrayList<>();
         List<Animator> imageAnimations = new ArrayList<>();
@@ -146,7 +145,7 @@ public class MenuAdapter {
 
     /**
      * Filling arrays of animations to build Set of Closing / Opening animations
-    */
+     */
     private void fillOpenClosingAnimations(boolean isCloseAnimation, List<Animator> textAnimations, List<Animator> imageAnimations, int wrapperPosition) {
         AnimatorSet textAnimatorSet = new AnimatorSet();
         Animator textAppearance = isCloseAnimation ?
@@ -171,17 +170,21 @@ public class MenuAdapter {
         public void onClick(View v) {
             if (mIsMenuOpen && !mIsAnimationRun) {
                 mClickedView = v;
-                toggleIsAnimationRun();
                 int childIndex = mMenuWrapper.indexOfChild(v);
-                if (childIndex == -1) { return; }
-
+                if (childIndex == -1) {
+                    return;
+                }
+                toggleIsAnimationRun();
                 buildChosenAnimation(childIndex);
                 toggleIsMenuOpen();
             }
         }
     };
 
-    private void buildChosenAnimation(int childIndex){
+    /**
+     * Builds and runs chosen item and menu closing animation
+     */
+    private void buildChosenAnimation(int childIndex) {
         List<Animator> fadeOutTextTopAnimatorList = new ArrayList<>();
         List<Animator> closeToBottomImageAnimatorList = new ArrayList<>();
         for (int i = 0; i < childIndex; i++) {
@@ -226,13 +229,12 @@ public class MenuAdapter {
         }
 
         AnimatorSet fullAnimatorSet = new AnimatorSet();
-        fullAnimatorSet.playTogether(imageFullAnimatorSet,textFullAnimatorSet);
+        fullAnimatorSet.playTogether(imageFullAnimatorSet, textFullAnimatorSet);
         fullAnimatorSet.setDuration(ANIMATION_DURATION_MILLIS);
         fullAnimatorSet.start();
     }
 
     public void menuToggle() {
-
         if (!mIsAnimationRun) {
             resetAnimations();
             mIsAnimationRun = true;

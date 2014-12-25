@@ -40,15 +40,17 @@ public class DropDownMenuFragment extends Fragment implements MenuAdapter.OnItem
 
     private void initDropDownMenuAdapter() {
         List<MenuObject> menuObjects = new ArrayList<>();
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_1)));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_2),"Very Importanr Icon2"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_3),"Very Importanr Icon3"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_4),"Very Importanr Icon4"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_close)));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_1), "Send message"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_2), "Like profile"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_3), "Add to friends"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_4), "Add to favorites"));
+        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_5), "Block user"));
 
-        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText ,menuObjects, this);
+        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText, menuObjects, this);
     }
 
-    private void setOnClickListeners(){
+    private void setOnClickListeners() {
         mButtonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +62,6 @@ public class DropDownMenuFragment extends Fragment implements MenuAdapter.OnItem
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getActivity(),"WoooHaa", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "WoooHaa", Toast.LENGTH_SHORT).show();
     }
 }

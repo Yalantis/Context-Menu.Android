@@ -37,20 +37,43 @@ public class Utils {
         return itemTextView;
     }
 
-    public static ImageButton getItemImageButton(Context context, int actionBarSize, Drawable drawable,View.OnClickListener onCLick){
-        ImageButton imageButton = new ImageButton(context);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                actionBarSize, actionBarSize);
-        imageButton.setLayoutParams(lp);
-        imageButton.setBackgroundColor(context.getResources().getColor(android.R.color.white));
-        imageButton.setPadding((int) context.getResources().getDimension(R.dimen.menu_item_padding),
+    public static ImageView getItemImageButton(Context context, Drawable drawable){
+        ImageView imageView = new ImageButton(context);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+        imageView.setLayoutParams(lp);
+        imageView.setPadding((int) context.getResources().getDimension(R.dimen.menu_item_padding),
                 (int) context.getResources().getDimension(R.dimen.menu_item_padding),
                 (int) context.getResources().getDimension(R.dimen.menu_item_padding),
                 (int) context.getResources().getDimension(R.dimen.menu_item_padding));
-        imageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        imageButton.setImageDrawable(drawable);
-        imageButton.setOnClickListener(onCLick);
-        return imageButton;
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        imageView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        imageView.setImageDrawable(drawable);
+        imageView.setClickable(false);
+        imageView.setFocusable(false);
+        return imageView;
+    }
+
+    public static View getDivider(Context context){
+        View dividerView = new View(context);
+        RelativeLayout.LayoutParams viewLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)context.getResources().getDimension(R.dimen.divider_height));
+        viewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        dividerView.setLayoutParams(viewLayoutParams);
+        dividerView.setClickable(true);
+        dividerView.setBackgroundColor(context.getResources().getColor(R.color.divider_color));
+        return dividerView;
+    }
+
+    public static RelativeLayout getImageWrapper(Context context, int actionBarSize, Drawable drawable, View.OnClickListener onCLick){
+        RelativeLayout imageWrapper = new RelativeLayout(context);
+        LinearLayout.LayoutParams imageWrapperLayoutParams = new LinearLayout.LayoutParams(actionBarSize, actionBarSize);
+        imageWrapper.setLayoutParams(imageWrapperLayoutParams);
+        imageWrapper.setBackgroundColor(context.getResources().getColor(R.color.menu_item_background));
+        imageWrapper.setOnClickListener(onCLick);
+        imageWrapper.addView(Utils.getItemImageButton(context, drawable));
+        imageWrapper.addView(getDivider(context));
+        return imageWrapper;
     }
 
 }

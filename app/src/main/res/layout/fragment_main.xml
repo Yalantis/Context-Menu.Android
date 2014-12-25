@@ -29,7 +29,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_toLeftOf="@+id/wrapper_buttons"
-            android:layout_marginRight="-8dp"
+            android:layout_marginRight="@dimen/text_wrapper_right_margin"
+            android:gravity="right"
             />
 
     </RelativeLayout>
