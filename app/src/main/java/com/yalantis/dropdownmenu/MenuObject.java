@@ -15,7 +15,7 @@ public class MenuObject {
         this.mTitle = title;
     }
 
-    public MenuObject(Drawable drawable){
+    public MenuObject(Drawable drawable) {
         this.mDrawable = drawable;
         this.mTitle = "";
     }
