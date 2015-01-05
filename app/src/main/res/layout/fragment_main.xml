@@ -1,37 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/menu_fragment_backgraund">
+    android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/menu_item_background">
 
-        <Button
-            android:id="@+id/button_menu"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Menu" />
-
+            android:src="@drawable/photo"
+            android:scaleType="fitXY"/>
 
         <LinearLayout
-            android:id="@+id/wrapper_buttons"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_alignParentRight="true" />
+            android:paddingLeft="@dimen/main_screen_side_padding"
+            android:paddingRight="@dimen/main_screen_side_padding"
+            android:paddingTop="@dimen/text_top_padding">
 
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textColor="@color/text_color"
+             android:textSize="@dimen/title_text_size"
+             android:text="@string/title"
+             android:layout_marginBottom="@dimen/main_screen_side_padding"/>
 
-        <LinearLayout
-            android:id="@+id/wrapper_text"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toLeftOf="@+id/wrapper_buttons"
-            android:layout_marginRight="@dimen/text_wrapper_right_margin"
-            android:gravity="right"
-            />
-
-    </RelativeLayout>
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/menu_text_size"
+            android:text="@string/text" />
+        </LinearLayout>
+    </LinearLayout>
 </ScrollView>

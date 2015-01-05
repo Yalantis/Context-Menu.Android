@@ -3,6 +3,7 @@ package com.yalantis.dropdownmenu;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,12 @@ public class Utils {
         return actionBarSize;
     }
 
-    public static TextView getItemTextView(Context context, String title, int actionBarSize){
+    public static TextView getItemTextView(Context context, String title, int menuItemSize){
         TextView itemTextView = new TextView(context);
         RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, actionBarSize);
+                ViewGroup.LayoutParams.WRAP_CONTENT, menuItemSize);
         itemTextView.setLayoutParams(textLayoutParams);
+        itemTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.menu_text_size));
         itemTextView.setTextColor(context.getResources().getColor(android.R.color.white));
         itemTextView.setText(title);
         itemTextView.setPadding(0,0,(int)context.getResources().getDimension(R.dimen.text_right_padding),0);
@@ -65,9 +67,9 @@ public class Utils {
         return dividerView;
     }
 
-    public static RelativeLayout getImageWrapper(Context context, int actionBarSize, Drawable drawable, View.OnClickListener onCLick){
+    public static RelativeLayout getImageWrapper(Context context, int menuItemSize, Drawable drawable, View.OnClickListener onCLick){
         RelativeLayout imageWrapper = new RelativeLayout(context);
-        LinearLayout.LayoutParams imageWrapperLayoutParams = new LinearLayout.LayoutParams(actionBarSize, actionBarSize);
+        LinearLayout.LayoutParams imageWrapperLayoutParams = new LinearLayout.LayoutParams(menuItemSize, menuItemSize);
         imageWrapper.setLayoutParams(imageWrapperLayoutParams);
         imageWrapper.setBackgroundColor(context.getResources().getColor(R.color.menu_item_background));
         imageWrapper.setOnClickListener(onCLick);
