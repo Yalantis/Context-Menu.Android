@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -27,8 +29,19 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         initToolbar();
-        mMenuDialogFragment = DropDownMenuFragment.newInstance((int)getResources().getDimension(R.dimen.tool_bar_height));
+        mMenuDialogFragment = DropDownMenuFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), getMenuObjects());
         addFragment(new MainFragment(), true, R.id.container);
+    }
+
+    private ArrayList<MenuObject> getMenuObjects() {
+        ArrayList<MenuObject> menuObjects = new ArrayList<>();
+        menuObjects.add(new MenuObject(R.drawable.icn_close));
+        menuObjects.add(new MenuObject(R.drawable.icn_1, "Send message"));
+        menuObjects.add(new MenuObject(R.drawable.icn_2, "Like profile"));
+        menuObjects.add(new MenuObject(R.drawable.icn_3, "Add to friends"));
+        menuObjects.add(new MenuObject(R.drawable.icn_4, "Add to favorites"));
+        menuObjects.add(new MenuObject(R.drawable.icn_5, "Block user"));
+        return menuObjects;
     }
 
     private void initToolbar() {

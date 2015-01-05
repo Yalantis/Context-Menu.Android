@@ -44,8 +44,8 @@ public class MenuAdapter {
         this.mOnItemClickListener = onItemClickListener;
 
 /**
-/       Make menu looks better by setting toolbar height as itemSize.
-*/
+ /       Make menu looks better by setting toolbar height as itemSize.
+ */
         this.mMenuItemSize = actionBarHeight;
         setViews();
         resetAnimations();
@@ -63,7 +63,7 @@ public class MenuAdapter {
     private void setViews() {
         for (MenuObject menuObject : mMenuObjects) {
             mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject.getTitle(), mMenuItemSize));
-            mMenuWrapper.addView(Utils.getImageWrapper(mContext, mMenuItemSize, menuObject.getDrawable(), clickItem));
+            mMenuWrapper.addView(Utils.getImageWrapper(mContext, mMenuItemSize, menuObject.getId(), clickItem));
         }
     }
 

@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Kirill-Penzykov on 23.12.2014.
@@ -17,16 +16,19 @@ import java.util.List;
 public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.OnItemClickListener {
 
     private static final String ACTION_BAR_SIZE = "action_bar_size";
+    private static final String MENU_OBJECTS = "menu_objects";
 
     private LinearLayout mWrapperButtons;
     private LinearLayout mWrapperText;
     private MenuAdapter mDropDownMenuAdapter;
+    private ArrayList<MenuObject> mMenuObjects;
     private int mActionBarHeight;
 
-    public static DropDownMenuFragment newInstance(int actionBarSize) {
+    public static DropDownMenuFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects) {
         DropDownMenuFragment dropDownMenuFragment = new DropDownMenuFragment();
         Bundle args = new Bundle();
         args.putInt(ACTION_BAR_SIZE, actionBarSize);
+        args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
         dropDownMenuFragment.setArguments(args);
         return dropDownMenuFragment;
     }
@@ -37,6 +39,7 @@ public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.
         setStyle(STYLE_NO_FRAME, R.style.MenuFragmentStyle);
         if (getArguments() != null) {
             mActionBarHeight = getArguments().getInt(ACTION_BAR_SIZE);
+            mMenuObjects = getArguments().getParcelableArrayList(MENU_OBJECTS);
         }
     }
 
@@ -56,17 +59,12 @@ public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.
     }
 
     private void initDropDownMenuAdapter() {
-        List<MenuObject> menuObjects = new ArrayList<>();
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_close)));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_1), "Send message"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_2), "Like profile"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_3), "Add to friends"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_4), "Add to favorites"));
-        menuObjects.add(new MenuObject(getResources().getDrawable(R.drawable.icn_5), "Block user"));
-
-        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText, menuObjects, mActionBarHeight, this);
+        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText, mMenuObjects, mActionBarHeight, this);
     }
 
+    /**
+    *  Menu item click method
+    */
     @Override
     public void onClick(View v) {
         dismiss();
