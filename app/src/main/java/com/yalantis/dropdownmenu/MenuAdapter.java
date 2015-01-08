@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class MenuAdapter {
 
-    private static final int ANIMATION_DURATION_MILLIS = 100;
+    public static final int ANIMATION_DURATION_MILLIS = 100;
 
     private OnItemClickListener mOnItemClickListener;
     private Context mContext;
@@ -30,6 +30,8 @@ public class MenuAdapter {
     private boolean mIsMenuOpen = false;
     private boolean mIsAnimationRun = false;
     private int mMenuItemSize;
+    private int mAnimationDurationMilis = ANIMATION_DURATION_MILLIS;
+
 
     public interface OnItemClickListener {
         public void onClick(View v);
@@ -140,7 +142,7 @@ public class MenuAdapter {
 
         AnimatorSet animatorFullSet = new AnimatorSet();
         animatorFullSet.playTogether(imageCloseAnimatorSet, textCloseAnimatorSet);
-        animatorFullSet.setDuration(ANIMATION_DURATION_MILLIS);
+        animatorFullSet.setDuration(mAnimationDurationMilis);
         animatorFullSet.addListener(mCloseOpenAnimatorListener);
         animatorFullSet.setStartDelay(0);
         animatorFullSet.setInterpolator(new HesitateInterpolator());
@@ -234,7 +236,7 @@ public class MenuAdapter {
 
         AnimatorSet fullAnimatorSet = new AnimatorSet();
         fullAnimatorSet.playTogether(imageFullAnimatorSet, textFullAnimatorSet);
-        fullAnimatorSet.setDuration(ANIMATION_DURATION_MILLIS);
+        fullAnimatorSet.setDuration(mAnimationDurationMilis);
         fullAnimatorSet.setInterpolator(new HesitateInterpolator());
         fullAnimatorSet.start();
     }
@@ -260,6 +262,9 @@ public class MenuAdapter {
         mIsMenuOpen = !mIsMenuOpen;
     }
 
+    public void setAnimationDuration(int durationMillis){
+        mAnimationDurationMilis =  durationMillis;
+    }
 
     private Animator.AnimatorListener mCloseOpenAnimatorListener = new Animator.AnimatorListener() {
         @Override

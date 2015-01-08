@@ -12,11 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements DropDownMenuFragment.ItemClickListener {
 
     private Toolbar mToolbar;
     private TextView mToolBarTextView;
@@ -87,7 +88,6 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.context_menu:
-//                addFragment(new DropDownMenuFragment(), true, R.id.container);
                 mMenuDialogFragment.show(fragmentManager, "DropDownMenuFragment");
                 break;
         }
@@ -103,4 +103,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onItemClick(View clickedView, int position) {
+        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
+    }
 }
