@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.dropdownmenu.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -14,13 +14,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.yalantis.dropdownmenu.R;
+import com.yalantis.dropdownmenu.lib.DropDownMenuFragment;
+import com.yalantis.dropdownmenu.lib.MenuObject;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity implements DropDownMenuFragment.ItemClickListener {
 
-    private Toolbar mToolbar;
-    private TextView mToolBarTextView;
     private FragmentManager fragmentManager;
     private DialogFragment mMenuDialogFragment;
 
@@ -34,8 +36,8 @@ public class MainActivity extends ActionBarActivity implements DropDownMenuFragm
         addFragment(new MainFragment(), true, R.id.container);
     }
 
-    private ArrayList<MenuObject> getMenuObjects() {
-        ArrayList<MenuObject> menuObjects = new ArrayList<>();
+    private List<MenuObject> getMenuObjects() {
+        List<MenuObject> menuObjects = new ArrayList<>();
         menuObjects.add(new MenuObject(R.drawable.icn_close));
         menuObjects.add(new MenuObject(R.drawable.icn_1, "Send message"));
         menuObjects.add(new MenuObject(R.drawable.icn_2, "Like profile"));
@@ -46,8 +48,8 @@ public class MainActivity extends ActionBarActivity implements DropDownMenuFragm
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,7 +62,6 @@ public class MainActivity extends ActionBarActivity implements DropDownMenuFragm
             }
         });
         mToolBarTextView.setText("Samantha");
-
     }
 
     protected void addFragment(Fragment fragment, boolean addToBackStack, int containerId) {

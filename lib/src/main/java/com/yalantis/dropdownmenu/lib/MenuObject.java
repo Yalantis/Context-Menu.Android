@@ -1,11 +1,8 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.dropdownmenu.lib;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Kirill-Penzykov on 23.12.2014.
- */
 public class MenuObject implements Parcelable {
 
     private String mTitle;

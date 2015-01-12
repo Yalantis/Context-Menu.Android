@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.dropdownmenu.lib;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,10 +12,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Kirill-Penzykov on 23.12.2014.
- */
 public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.OnItemClickListener {
 
     private static final String ACTION_BAR_SIZE = "action_bar_size";
@@ -36,11 +34,11 @@ public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.
         public void onItemClick(View clickedView, int position);
     }
 
-    public static DropDownMenuFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects) {
+    public static DropDownMenuFragment newInstance(int actionBarSize, List<MenuObject> menuObjects) {
         DropDownMenuFragment dropDownMenuFragment = new DropDownMenuFragment();
         Bundle args = new Bundle();
         args.putInt(ACTION_BAR_SIZE, actionBarSize);
-        args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
+        args.putParcelableArrayList(MENU_OBJECTS, new ArrayList<>(menuObjects));
         dropDownMenuFragment.setArguments(args);
         return dropDownMenuFragment;
     }
