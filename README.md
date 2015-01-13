@@ -1,6 +1,6 @@
 # ContextMenu 
 
-#### You can easily add awsome animated context menu to  your app. Made in [Yalantis] (http://yalantis.com/)
+#### You can easily add awesome animated context menu to  your app. Made in [Yalantis] (http://yalantis.com/)
 
 Check this [project on dribbble] (https://dribbble.com/shots/1785274-Menu-Animation-for-Additional-Functions?list=users&offset=17)
 
