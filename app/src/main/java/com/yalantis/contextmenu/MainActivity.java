@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.contextmenu;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,12 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity implements DropDownMenuFragment.ItemClickListener {
+public class MainActivity extends ActionBarActivity implements ContextMenuDialogFragment.ItemClickListener {
 
     private Toolbar mToolbar;
     private TextView mToolBarTextView;
@@ -30,7 +29,7 @@ public class MainActivity extends ActionBarActivity implements DropDownMenuFragm
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         initToolbar();
-        mMenuDialogFragment = DropDownMenuFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), getMenuObjects());
+        mMenuDialogFragment = ContextMenuDialogFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), getMenuObjects());
         addFragment(new MainFragment(), true, R.id.container);
     }
 
@@ -103,8 +102,11 @@ public class MainActivity extends ActionBarActivity implements DropDownMenuFragm
         }
     }
 
+    /**
+     * Item Click Method where clicked view is a relative layout which contains ImageView and divider,
+     * and position of clicked item
+     */
     @Override
     public void onItemClick(View clickedView, int position) {
-        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
     }
 }

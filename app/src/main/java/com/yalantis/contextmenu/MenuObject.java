@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.contextmenu;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -64,24 +64,5 @@ public class MenuObject implements Parcelable {
     public void setId(int mId) {
         this.mId = mId;
     }
-
-//    TODO: Realize drawable constructor
-//    private Drawable mDrawable;
-//    public MenuObject(Drawable drawable, String title) {
-//        this.mDrawable = drawable;
-//        this.mTitle = title;
-//    }
-//
-//    public MenuObject(Drawable drawable) {
-//        this.mDrawable = drawable;
-//        this.mTitle = "";
-//    }
-//    public Drawable getDrawable() {
-//        return mDrawable;
-//    }
-//
-//    public void setDrawable(Drawable drawable) {
-//        this.mDrawable = drawable;
-//    }
 
 }
