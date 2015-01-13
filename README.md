@@ -1,10 +1,10 @@
 # ContextMenu 
-Here is it dribble reprisantation:
+Here is it dribble representation:
 https://dribbble.com/shots/1785274-Menu-Animation-for-Additional-Functions?list=users&offset=17
 
 ![ContextMenu](https://d13yacurqjgara.cloudfront.net/users/125056/screenshots/1785274/99miles-profile-light_1-1-4.gif)
 
-#### You can easily add awsome animated context menu to  your app.
+#### You can easily add awesome animated context menu to  your app.
 
 ### Usage:
 #### 	1. Clone repository and add sources into your project .
