@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.contextmenu;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 /**
  * Created by Kirill-Penzykov on 23.12.2014.
  */
-public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.OnItemClickListener {
+public class ContextMenuDialogFragment extends DialogFragment implements MenuAdapter.OnItemClickListener {
 
-    private static final String ACTION_BAR_SIZE = "action_bar_size";
+    private static final String ITEM_SIZE = "action_bar_size";
     private static final String MENU_OBJECTS = "menu_objects";
     private static final String ANIMATION_DELAY = "animation_delay";
     private static final String ANIMATION_DURATION = "animation_duration";
@@ -36,34 +36,43 @@ public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.
         public void onItemClick(View clickedView, int position);
     }
 
-    public static DropDownMenuFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects) {
-        DropDownMenuFragment dropDownMenuFragment = new DropDownMenuFragment();
+    /**
+     * New instance of DialogFragment where itemSize should be actionbar size and list of menuObjects
+     */
+    public static ContextMenuDialogFragment newInstance(int itemSize, ArrayList<MenuObject> menuObjects) {
+        ContextMenuDialogFragment contextMenuDialogFragment = new ContextMenuDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ACTION_BAR_SIZE, actionBarSize);
+        args.putInt(ITEM_SIZE, itemSize);
         args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
-        dropDownMenuFragment.setArguments(args);
-        return dropDownMenuFragment;
+        contextMenuDialogFragment.setArguments(args);
+        return contextMenuDialogFragment;
     }
 
-    public static DropDownMenuFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects, int animationDelay) {
-        DropDownMenuFragment dropDownMenuFragment = new DropDownMenuFragment();
+    /**
+     * Animation delay its a delay after DialogFragment opens and before DialogFragment closes
+     */
+    public static ContextMenuDialogFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects, int animationDelay) {
+        ContextMenuDialogFragment contextMenuDialogFragment = new ContextMenuDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ACTION_BAR_SIZE, actionBarSize);
+        args.putInt(ITEM_SIZE, actionBarSize);
         args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
         args.putInt(ANIMATION_DELAY, animationDelay);
-        dropDownMenuFragment.setArguments(args);
-        return dropDownMenuFragment;
+        contextMenuDialogFragment.setArguments(args);
+        return contextMenuDialogFragment;
     }
 
-    public static DropDownMenuFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects, int animationDelay, int animationDuration) {
-        DropDownMenuFragment dropDownMenuFragment = new DropDownMenuFragment();
+    /**
+     * Animation duration its duration in millis of every piece of animation
+     */
+    public static ContextMenuDialogFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects, int animationDelay, int animationDuration) {
+        ContextMenuDialogFragment contextMenuDialogFragment = new ContextMenuDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ACTION_BAR_SIZE, actionBarSize);
+        args.putInt(ITEM_SIZE, actionBarSize);
         args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
         args.putInt(ANIMATION_DELAY, animationDelay);
         args.putInt(ANIMATION_DURATION, animationDuration);
-        dropDownMenuFragment.setArguments(args);
-        return dropDownMenuFragment;
+        contextMenuDialogFragment.setArguments(args);
+        return contextMenuDialogFragment;
     }
 
     @Override
@@ -81,13 +90,13 @@ public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_FRAME, R.style.MenuFragmentStyle);
         if (getArguments() != null) {
-            mActionBarHeight = getArguments().getInt(ACTION_BAR_SIZE);
+            mActionBarHeight = getArguments().getInt(ITEM_SIZE);
             mMenuObjects = getArguments().getParcelableArrayList(MENU_OBJECTS);
-            if(getArguments().containsKey(ANIMATION_DELAY)){
+            if (getArguments().containsKey(ANIMATION_DELAY)) {
                 mAnimationDelay = getArguments().getInt(ANIMATION_DELAY);
             }
-            mAnimationDuration = (getArguments().containsKey(ANIMATION_DELAY))?
-                getArguments().getInt(ANIMATION_DELAY): MenuAdapter.ANIMATION_DURATION_MILLIS;
+            mAnimationDuration = (getArguments().containsKey(ANIMATION_DELAY)) ?
+                    getArguments().getInt(ANIMATION_DELAY) : MenuAdapter.ANIMATION_DURATION_MILLIS;
         }
     }
 
@@ -102,7 +111,7 @@ public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.
             public void run() {
                 mDropDownMenuAdapter.menuToggle();
             }
-        },mAnimationDelay);
+        }, mAnimationDelay);
         return rootView;
     }
 
@@ -127,6 +136,6 @@ public class DropDownMenuFragment extends DialogFragment implements MenuAdapter.
             public void run() {
                 dismiss();
             }
-        },mAnimationDelay);
+        }, mAnimationDelay);
     }
 }

@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.contextmenu;
 
 import android.content.Context;
 import android.view.View;

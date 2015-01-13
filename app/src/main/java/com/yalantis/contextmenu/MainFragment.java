@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu;
+package com.yalantis.contextmenu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
