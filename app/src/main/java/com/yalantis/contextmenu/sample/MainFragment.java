@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu.sample;
+package com.yalantis.contextmenu.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yalantis.dropdownmenu.R;
+import com.yalantis.contextmenu.R;
 
 public class MainFragment extends Fragment {
 

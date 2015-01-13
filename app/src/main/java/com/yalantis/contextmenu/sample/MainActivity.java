@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu.sample;
+package com.yalantis.contextmenu.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -14,14 +14,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yalantis.dropdownmenu.R;
-import com.yalantis.dropdownmenu.lib.DropDownMenuFragment;
-import com.yalantis.dropdownmenu.lib.MenuObject;
+
+import com.yalantis.contextmenu.R;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity implements DropDownMenuFragment.ItemClickListener {
+public class MainActivity extends ActionBarActivity implements ContextMenuDialogFragment.ItemClickListener {
 
     private FragmentManager fragmentManager;
     private DialogFragment mMenuDialogFragment;
@@ -32,7 +33,7 @@ public class MainActivity extends ActionBarActivity implements DropDownMenuFragm
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         initToolbar();
-        mMenuDialogFragment = DropDownMenuFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), getMenuObjects());
+        mMenuDialogFragment = ContextMenuDialogFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), getMenuObjects());
         addFragment(new MainFragment(), true, R.id.container);
     }
 

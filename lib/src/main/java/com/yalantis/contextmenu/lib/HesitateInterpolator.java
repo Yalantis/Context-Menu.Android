@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu.lib;
+package com.yalantis.contextmenu.lib;
 
 import android.view.animation.Interpolator;
 

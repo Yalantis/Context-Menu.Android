@@ -1,4 +1,4 @@
-package com.yalantis.dropdownmenu.lib;
+package com.yalantis.contextmenu.lib;
 
 import android.content.Context;
 import android.content.res.TypedArray;
