@@ -1,4 +1,4 @@
-package com.yalantis.contextmenu;
+package com.yalantis.contextmenu.lib;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,9 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-/**
- * Created by Kirill-Penzykov on 24.12.2014.
- */
 public class Utils {
 
     public static int getDefaultActionBarSize(Context context) {

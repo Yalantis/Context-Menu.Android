@@ -1,11 +1,8 @@
-package com.yalantis.contextmenu;
+package com.yalantis.contextmenu.lib;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Kirill-Penzykov on 23.12.2014.
- */
 public class MenuObject implements Parcelable {
 
     private String mTitle;
@@ -64,5 +61,24 @@ public class MenuObject implements Parcelable {
     public void setId(int mId) {
         this.mId = mId;
     }
+
+//    TODO: Realize drawable constructor
+//    private Drawable mDrawable;
+//    public MenuObject(Drawable drawable, String title) {
+//        this.mDrawable = drawable;
+//        this.mTitle = title;
+//    }
+//
+//    public MenuObject(Drawable drawable) {
+//        this.mDrawable = drawable;
+//        this.mTitle = "";
+//    }
+//    public Drawable getDrawable() {
+//        return mDrawable;
+//    }
+//
+//    public void setDrawable(Drawable drawable) {
+//        this.mDrawable = drawable;
+//    }
 
 }

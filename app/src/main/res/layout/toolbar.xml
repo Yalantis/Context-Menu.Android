@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         android:textColor="@color/text_color"
         android:textSize="@dimen/tool_bar_text_size"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
 </android.support.v7.widget.Toolbar>

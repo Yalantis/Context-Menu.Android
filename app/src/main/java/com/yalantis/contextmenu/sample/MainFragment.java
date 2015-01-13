@@ -1,4 +1,4 @@
-package com.yalantis.contextmenu;
+package com.yalantis.contextmenu.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,9 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Kirill-Penzykov on 25.12.2014.
- */
+import com.yalantis.contextmenu.R;
+
 public class MainFragment extends Fragment {
 
     @Override

@@ -1,13 +1,10 @@
-package com.yalantis.contextmenu;
+package com.yalantis.contextmenu.lib;
 
 import android.view.View;
 
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
-/**
- * Created by Kirill-Penzykov on 24.12.2014.
- */
 public class AnimatorUtils {
 
     public static ObjectAnimator rotationCloseToRight(View v) {
@@ -44,12 +41,6 @@ public class AnimatorUtils {
     public static AnimatorSet fadeOutSet(View v, float x){
         AnimatorSet fadeOutSet = new AnimatorSet();
         fadeOutSet.playTogether(alfaDisappear(v), translationRight(v,x));
-        return fadeOutSet;
-    }
-
-    public static AnimatorSet fadeInSet(View v, float x){
-        AnimatorSet fadeOutSet = new AnimatorSet();
-        fadeOutSet.playTogether(alfaAppear(v), translationLeft(v, x));
         return fadeOutSet;
     }
 

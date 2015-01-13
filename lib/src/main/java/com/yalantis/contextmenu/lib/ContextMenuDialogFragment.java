@@ -1,4 +1,4 @@
-package com.yalantis.contextmenu;
+package com.yalantis.contextmenu.lib;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,15 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Kirill-Penzykov on 23.12.2014.
- */
 public class ContextMenuDialogFragment extends DialogFragment implements MenuAdapter.OnItemClickListener {
 
-    private static final String ITEM_SIZE = "action_bar_size";
+    private static final String ACTION_BAR_SIZE = "action_bar_size";
     private static final String MENU_OBJECTS = "menu_objects";
     private static final String ANIMATION_DELAY = "animation_delay";
     private static final String ANIMATION_DURATION = "animation_duration";
@@ -36,38 +33,29 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
         public void onItemClick(View clickedView, int position);
     }
 
-    /**
-     * New instance of DialogFragment where itemSize should be actionbar size and list of menuObjects
-     */
-    public static ContextMenuDialogFragment newInstance(int itemSize, ArrayList<MenuObject> menuObjects) {
+    public static ContextMenuDialogFragment newInstance(int actionBarSize, List<MenuObject> menuObjects) {
         ContextMenuDialogFragment contextMenuDialogFragment = new ContextMenuDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ITEM_SIZE, itemSize);
-        args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
+        args.putInt(ACTION_BAR_SIZE, actionBarSize);
+        args.putParcelableArrayList(MENU_OBJECTS, new ArrayList<>(menuObjects));
         contextMenuDialogFragment.setArguments(args);
         return contextMenuDialogFragment;
     }
 
-    /**
-     * Animation delay its a delay after DialogFragment opens and before DialogFragment closes
-     */
     public static ContextMenuDialogFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects, int animationDelay) {
         ContextMenuDialogFragment contextMenuDialogFragment = new ContextMenuDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ITEM_SIZE, actionBarSize);
+        args.putInt(ACTION_BAR_SIZE, actionBarSize);
         args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
         args.putInt(ANIMATION_DELAY, animationDelay);
         contextMenuDialogFragment.setArguments(args);
         return contextMenuDialogFragment;
     }
 
-    /**
-     * Animation duration its duration in millis of every piece of animation
-     */
     public static ContextMenuDialogFragment newInstance(int actionBarSize, ArrayList<MenuObject> menuObjects, int animationDelay, int animationDuration) {
         ContextMenuDialogFragment contextMenuDialogFragment = new ContextMenuDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ITEM_SIZE, actionBarSize);
+        args.putInt(ACTION_BAR_SIZE, actionBarSize);
         args.putParcelableArrayList(MENU_OBJECTS, menuObjects);
         args.putInt(ANIMATION_DELAY, animationDelay);
         args.putInt(ANIMATION_DURATION, animationDuration);
@@ -90,13 +78,13 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_FRAME, R.style.MenuFragmentStyle);
         if (getArguments() != null) {
-            mActionBarHeight = getArguments().getInt(ITEM_SIZE);
+            mActionBarHeight = getArguments().getInt(ACTION_BAR_SIZE);
             mMenuObjects = getArguments().getParcelableArrayList(MENU_OBJECTS);
-            if (getArguments().containsKey(ANIMATION_DELAY)) {
+            if(getArguments().containsKey(ANIMATION_DELAY)){
                 mAnimationDelay = getArguments().getInt(ANIMATION_DELAY);
             }
-            mAnimationDuration = (getArguments().containsKey(ANIMATION_DELAY)) ?
-                    getArguments().getInt(ANIMATION_DELAY) : MenuAdapter.ANIMATION_DURATION_MILLIS;
+            mAnimationDuration = (getArguments().containsKey(ANIMATION_DELAY))?
+                getArguments().getInt(ANIMATION_DELAY): MenuAdapter.ANIMATION_DURATION_MILLIS;
         }
     }
 
@@ -111,7 +99,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
             public void run() {
                 mDropDownMenuAdapter.menuToggle();
             }
-        }, mAnimationDelay);
+        },mAnimationDelay);
         return rootView;
     }
 
@@ -136,6 +124,6 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
             public void run() {
                 dismiss();
             }
-        }, mAnimationDelay);
+        },mAnimationDelay);
     }
 }

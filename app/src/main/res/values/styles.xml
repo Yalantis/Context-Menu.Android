@@ -6,18 +6,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MenuFragmentStyle" parent="AppTheme">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:colorForeground">@android:color/transparent</item>
-        <item name="android:colorForegroundInverse">@android:color/transparent</item>
-        <item name="android:colorBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <style name="MenuWindowAnimationStyle">
-        <item name="android:windowEnterAnimation">@anim/anim_menu_fragment_open</item>
-        <item name="android:windowExitAnimation">@anim/anim_menu_fragment_close</item>
-    </style>
-
 </resources>

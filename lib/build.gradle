@@ -1,11 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.yalantis.contextmenu.sample"
         minSdkVersion 11
         targetSdkVersion 21
         versionCode 1
@@ -14,5 +13,7 @@ android {
 }
 
 dependencies {
-    compile project(':lib')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.nineoldandroids:library:2.4.0'
 }

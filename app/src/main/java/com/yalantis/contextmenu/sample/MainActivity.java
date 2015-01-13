@@ -1,4 +1,4 @@
-package com.yalantis.contextmenu;
+package com.yalantis.contextmenu.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,14 +12,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
+import com.yalantis.contextmenu.R;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity implements ContextMenuDialogFragment.ItemClickListener {
 
-    private Toolbar mToolbar;
-    private TextView mToolBarTextView;
     private FragmentManager fragmentManager;
     private DialogFragment mMenuDialogFragment;
 
@@ -33,8 +37,8 @@ public class MainActivity extends ActionBarActivity implements ContextMenuDialog
         addFragment(new MainFragment(), true, R.id.container);
     }
 
-    private ArrayList<MenuObject> getMenuObjects() {
-        ArrayList<MenuObject> menuObjects = new ArrayList<>();
+    private List<MenuObject> getMenuObjects() {
+        List<MenuObject> menuObjects = new ArrayList<>();
         menuObjects.add(new MenuObject(R.drawable.icn_close));
         menuObjects.add(new MenuObject(R.drawable.icn_1, "Send message"));
         menuObjects.add(new MenuObject(R.drawable.icn_2, "Like profile"));
@@ -45,8 +49,8 @@ public class MainActivity extends ActionBarActivity implements ContextMenuDialog
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,7 +63,6 @@ public class MainActivity extends ActionBarActivity implements ContextMenuDialog
             }
         });
         mToolBarTextView.setText("Samantha");
-
     }
 
     protected void addFragment(Fragment fragment, boolean addToBackStack, int containerId) {
@@ -102,11 +105,8 @@ public class MainActivity extends ActionBarActivity implements ContextMenuDialog
         }
     }
 
-    /**
-     * Item Click Method where clicked view is a relative layout which contains ImageView and divider,
-     * and position of clicked item
-     */
     @Override
     public void onItemClick(View clickedView, int position) {
+        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
     }
 }

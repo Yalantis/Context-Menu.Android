@@ -1,4 +1,4 @@
-package com.yalantis.contextmenu;
+package com.yalantis.contextmenu.lib;
 
 import android.content.Context;
 import android.view.View;
@@ -12,9 +12,6 @@ import com.nineoldandroids.view.ViewHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Kirill-Penzykov on 23.12.2014.
- */
 public class MenuAdapter {
 
     public static final int ANIMATION_DURATION_MILLIS = 100;
@@ -126,11 +123,11 @@ public class MenuAdapter {
 
         if (isCloseAnimation) {
             for (int i = getItemCount() - 1; i >= 0; i--) {
-                fillOpenClosingAnimations(isCloseAnimation, textAnimations, imageAnimations, i);
+                fillOpenClosingAnimations(true, textAnimations, imageAnimations, i);
             }
         } else {
             for (int i = 0; i < getItemCount(); i++) {
-                fillOpenClosingAnimations(isCloseAnimation, textAnimations, imageAnimations, i);
+                fillOpenClosingAnimations(false, textAnimations, imageAnimations, i);
             }
         }
 
