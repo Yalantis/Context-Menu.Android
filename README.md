@@ -80,7 +80,7 @@ For better experience menu item size should be equal to `ActionBar` height.
 
 ### Version: 1.0
 
-  * Initial Build
+  * Pilot version
 
 ## License
 
