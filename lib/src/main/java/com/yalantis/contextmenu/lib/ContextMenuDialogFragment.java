@@ -83,8 +83,8 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
             if(getArguments().containsKey(ANIMATION_DELAY)){
                 mAnimationDelay = getArguments().getInt(ANIMATION_DELAY);
             }
-            mAnimationDuration = (getArguments().containsKey(ANIMATION_DELAY))?
-                getArguments().getInt(ANIMATION_DELAY): MenuAdapter.ANIMATION_DURATION_MILLIS;
+            mAnimationDuration = (getArguments().containsKey(ANIMATION_DURATION))?
+                getArguments().getInt(ANIMATION_DURATION): MenuAdapter.ANIMATION_DURATION_MILLIS;
         }
     }
 
