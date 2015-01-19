@@ -70,7 +70,7 @@ public class Utils {
         imageWrapper.setLayoutParams(imageWrapperLayoutParams);
         imageWrapper.setBackgroundColor(context.getResources().getColor(R.color.menu_item_background));
         imageWrapper.setOnClickListener(onCLick);
-        imageWrapper.addView(Utils.getItemImageButton(context, context.getResources().getDrawable(drawableId)));
+        imageWrapper.addView(Utils.getItemImageButton(context, drawableId > 0 ? context.getResources().getDrawable(drawableId) : null));
         imageWrapper.addView(getDivider(context));
         return imageWrapper;
     }
