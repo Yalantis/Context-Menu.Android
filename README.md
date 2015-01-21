@@ -12,7 +12,7 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 
 ### Usage:
 
-*For a working implementation, Have a look at the Sample Project - sample*
+*For a working implementation, have a look at the ```app``` module*
 
 #### 	1. Clone repository and add sources into your project or use Gradle: 
 ``` compile 'com.yalantis:contextmenu:1.0.0' ```  
