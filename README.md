@@ -14,7 +14,8 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 
 *For a working implementation, Have a look at the Sample Project - sample*
 
-#### 	1. Clone repository and add sources into your project .
+#### 	1. Clone repository and add sources into your project or use Gradle: 
+``` compile 'com.yalantis:contextmenu:1.0.0' ```  
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
 
 ```
