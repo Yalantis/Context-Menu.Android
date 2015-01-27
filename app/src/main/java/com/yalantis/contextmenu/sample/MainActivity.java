@@ -18,11 +18,14 @@ import android.widget.Toast;
 import com.yalantis.contextmenu.R;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity implements ContextMenuDialogFragment.ItemClickListener {
+public class MainActivity extends ActionBarActivity implements OnMenuItemClickListener,
+        OnMenuItemLongClickListener{
 
     private FragmentManager fragmentManager;
     private DialogFragment mMenuDialogFragment;
@@ -106,7 +109,12 @@ public class MainActivity extends ActionBarActivity implements ContextMenuDialog
     }
 
     @Override
-    public void onItemClick(View clickedView, int position) {
-        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
+    public void onMenuItemClick(View clickedView, int position) {
+        Toast.makeText(this, "Clicked on position: " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMenuItemLongClick(View clickedView, int position) {
+        Toast.makeText(this, "Long clicked on position: " + position, Toast.LENGTH_SHORT).show();
     }
 }

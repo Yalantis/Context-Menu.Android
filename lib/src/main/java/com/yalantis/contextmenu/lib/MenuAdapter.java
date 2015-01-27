@@ -8,6 +8,8 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
+import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener;
+import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,9 @@ public class MenuAdapter {
     public static final int ANIMATION_DURATION_MILLIS = 100;
 
     private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
+    private OnItemClickListener mOnItemClickListenerCalled;
+    private OnItemLongClickListener mOnItemLongClickListenerCalled;
     private Context mContext;
     private LinearLayout mMenuWrapper;
     private LinearLayout mTextWrapper;
@@ -29,18 +34,12 @@ public class MenuAdapter {
     private int mMenuItemSize;
     private int mAnimationDurationMilis = ANIMATION_DURATION_MILLIS;
 
-
-    public interface OnItemClickListener {
-        public void onClick(View v);
-    }
-
     public MenuAdapter(Context context, LinearLayout menuWrapper, LinearLayout textWrapper, List<MenuObject> menuObjects,
-                       int actionBarHeight, OnItemClickListener onItemClickListener) {
+                       int actionBarHeight) {
         this.mContext = context;
         this.mMenuWrapper = menuWrapper;
         this.mTextWrapper = textWrapper;
         this.mMenuObjects = menuObjects;
-        this.mOnItemClickListener = onItemClickListener;
 
 /**
  /       Make menu looks better by setting toolbar height as itemSize.
@@ -50,6 +49,14 @@ public class MenuAdapter {
         resetAnimations();
         mAnimatorSetShowMenu = setOpenCloseAnimation(false);
         mAnimatorSetHideMenu = setOpenCloseAnimation(true);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        mOnItemLongClickListener = listener;
     }
 
     public int getItemCount() {
@@ -62,7 +69,8 @@ public class MenuAdapter {
     private void setViews() {
         for (MenuObject menuObject : mMenuObjects) {
             mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject.getTitle(), mMenuItemSize));
-            mMenuWrapper.addView(Utils.getImageWrapper(mContext, mMenuItemSize, menuObject.getId(), clickItem));
+            mMenuWrapper.addView(Utils.getImageWrapper(mContext, mMenuItemSize, menuObject.getId(),
+                    clickItem, longClickItem));
         }
     }
 
@@ -171,18 +179,33 @@ public class MenuAdapter {
     private View.OnClickListener clickItem = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (mIsMenuOpen && !mIsAnimationRun) {
-                mClickedView = v;
-                int childIndex = mMenuWrapper.indexOfChild(v);
-                if (childIndex == -1) {
-                    return;
-                }
-                toggleIsAnimationRun();
-                buildChosenAnimation(childIndex);
-                toggleIsMenuOpen();
-            }
+            mOnItemClickListenerCalled = mOnItemClickListener;
+            viewClicked(v);
         }
     };
+
+    private View.OnLongClickListener longClickItem = new View.OnLongClickListener() {
+
+        @Override
+        public boolean onLongClick(View v) {
+            mOnItemLongClickListenerCalled = mOnItemLongClickListener;
+            viewClicked(v);
+            return true;
+        }
+    };
+
+    private void viewClicked(View v) {
+        if (mIsMenuOpen && !mIsAnimationRun) {
+            mClickedView = v;
+            int childIndex = mMenuWrapper.indexOfChild(v);
+            if (childIndex == -1) {
+                return;
+            }
+            toggleIsAnimationRun();
+            buildChosenAnimation(childIndex);
+            toggleIsMenuOpen();
+        }
+    }
 
     /**
      * Builds and runs chosen item and menu closing animation
@@ -290,7 +313,11 @@ public class MenuAdapter {
         @Override
         public void onAnimationEnd(Animator animation) {
             toggleIsAnimationRun();
-            mOnItemClickListener.onClick(mClickedView);
+            if (mOnItemLongClickListenerCalled != null) {
+                mOnItemLongClickListenerCalled.onLongClick(mClickedView);
+            } else if (mOnItemClickListenerCalled != null) {
+                mOnItemClickListenerCalled.onClick(mClickedView);
+            }
         }
 
         @Override

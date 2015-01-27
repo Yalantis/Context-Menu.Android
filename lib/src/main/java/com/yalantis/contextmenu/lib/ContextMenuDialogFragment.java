@@ -10,11 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+
+import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener;
+import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContextMenuDialogFragment extends DialogFragment implements MenuAdapter.OnItemClickListener {
+public class ContextMenuDialogFragment extends DialogFragment implements OnItemClickListener, OnItemLongClickListener {
 
+    private static final String TAG = ContextMenuDialogFragment.class.getSimpleName();
     private static final String ACTION_BAR_SIZE = "action_bar_size";
     private static final String MENU_OBJECTS = "menu_objects";
     private static final String ANIMATION_DELAY = "animation_delay";
@@ -25,13 +32,10 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
     private MenuAdapter mDropDownMenuAdapter;
     private ArrayList<MenuObject> mMenuObjects;
     private int mActionBarHeight;
-    private ItemClickListener mItemClickListener;
+    private OnMenuItemClickListener mItemClickListener;
+    private OnMenuItemLongClickListener mItemLongClickListener;
     private int mAnimationDelay = 0; // delay after opening and before closing dialogfragent
     private int mAnimationDuration;
-
-    public interface ItemClickListener {
-        public void onItemClick(View clickedView, int position);
-    }
 
     public static ContextMenuDialogFragment newInstance(int actionBarSize, List<MenuObject> menuObjects) {
         ContextMenuDialogFragment contextMenuDialogFragment = new ContextMenuDialogFragment();
@@ -67,9 +71,16 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mItemClickListener = (ItemClickListener) activity;
+            mItemClickListener = (OnMenuItemClickListener) activity;
         } catch (ClassCastException e) {
-            Log.e(getClass().getName(), "Should implement ItemClickListener");
+            Log.e(TAG, activity.getClass().getSimpleName() +
+                    " should implement " + OnMenuItemClickListener.class.getSimpleName());
+        }
+        try {
+            mItemLongClickListener = (OnMenuItemLongClickListener) activity;
+        } catch (ClassCastException e) {
+            Log.e(TAG, activity.getClass().getSimpleName() +
+                    " should implement " + OnMenuItemLongClickListener.class.getSimpleName());
         }
     }
 
@@ -109,8 +120,19 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
     }
 
     private void initDropDownMenuAdapter() {
-        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText, mMenuObjects, mActionBarHeight, this);
+        mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText, mMenuObjects, mActionBarHeight);
+        mDropDownMenuAdapter.setOnItemClickListener(this);
+        mDropDownMenuAdapter.setOnItemLongClickListener(this);
         mDropDownMenuAdapter.setAnimationDuration(mAnimationDuration);
+    }
+
+    private void close() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismiss();
+            }
+        },mAnimationDelay);
     }
 
     /**
@@ -118,12 +140,17 @@ public class ContextMenuDialogFragment extends DialogFragment implements MenuAda
      */
     @Override
     public void onClick(View v) {
-        mItemClickListener.onItemClick(v, mWrapperButtons.indexOfChild(v));
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dismiss();
-            }
-        },mAnimationDelay);
+        if (mItemClickListener != null) {
+            mItemClickListener.onMenuItemClick(v, mWrapperButtons.indexOfChild(v));
+        }
+        close();
+    }
+
+    @Override
+    public void onLongClick(View v) {
+        if (mItemLongClickListener != null) {
+            mItemLongClickListener.onMenuItemLongClick(v, mWrapperButtons.indexOfChild(v));
+        }
+        close();
     }
 }
