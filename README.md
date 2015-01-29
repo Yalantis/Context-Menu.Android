@@ -19,7 +19,7 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
 
 ```
-ArrayList<MenuObject> menuObjects = new ArrayList<>();
+        ArrayList<MenuObject> menuObjects = new ArrayList<>();
         menuObjects.add(new MenuObject(R.drawable.icn_close));
         menuObjects.add(new MenuObject(R.drawable.icn_1, "Send message"));
         menuObjects.add(new MenuObject(R.drawable.icn_2, "Like profile"));
@@ -37,7 +37,7 @@ ArrayList<MenuObject> menuObjects = new ArrayList<>();
 ####	4. Set menu with button, which will open `ContextMenuDialogFragment`.
 
 ```
-@Override
+    @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
