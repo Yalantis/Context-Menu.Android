@@ -55,14 +55,14 @@ ArrayList<MenuObject> menuObjects = new ArrayList<>();
     }
 ```
 
-####	5. Implement `ContextMenuDialogFragment.ItemClickListener` interface with `onItemClick` method.
+####	5. Implement `OnMenuItemClickListener` interface with `onMenuItemClick` method.
 	
 ```	
-public class MainActivity extends ActionBarActivity implements ContextMenuDialogFragment.ItemClickListener
+public class MainActivity extends ActionBarActivity implements OnMenuItemClickListener
 …
- @Override
-    public void onItemClick(View clickedView, int position) {
-//Do something here
+    @Override
+    public void onMenuItemClick(View clickedView, int position) {
+         //Do something here
     }
 ```
 
