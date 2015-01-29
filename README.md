@@ -15,7 +15,7 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 *For a working implementation, have a look at the ```app``` module*
 
 #### 	1. Clone repository and add sources into your project or use Gradle: 
-``` compile 'com.yalantis:contextmenu:1.0.0' ```  
+``` compile 'com.yalantis:contextmenu:1.0.1' ```  
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
 
 ```
@@ -80,6 +80,18 @@ For better experience menu item size should be equal to `ActionBar` height.
   * Android Honeycomb 3.0+
 
 # Changelog
+
+### Version: 1.0.1
+
+  * Added `OnMenuItemLongClickListener` (usage: the same as `OnMenuItemClickListener`, check sample app)
+  * Renamed:
+```
+com.yalantis.contextmenu.lib.ContextMenuDialogFragment.ItemClickListener ->
+com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
+
+com.yalantis.contextmenu.lib.ContextMenuDialogFragment.ItemClickListener.onItemClick(...) ->
+com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener.onMenuItemClick(...)
+```
 
 ### Version: 1.0
 
