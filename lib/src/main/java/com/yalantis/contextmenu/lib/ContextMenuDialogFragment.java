@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ContextMenuDialogFragment extends DialogFragment implements OnItemClickListener, OnItemLongClickListener {
 
-    private static final String TAG = ContextMenuDialogFragment.class.getSimpleName();
+    public static final String TAG = ContextMenuDialogFragment.class.getSimpleName();
     private static final String ACTION_BAR_SIZE = "action_bar_size";
     private static final String MENU_OBJECTS = "menu_objects";
     private static final String ANIMATION_DELAY = "animation_delay";

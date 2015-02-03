@@ -93,7 +93,9 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.context_menu:
-                mMenuDialogFragment.show(fragmentManager, "DropDownMenuFragment");
+                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
+                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
