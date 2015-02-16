@@ -68,8 +68,8 @@ public class MenuAdapter {
      */
     private void setViews() {
         for (MenuObject menuObject : mMenuObjects) {
-            mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject.getTitle(), mMenuItemSize));
-            mMenuWrapper.addView(Utils.getImageWrapper(mContext, mMenuItemSize, menuObject.getId(),
+            mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize));
+            mMenuWrapper.addView(Utils.getImageWrapper(mContext, menuObject, mMenuItemSize,
                     clickItem, longClickItem));
         }
     }

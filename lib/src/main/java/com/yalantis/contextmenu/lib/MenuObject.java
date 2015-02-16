@@ -1,32 +1,44 @@
 package com.yalantis.contextmenu.lib;
 
+import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
 public class MenuObject implements Parcelable {
 
     private String mTitle;
-    private int mId;
+    // bg
+    private Drawable mBgDrawable;
+    private int mBgColor;
+    private int mBgResource;
+    // image
+    private Drawable mDrawable;
+    private int mColor;
+    private Bitmap mBitmap;
+    private int mResource;
+    // image scale type
+    private ImageView.ScaleType mScaleType = ImageView.ScaleType.CENTER_INSIDE;
+    // text
+    private int mTextColor;
 
-    public MenuObject(int id, String title) {
-        this.mId = id;
+    public MenuObject(String title) {
         this.mTitle = title;
     }
 
-    public MenuObject(int id) {
-        this.mId = id;
+    public MenuObject() {
         this.mTitle = "";
     }
 
     private MenuObject(Parcel in) {
         mTitle = in.readString();
-        mId = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mTitle);
-        dest.writeInt(mId);
     }
 
     public static final Parcelable.Creator<MenuObject> CREATOR = new Parcelable.Creator<MenuObject>() {
@@ -54,31 +66,99 @@ public class MenuObject implements Parcelable {
         this.mTitle = title;
     }
 
-    public int getId() {
-        return mId;
+    @TargetApi(16)
+    public Drawable getBgDrawable() {
+        return mBgDrawable;
     }
 
-    public void setId(int mId) {
-        this.mId = mId;
+    @TargetApi(16)
+    public void setBgDrawable(Drawable mBgDrawable) {
+        this.mBgDrawable = mBgDrawable;
+        mBgColor = 0;
+        mBgResource = 0;
     }
 
-//    TODO: Realize drawable constructor
-//    private Drawable mDrawable;
-//    public MenuObject(Drawable drawable, String title) {
-//        this.mDrawable = drawable;
-//        this.mTitle = title;
-//    }
-//
-//    public MenuObject(Drawable drawable) {
-//        this.mDrawable = drawable;
-//        this.mTitle = "";
-//    }
-//    public Drawable getDrawable() {
-//        return mDrawable;
-//    }
-//
-//    public void setDrawable(Drawable drawable) {
-//        this.mDrawable = drawable;
-//    }
+    public int getBgColor() {
+        return mBgColor;
+    }
 
+    public void setBgColor(int mBgColor) {
+        this.mBgColor = mBgColor;
+        mBgResource = 0;
+        mBgDrawable = null;
+    }
+
+    public int getBgResource() {
+        return mBgResource;
+    }
+
+    public void setBgResource(int mBgResource) {
+        this.mBgResource = mBgResource;
+        mBgColor = 0;
+        mBgDrawable = null;
+    }
+
+    public int getTextColor() {
+        return mTextColor;
+    }
+
+    public void setTextColor(int mTextColor) {
+        this.mTextColor = mTextColor;
+    }
+
+    public int getColor() {
+        return mColor;
+    }
+
+    public void setColor(int mColor) {
+        this.mColor = mColor;
+        mResource = 0;
+        mBitmap = null;
+        mDrawable = null;
+    }
+
+    public Bitmap getBitmap() {
+        return mBitmap;
+    }
+
+    public void setBitmap(Bitmap mBitmap) {
+        this.mBitmap = mBitmap;
+        mColor = 0;
+        mResource = 0;
+        mDrawable = null;
+    }
+
+    public int getResource() {
+        return mResource;
+    }
+
+    public void setResource(int mResource) {
+        this.mResource = mResource;
+        mColor = 0;
+        mBitmap = null;
+        mDrawable = null;
+    }
+
+    public Drawable getDrawable() {
+        return mDrawable;
+    }
+
+    public void setDrawable(Drawable mDrawable) {
+        this.mDrawable = mDrawable;
+        mColor = 0;
+        mResource = 0;
+        mBitmap = null;
+    }
+
+    public ImageView.ScaleType getScaleType() {
+        return mScaleType;
+    }
+
+    public void setScaleType(ImageView.ScaleType mScaleType) {
+        this.mScaleType = mScaleType;
+    }
+
+    public static Creator<MenuObject> getCreator() {
+        return CREATOR;
+    }
 }

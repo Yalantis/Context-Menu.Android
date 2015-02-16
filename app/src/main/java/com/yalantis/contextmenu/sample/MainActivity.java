@@ -1,5 +1,8 @@
 package com.yalantis.contextmenu.sample;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -13,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.yalantis.contextmenu.R;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
@@ -41,13 +43,49 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
     }
 
     private List<MenuObject> getMenuObjects() {
+        // You can use any [resource, bitmap, drawable, color] as image:
+        // item.setResource(...)
+        // item.setBitmap(...)
+        // item.setDrawable(...)
+        // item.setColor(...)
+        // You can set image ScaleType:
+        // item.setScaleType(ScaleType.FIT_XY)
+        // You can use any [resource, drawable, color] as background:
+        // item.setBgResource(...)
+        // item.setBgDrawable(...)
+        // item.setBgColor(...)
+        // You can use any [color] as text color:
+        // item.setTextColor(...)
+
         List<MenuObject> menuObjects = new ArrayList<>();
-        menuObjects.add(new MenuObject(R.drawable.icn_close));
-        menuObjects.add(new MenuObject(R.drawable.icn_1, "Send message"));
-        menuObjects.add(new MenuObject(R.drawable.icn_2, "Like profile"));
-        menuObjects.add(new MenuObject(R.drawable.icn_3, "Add to friends"));
-        menuObjects.add(new MenuObject(R.drawable.icn_4, "Add to favorites"));
-        menuObjects.add(new MenuObject(R.drawable.icn_5, "Block user"));
+
+        MenuObject close = new MenuObject();
+        close.setResource(R.drawable.icn_close);
+
+        MenuObject send = new MenuObject("Send message");
+        send.setResource(R.drawable.icn_1);
+
+        MenuObject like = new MenuObject("Like profile");
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.icn_2);
+        like.setBitmap(b);
+
+        MenuObject addFr = new MenuObject("Add to friends");
+        BitmapDrawable bd = new BitmapDrawable(getResources(),
+                BitmapFactory.decodeResource(getResources(), R.drawable.icn_3));
+        addFr.setDrawable(bd);
+
+        MenuObject addFav = new MenuObject("Add to favorites");
+        addFav.setResource(R.drawable.icn_4);
+
+        MenuObject block = new MenuObject("Block user");
+        block.setResource(R.drawable.icn_5);
+
+        menuObjects.add(close);
+        menuObjects.add(send);
+        menuObjects.add(like);
+        menuObjects.add(addFr);
+        menuObjects.add(addFav);
+        menuObjects.add(block);
         return menuObjects;
     }
 
