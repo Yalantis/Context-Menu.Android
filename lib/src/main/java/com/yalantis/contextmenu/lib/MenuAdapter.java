@@ -67,10 +67,11 @@ public class MenuAdapter {
      * Creating views and filling to wrappers
      */
     private void setViews() {
-        for (MenuObject menuObject : mMenuObjects) {
+        for (int i = 0; i < mMenuObjects.size(); i++) {
+            MenuObject menuObject = mMenuObjects.get(i);
             mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize));
             mMenuWrapper.addView(Utils.getImageWrapper(mContext, menuObject, mMenuItemSize,
-                    clickItem, longClickItem));
+                    clickItem, longClickItem, i != mMenuObjects.size() - 1));
         }
     }
 
@@ -282,8 +283,8 @@ public class MenuAdapter {
         mIsMenuOpen = !mIsMenuOpen;
     }
 
-    public void setAnimationDuration(int durationMillis){
-        mAnimationDurationMilis =  durationMillis;
+    public void setAnimationDuration(int durationMillis) {
+        mAnimationDurationMilis = durationMillis;
     }
 
     private Animator.AnimatorListener mCloseOpenAnimatorListener = new Animator.AnimatorListener() {

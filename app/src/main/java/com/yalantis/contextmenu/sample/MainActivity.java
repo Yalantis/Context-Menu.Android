@@ -56,6 +56,8 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
         // item.setBgColor(...)
         // You can use any [color] as text color:
         // item.setTextColor(...)
+        // You can set any [color] as divider color:
+        // item.setDividerColor(...)
 
         List<MenuObject> menuObjects = new ArrayList<>();
 

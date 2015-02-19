@@ -23,6 +23,8 @@ public class MenuObject implements Parcelable {
     private ImageView.ScaleType mScaleType = ImageView.ScaleType.CENTER_INSIDE;
     // text
     private int mTextColor;
+    // divider
+    private int mDividerColor;
 
     public MenuObject(String title) {
         this.mTitle = title;
@@ -148,6 +150,14 @@ public class MenuObject implements Parcelable {
         mColor = 0;
         mResource = 0;
         mBitmap = null;
+    }
+
+    public int getDividerColor() {
+        return mDividerColor;
+    }
+
+    public void setDividerColor(int mDividerColor) {
+        this.mDividerColor = mDividerColor;
     }
 
     public ImageView.ScaleType getScaleType() {

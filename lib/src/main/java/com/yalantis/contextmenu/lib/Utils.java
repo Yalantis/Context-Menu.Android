@@ -70,25 +70,31 @@ public class Utils {
         return imageView;
     }
 
-    public static View getDivider(Context context) {
+    public static View getDivider(Context context, MenuObject menuItem) {
         View dividerView = new View(context);
         RelativeLayout.LayoutParams viewLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.divider_height));
         viewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         dividerView.setLayoutParams(viewLayoutParams);
         dividerView.setClickable(true);
-        dividerView.setBackgroundColor(context.getResources().getColor(R.color.divider_color));
+        int dividerColor = menuItem.getDividerColor() == 0 ?
+                context.getResources().getColor(R.color.divider_color) :
+                menuItem.getDividerColor();
+        dividerView.setBackgroundColor(dividerColor);
         return dividerView;
     }
 
     public static RelativeLayout getImageWrapper(Context context, MenuObject menuItem, int menuItemSize,
-                                                 View.OnClickListener onCLick, View.OnLongClickListener onLongClick) {
+                                                 View.OnClickListener onCLick, View.OnLongClickListener onLongClick,
+                                                 boolean showDivider) {
         RelativeLayout imageWrapper = new RelativeLayout(context);
         LinearLayout.LayoutParams imageWrapperLayoutParams = new LinearLayout.LayoutParams(menuItemSize, menuItemSize);
         imageWrapper.setLayoutParams(imageWrapperLayoutParams);
         imageWrapper.setOnClickListener(onCLick);
         imageWrapper.setOnLongClickListener(onLongClick);
         imageWrapper.addView(Utils.getItemImageButton(context, menuItem));
-        imageWrapper.addView(getDivider(context));
+        if (showDivider) {
+            imageWrapper.addView(getDivider(context, menuItem));
+        }
 
         if (menuItem.getBgColor() != 0) {
             imageWrapper.setBackgroundColor(menuItem.getBgColor());
