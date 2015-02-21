@@ -15,17 +15,44 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 *For a working implementation, have a look at the ```app``` module*
 
 #### 	1. Clone repository and add sources into your project or use Gradle: 
-``` compile 'com.yalantis:contextmenu:1.0.1' ```  
+``` compile 'com.yalantis:contextmenu:1.0.2' ```  
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
-
+You can use any `resource, bitmap, drawable, color` as image:  
 ```
-        ArrayList<MenuObject> menuObjects = new ArrayList<>();
-        menuObjects.add(new MenuObject(R.drawable.icn_close));
-        menuObjects.add(new MenuObject(R.drawable.icn_1, "Send message"));
-        menuObjects.add(new MenuObject(R.drawable.icn_2, "Like profile"));
-        menuObjects.add(new MenuObject(R.drawable.icn_3, "Add to friends"));
-        menuObjects.add(new MenuObject(R.drawable.icn_4, "Add to favorites"));
-        menuObjects.add(new MenuObject(R.drawable.icn_5, "Block user"));
+    item.setResource(...)  
+    item.setBitmap(...)  
+    item.setDrawable(...)  
+    item.setColor(...)  
+   ```
+You can set image `ScaleType`:  
+```
+    item.setScaleType(ScaleType.FIT_XY)
+```
+You can use any `resource, drawable, color` as background: 
+```
+    item.setBgResource(...)
+    item.setBgDrawable(...)
+    item.setBgColor(...)
+```
+You can use any `color` as text color: 
+```
+    item.setTextColor(...)
+```
+You can set any `color` as divider color: 
+```
+    item.setDividerColor(...)
+```
+Example:  
+```
+    MenuObject close = new MenuObject();
+    close.setResource(R.drawable.icn_close);
+
+    MenuObject send = new MenuObject("Send message");
+    send.setResource(R.drawable.icn_1);
+
+    List<MenuObject> menuObjects = new ArrayList<>();
+    menuObjects.add(close);
+    menuObjects.add(send);
 ```
 
 ####	3. Create `newInstance` of `ContextMenuDialogFragment`, which received menu item size and list of `MenuObject`.
@@ -73,13 +100,29 @@ For better experience menu item size should be equal to `ActionBar` height.
 
  `animationDelay` - delay in millis after fragment opening and before closing, which will make animation smoother on slow devices,
 
-`animationDuration` - duration of every piece of animation in millis. 
+`animationDuration` - duration of every piece of animation in millis,
+
+`fitSystemWindows` - if true, then the default implementation of fitSystemWindows(Rect) will be executed,
+
+`clipToPadding` - true to clip children to the padding of the group, false otherwise.
+
+The last two parameters may be useful if you use _Translucent_ parameters in your theme:
+```
+    <item name="android:windowTranslucentStatus">true</item>
+```
+To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clipToPadding` to false.
 
 ## Compatibility
   
   * Android Honeycomb 3.0+
 
 # Changelog
+
+### Version: 1.0.2
+
+  * Changed `MenuObject` constructors. Image setting is moved to methods
+  * Added styling of `MenuObject` image, background, text color, divider color
+  * Added possibility to interact with translucent Status Bar
 
 ### Version: 1.0.1
 
