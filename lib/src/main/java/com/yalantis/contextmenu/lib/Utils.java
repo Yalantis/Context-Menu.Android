@@ -25,7 +25,7 @@ public class Utils {
         return actionBarSize;
     }
 
-    public static TextView getItemTextView(Context context, MenuObject menuItem, int menuItemSize) {
+    public static TextView getItemTextView(Context context, MenuObject menuItem, int menuItemSize,View.OnClickListener onCLick) {
         TextView itemTextView = new TextView(context);
         RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, menuItemSize);
@@ -34,6 +34,8 @@ public class Utils {
         itemTextView.setText(menuItem.getTitle());
         itemTextView.setPadding(0, 0, (int) context.getResources().getDimension(R.dimen.text_right_padding), 0);
         itemTextView.setGravity(Gravity.CENTER_VERTICAL);
+
+        itemTextView.setOnClickListener(onCLick);
 
         int textColor = menuItem.getTextColor() == 0 ?
                 context.getResources().getColor(android.R.color.white) :
