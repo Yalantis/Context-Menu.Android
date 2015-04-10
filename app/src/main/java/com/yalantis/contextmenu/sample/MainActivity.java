@@ -75,7 +75,6 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
         BitmapDrawable bd = new BitmapDrawable(getResources(),
                 BitmapFactory.decodeResource(getResources(), R.drawable.icn_3));
         addFr.setDrawable(bd);
-        addFr.setMenuTextAppearanceStyle(R.style.TextViewStyle);
 
         MenuObject addFav = new MenuObject("Add to favorites");
         addFav.setResource(R.drawable.icn_4);

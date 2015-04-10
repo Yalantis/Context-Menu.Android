@@ -34,9 +34,24 @@ You can use any `resource, drawable, color` as background:
     item.setBgDrawable(...)
     item.setBgColor(...)
 ```
-You can use any `color` as text color: 
+Now You can easily add text appearance style for menu titles: 
 ```
-    item.setTextColor(...)
+	In your project styles create style for text appearance
+	(For better visual effect extend it from TextView.DefaultStyle):
+	
+	 <style name="TextViewStyle" parent="TextView.DefaultStyle">
+        <item name="android:textStyle">italic|bold</item>
+        <item name="android:textColor">#26D0EB</item>
+    </style>
+
+And set it's id to your MenuObject :	
+    
+        MenuObject addFr = new MenuObject("Add to friends");
+        BitmapDrawable bd = new BitmapDrawable(getResources(),
+                BitmapFactory.decodeResource(getResources(), R.drawable.icn_3));
+        addFr.setDrawable(bd);
+        addFr.setMenuTextAppearanceStyle(R.style.TextViewStyle);
+
 ```
 You can set any `color` as divider color: 
 ```
