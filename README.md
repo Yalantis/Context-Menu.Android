@@ -42,7 +42,7 @@ Now You can easily add text appearance style for menu titles:
 	 <style name="TextViewStyle" parent="TextView.DefaultStyle">
         <item name="android:textStyle">italic|bold</item>
         <item name="android:textColor">#26D0EB</item>
-    </style>
+	 </style>
 
 And set it's id to your MenuObject :	
     
