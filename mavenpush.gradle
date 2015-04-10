@@ -1,6 +1,11 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+def isReleaseBuild() {
+    //return VERSION_NAME.contains("SNAPSHOT") == false
+    return true
+}
+
 def sonatypeRepositoryUrl
 if (isReleaseBuild()) {
     println 'RELEASE BUILD'
@@ -9,7 +14,7 @@ if (isReleaseBuild()) {
 } else {
     println 'DEBUG BUILD'
     sonatypeRepositoryUrl = hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
-            : "https://oss.sonatype.org/content/repositories/snapshots/"
+           : "https://oss.sonatype.org/content/repositories/snapshots/"
 }
 
 def getRepositoryUsername() {
