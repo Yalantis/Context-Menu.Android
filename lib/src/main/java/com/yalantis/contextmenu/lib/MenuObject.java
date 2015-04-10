@@ -2,6 +2,7 @@ package com.yalantis.contextmenu.lib;
 
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -26,38 +27,14 @@ public class MenuObject implements Parcelable {
     // divider
     private int mDividerColor;
 
+    private int mMenuTextAppearenseStyle;
+
     public MenuObject(String title) {
         this.mTitle = title;
     }
 
     public MenuObject() {
         this.mTitle = "";
-    }
-
-    private MenuObject(Parcel in) {
-        mTitle = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mTitle);
-    }
-
-    public static final Parcelable.Creator<MenuObject> CREATOR = new Parcelable.Creator<MenuObject>() {
-        @Override
-        public MenuObject createFromParcel(Parcel in) {
-            return new MenuObject(in);
-        }
-
-        @Override
-        public MenuObject[] newArray(int size) {
-            return new MenuObject[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public String getTitle() {
@@ -104,6 +81,10 @@ public class MenuObject implements Parcelable {
         return mTextColor;
     }
 
+    /**
+     * Use {@link #setMenuTextAppearanceStyle(int)} to set all text style params at one place
+     */
+    @Deprecated
     public void setTextColor(int mTextColor) {
         this.mTextColor = mTextColor;
     }
@@ -152,6 +133,18 @@ public class MenuObject implements Parcelable {
         mBitmap = null;
     }
 
+    public int getMenuTextAppearanceStyle() {
+        return mMenuTextAppearenseStyle;
+    }
+
+    /**
+     * Set style resource id, it will be used for setting text appearance of menu item title.
+     * For better effect your style should extend TextView.DefaultStyle
+     */
+    public void setMenuTextAppearanceStyle(int mMenuTextAppearanceStyle) {
+        this.mMenuTextAppearenseStyle = mMenuTextAppearanceStyle;
+    }
+
     public int getDividerColor() {
         return mDividerColor;
     }
@@ -171,4 +164,51 @@ public class MenuObject implements Parcelable {
     public static Creator<MenuObject> getCreator() {
         return CREATOR;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mTitle);
+        dest.writeParcelable(((BitmapDrawable) this.mBgDrawable).getBitmap(), flags);
+        dest.writeInt(this.mBgColor);
+        dest.writeInt(this.mBgResource);
+        dest.writeParcelable(((BitmapDrawable) this.mDrawable).getBitmap(), flags);
+        dest.writeInt(this.mColor);
+        dest.writeParcelable(this.mBitmap, 0);
+        dest.writeInt(this.mResource);
+        dest.writeInt(this.mScaleType == null ? -1 : this.mScaleType.ordinal());
+        dest.writeInt(this.mTextColor);
+        dest.writeInt(this.mDividerColor);
+        dest.writeInt(this.mMenuTextAppearenseStyle);
+    }
+
+    private MenuObject(Parcel in) {
+        this.mTitle = in.readString();
+        this.mBgDrawable = new BitmapDrawable((Bitmap) in.readParcelable(getClass().getClassLoader()));
+        this.mBgColor = in.readInt();
+        this.mBgResource = in.readInt();
+        this.mDrawable = new BitmapDrawable((Bitmap) in.readParcelable(Drawable.class.getClassLoader()));
+        this.mColor = in.readInt();
+        this.mBitmap = in.readParcelable(Bitmap.class.getClassLoader());
+        this.mResource = in.readInt();
+        int tmpMScaleType = in.readInt();
+        this.mScaleType = tmpMScaleType == -1 ? null : ImageView.ScaleType.values()[tmpMScaleType];
+        this.mTextColor = in.readInt();
+        this.mDividerColor = in.readInt();
+        this.mMenuTextAppearenseStyle = in.readInt();
+    }
+
+    public static final Creator<MenuObject> CREATOR = new Creator<MenuObject>() {
+        public MenuObject createFromParcel(Parcel source) {
+            return new MenuObject(source);
+        }
+
+        public MenuObject[] newArray(int size) {
+            return new MenuObject[size];
+        }
+    };
 }
