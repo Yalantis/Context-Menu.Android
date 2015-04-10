@@ -16,4 +16,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="TextView" />
+
+    <style name="TextView.DefaultStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/menu_text_size</item>
+    </style>
 </resources>
