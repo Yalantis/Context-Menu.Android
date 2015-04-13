@@ -25,7 +25,7 @@ public class MenuObject implements Parcelable {
     // text
     private int mTextColor;
     // divider
-    private int mDividerColor;
+    private int mDividerColor = Integer.MAX_VALUE;
 
     private int mMenuTextAppearenseStyle;
 

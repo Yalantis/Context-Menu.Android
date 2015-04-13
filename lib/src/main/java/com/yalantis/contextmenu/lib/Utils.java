@@ -77,7 +77,7 @@ public class Utils {
         viewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         dividerView.setLayoutParams(viewLayoutParams);
         dividerView.setClickable(true);
-        int dividerColor = menuItem.getDividerColor() == 0 ?
+        int dividerColor = menuItem.getDividerColor() == Integer.MAX_VALUE ?
                 context.getResources().getColor(R.color.divider_color) :
                 menuItem.getDividerColor();
         dividerView.setBackgroundColor(dividerColor);
