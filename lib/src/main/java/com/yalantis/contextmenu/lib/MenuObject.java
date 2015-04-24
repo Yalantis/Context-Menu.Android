@@ -173,10 +173,12 @@ public class MenuObject implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.mTitle);
-        dest.writeParcelable(((BitmapDrawable) this.mBgDrawable).getBitmap(), flags);
+        dest.writeParcelable(mBgDrawable == null ? null :
+                ((BitmapDrawable) this.mBgDrawable).getBitmap(), flags);
         dest.writeInt(this.mBgColor);
         dest.writeInt(this.mBgResource);
-        dest.writeParcelable(((BitmapDrawable) this.mDrawable).getBitmap(), flags);
+        dest.writeParcelable(mDrawable == null ? null :
+                ((BitmapDrawable) this.mDrawable).getBitmap(), flags);
         dest.writeInt(this.mColor);
         dest.writeParcelable(this.mBitmap, 0);
         dest.writeInt(this.mResource);
@@ -188,10 +190,16 @@ public class MenuObject implements Parcelable {
 
     private MenuObject(Parcel in) {
         this.mTitle = in.readString();
-        this.mBgDrawable = new BitmapDrawable((Bitmap) in.readParcelable(getClass().getClassLoader()));
+        Bitmap bitmapBgDrawable = in.readParcelable(Bitmap.class.getClassLoader());
+        if (bitmapBgDrawable != null) {
+            this.mBgDrawable = new BitmapDrawable(bitmapBgDrawable);
+        }
         this.mBgColor = in.readInt();
         this.mBgResource = in.readInt();
-        this.mDrawable = new BitmapDrawable((Bitmap) in.readParcelable(Drawable.class.getClassLoader()));
+        Bitmap bitmapDrawable = in.readParcelable(Bitmap.class.getClassLoader());
+        if (bitmapDrawable != null) {
+            this.mDrawable = new BitmapDrawable(bitmapDrawable);
+        }
         this.mColor = in.readInt();
         this.mBitmap = in.readParcelable(Bitmap.class.getClassLoader());
         this.mResource = in.readInt();
