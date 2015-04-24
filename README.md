@@ -15,7 +15,7 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 *For a working implementation, have a look at the ```app``` module*
 
 #### 	1. Clone repository and add sources into your project or use Gradle: 
-``` compile 'com.yalantis:contextmenu:1.0.3' ```  
+``` compile 'com.yalantis:contextmenu:1.0.4' ```  
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
 You can use any `resource, bitmap, drawable, color` as image:  
 ```
@@ -70,10 +70,15 @@ Example:
     menuObjects.add(send);
 ```
 
-####	3. Create `newInstance` of `ContextMenuDialogFragment`, which received menu item size and list of `MenuObject`.
+####	3. Create `newInstance` of `ContextMenuDialogFragment`, which received `MenuParams` object.
 
 ```
- mMenuDialogFragment = ContextMenuDialogFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), menuObjects );
+    MenuParams menuParams = new MenuParams();
+    menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+    menuParams.setMenuObjects(getMenuObjects());
+    menuParams.setClosableOutside(true);
+    // set other settings to meet your need
+    mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
 ```
 
 ####	4. Set menu with button, which will open `ContextMenuDialogFragment`.
@@ -111,15 +116,19 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
 ## Customization: 
 For better experience menu item size should be equal to `ActionBar` height.
 
-`newInstance` of `ContextMenuDialogFragment` can receive:
+`newInstance` of `ContextMenuDialogFragment` receives `MenuParams` object that has the fields:
 
- `animationDelay` - delay in millis after fragment opening and before closing, which will make animation smoother on slow devices,
+`mMenuObjects` - list of MenuObject objects,
 
-`animationDuration` - duration of every piece of animation in millis,
+`mAnimationDelay` - delay in millis after fragment opening and before closing, which will make animation smoother on slow devices,
 
-`fitSystemWindows` - if true, then the default implementation of fitSystemWindows(Rect) will be executed,
+`nAnimationDuration` - duration of every piece of animation in millis,
 
-`clipToPadding` - true to clip children to the padding of the group, false otherwise.
+`isClosableOutside` - if menu can be closed on touch to non-button area,
+
+`isFitSystemWindows` - if true, then the default implementation of fitSystemWindows(Rect) will be executed,
+
+`isClipToPadding` - true to clip children to the padding of the group, false otherwise.
 
 The last two parameters may be useful if you use _Translucent_ parameters in your theme:
 ```
@@ -132,6 +141,11 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
   * Android Honeycomb 3.0+
 
 # Changelog
+
+### Version: 1.0.4
+
+  * Old `ContextMenuDialogFragment` `newInstance` methods are deprecated. Use new universal one that received `MenuParams`.
+  * Added possibility to dismiss menu by clicking on non-button area. See `MenuParams.setClosableOutside(boolean)`.
 
 ### Version: 1.0.3
 
