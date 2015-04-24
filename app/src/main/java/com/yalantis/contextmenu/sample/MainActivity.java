@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.yalantis.contextmenu.R;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
@@ -38,8 +39,16 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         initToolbar();
-        mMenuDialogFragment = ContextMenuDialogFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), getMenuObjects());
+        initMenuFragment();
         addFragment(new MainFragment(), true, R.id.container);
+    }
+
+    private void initMenuFragment() {
+        MenuParams menuParams = new MenuParams();
+        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+        menuParams.setMenuObjects(getMenuObjects());
+        menuParams.setClosableOutside(false);
+        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
     }
 
     private List<MenuObject> getMenuObjects() {
@@ -143,10 +152,10 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
 
     @Override
     public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() == 1) {
+        if (mMenuDialogFragment != null && mMenuDialogFragment.isAdded()) {
+            mMenuDialogFragment.dismiss();
+        } else{
             finish();
-        } else {
-            super.onBackPressed();
         }
     }
 
