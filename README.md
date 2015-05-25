@@ -1,9 +1,8 @@
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Context--Menu.Android-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1387)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Context--Menu.Android-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1387) [![Yalantis](https://github.com/Yalantis/Context-Menu.Android/blob/master/badge.png)](http://yalantis.com/?utm_source=github)
 
 # ContextMenu 
 
 #### You can easily add awesome animated context menu to  your app. 
-#### Made in [![Yalantis](https://github.com/Yalantis/Context-Menu.Android/blob/master/badge.png)](http://yalantis.com/?utm_source=github)
 
 Check this [project on dribbble] (https://dribbble.com/shots/1785274-Menu-Animation-for-Additional-Functions?list=users&offset=17)
 
