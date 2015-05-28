@@ -100,7 +100,11 @@ public class Utils {
         if (menuItem.getBgColor() != 0) {
             imageWrapper.setBackgroundColor(menuItem.getBgColor());
         } else if (menuItem.getBgDrawable() != null) {
-            imageWrapper.setBackground(menuItem.getBgDrawable());
+            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                imageWrapper.setBackgroundDrawable(menuItem.getBgDrawable());
+            } else {
+                imageWrapper.setBackground(menuItem.getBgDrawable());
+            }
         } else if (menuItem.getBgResource() != 0) {
             imageWrapper.setBackgroundResource(menuItem.getBgResource());
         } else {

@@ -1,6 +1,5 @@
 package com.yalantis.contextmenu.lib;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -45,12 +44,10 @@ public class MenuObject implements Parcelable {
         this.mTitle = title;
     }
 
-    @TargetApi(16)
     public Drawable getBgDrawable() {
         return mBgDrawable;
     }
 
-    @TargetApi(16)
     public void setBgDrawable(Drawable mBgDrawable) {
         this.mBgDrawable = mBgDrawable;
         mBgColor = 0;
