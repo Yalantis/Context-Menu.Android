@@ -2,12 +2,10 @@ package com.yalantis.contextmenu.lib;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,23 +82,6 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mItemClickListener = (OnMenuItemClickListener) activity;
-        } catch (ClassCastException e) {
-            Log.e(TAG, activity.getClass().getSimpleName() +
-                    " should implement " + OnMenuItemClickListener.class.getSimpleName());
-        }
-        try {
-            mItemLongClickListener = (OnMenuItemLongClickListener) activity;
-        } catch (ClassCastException e) {
-            Log.e(TAG, activity.getClass().getSimpleName() +
-                    " should implement " + OnMenuItemLongClickListener.class.getSimpleName());
-        }
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_FRAME, R.style.MenuFragmentStyle);
@@ -130,7 +111,9 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
             rootView.findViewById(R.id.root).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().onBackPressed();
+                    if (isAdded()) {
+                        dismiss();
+                    }
                 }
             });
         }
@@ -157,6 +140,14 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
                 dismiss();
             }
         }, mMenuParams.getAnimationDelay());
+    }
+
+    public void setItemLongClickListener(OnMenuItemLongClickListener itemLongClickListener) {
+        this.mItemLongClickListener = itemLongClickListener;
+    }
+
+    public void setItemClickListener(OnMenuItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
     }
 
     /**

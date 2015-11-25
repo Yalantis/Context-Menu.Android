@@ -4,11 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +26,10 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity implements OnMenuItemClickListener,
-        OnMenuItemLongClickListener{
+public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener{
 
     private FragmentManager fragmentManager;
-    private DialogFragment mMenuDialogFragment;
+    private ContextMenuDialogFragment mMenuDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +47,8 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
         menuParams.setMenuObjects(getMenuObjects());
         menuParams.setClosableOutside(false);
         mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+        mMenuDialogFragment.setItemClickListener(this);
+        mMenuDialogFragment.setItemLongClickListener(this);
     }
 
     private List<MenuObject> getMenuObjects() {
