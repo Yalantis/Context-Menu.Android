@@ -130,7 +130,9 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
             rootView.findViewById(R.id.root).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().onBackPressed();
+                    if (isAdded()) {
+                        dismiss();
+                    }
                 }
             });
         }
