@@ -285,6 +285,8 @@ public class MenuAdapter {
 
     public void setAnimationDuration(int durationMillis) {
         mAnimationDurationMilis = durationMillis;
+        mAnimatorSetShowMenu.setDuration(mAnimationDurationMilis);
+        mAnimatorSetHideMenu.setDuration(mAnimationDurationMilis);
     }
 
     private Animator.AnimatorListener mCloseOpenAnimatorListener = new Animator.AnimatorListener() {
