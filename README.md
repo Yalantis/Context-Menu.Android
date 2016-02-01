@@ -15,7 +15,7 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 *For a working implementation, have a look at the ```app``` module*
 
 #### 	1. Clone repository and add sources into your project or use Gradle: 
-``` compile 'com.yalantis:contextmenu:1.0.4' ```  
+``` compile 'com.yalantis:contextmenu:1.0.6' ```  
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
 You can use any `resource, bitmap, drawable, color` as image:  
 ```
@@ -111,6 +111,8 @@ public class MainActivity extends ActionBarActivity implements OnMenuItemClickLi
     public void onMenuItemClick(View clickedView, int position) {
          //Do something here
     }
+…
+    mMenuDialogFragment.setItemClickListener(this);
 ```
 
 ## Customization: 
@@ -142,6 +144,17 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
 
 # Changelog
 
+### Version: 1.0.6
+
+  * com.android.tools.build:gradle:1.5.0
+  * Support libs and sdk updated to 23 
+
+### Version: 1.0.5
+
+  * Fixed `setClosableOutside` [issue](https://github.com/Yalantis/Context-Menu.Android/issues/25).
+  * Fixed `setAnimationDuration` doesn´t work for open event [issue](https://github.com/Yalantis/Context-Menu.Android/issues/22).
+  * Fixed menu item listener setting mechanism. It can be not activity but any class that implements listeners now. [Issue](https://github.com/Yalantis/Context-Menu.Android/issues/24). Attention! You have to set listeners to the context fragment manually. Check block 5 in the `Usage`.
+
 ### Version: 1.0.4
 
   * Old `ContextMenuDialogFragment` `newInstance` methods are deprecated. Use new universal one that received `MenuParams`.
@@ -172,6 +185,12 @@ com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener.onMenuItemClick(
 ### Version: 1.0
 
   * Pilot version
+
+#### Let us know!
+
+We’d be really happy if you sent us links to your projects where you use our component. Just send an email to github@yalantis.com And do let us know if you have any questions or suggestion regarding the animation. 
+
+P.S. We’re going to publish more awesomeness wrapped in code and a tutorial on how to make UI for Android (iOS) better than better. Stay tuned!
 
 ## License
 
