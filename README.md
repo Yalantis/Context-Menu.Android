@@ -142,6 +142,11 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
 
 # Changelog
 
+### Version: 1.0.6
+
+  * com.android.tools.build:gradle:1.5.0
+  * Support libs and sdk updated to 23 
+
 ### Version: 1.0.4
 
   * Old `ContextMenuDialogFragment` `newInstance` methods are deprecated. Use new universal one that received `MenuParams`.
