@@ -200,7 +200,7 @@ public class MenuAdapter {
     private void viewClicked(View v) {
         if (mIsMenuOpen && !mIsAnimationRun) {
             mClickedView = v;
-            int childIndex = ((ViewGroup)v.getParent()).indexOfChild(v);
+            int childIndex = ((ViewGroup) v.getParent()).indexOfChild(v);
             if (childIndex == -1) {
                 return;
             }

@@ -26,7 +26,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener{
+public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener {
 
     private FragmentManager fragmentManager;
     private ContextMenuDialogFragment mMenuDialogFragment;
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
         setSupportActionBar(mToolbar);
-        if(getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     public void onBackPressed() {
         if (mMenuDialogFragment != null && mMenuDialogFragment.isAdded()) {
             mMenuDialogFragment.dismiss();
-        } else{
+        } else {
             finish();
         }
     }

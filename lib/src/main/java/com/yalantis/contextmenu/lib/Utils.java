@@ -33,7 +33,6 @@ public class Utils {
         itemTextView.setLayoutParams(textLayoutParams);
         itemTextView.setOnClickListener(onCLick);
         itemTextView.setOnLongClickListener(onLongClick);
-//        itemTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.menu_text_size));
         itemTextView.setText(menuItem.getTitle());
         itemTextView.setPadding(0, 0, (int) context.getResources().getDimension(R.dimen.text_right_padding), 0);
         itemTextView.setGravity(Gravity.CENTER_VERTICAL);
@@ -42,15 +41,17 @@ public class Utils {
                 menuItem.getTextColor();
 
         itemTextView.setTextColor(ContextCompat.getColor(context, textColor));
+
+        int styleResId = menuItem.getMenuTextAppearanceStyle() > 0
+                ? menuItem.getMenuTextAppearanceStyle()
+                : R.style.TextView_DefaultStyle;
+
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
-            itemTextView.setTextAppearance(context, menuItem.getMenuTextAppearanceStyle() > 0
-                    ? menuItem.getMenuTextAppearanceStyle()
-                    : R.style.TextView_DefaultStyle);
+            itemTextView.setTextAppearance(context, styleResId);
         } else {
-            itemTextView.setTextAppearance(menuItem.getMenuTextAppearanceStyle() > 0
-                    ? menuItem.getMenuTextAppearanceStyle()
-                    : R.style.TextView_DefaultStyle);
+            itemTextView.setTextAppearance(styleResId);
         }
+
         return itemTextView;
     }
 
