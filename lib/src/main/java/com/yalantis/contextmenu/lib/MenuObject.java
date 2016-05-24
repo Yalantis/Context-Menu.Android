@@ -141,7 +141,7 @@ public class MenuObject implements Parcelable {
      * Set style resource id, it will be used for setting text appearance of menu item title.
      * For better effect your style should extend TextView.DefaultStyle
      */
-    public void setMenuTextAppearanceStyle(int mMenuTextAppearanceStyle) {
+    public void setMenuTextAppearanceStyle(@StyleRes int mMenuTextAppearanceStyle) {
         this.mMenuTextAppearenseStyle = mMenuTextAppearanceStyle;
     }
 
