@@ -19,5 +19,5 @@ android {
 }
 
 dependencies {
-    compile project(':lib')
+    compile project(":lib")
 }

@@ -104,9 +104,11 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         mToolbar.setNavigationIcon(R.drawable.btn_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

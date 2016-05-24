@@ -2,6 +2,7 @@ package com.yalantis.contextmenu.lib;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.nineoldandroids.animation.Animator;
@@ -69,7 +70,8 @@ public class MenuAdapter {
     private void setViews() {
         for (int i = 0; i < mMenuObjects.size(); i++) {
             MenuObject menuObject = mMenuObjects.get(i);
-            mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize));
+            mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize,
+                    clickItem, longClickItem));
             mMenuWrapper.addView(Utils.getImageWrapper(mContext, menuObject, mMenuItemSize,
                     clickItem, longClickItem, i != mMenuObjects.size() - 1));
         }
@@ -198,7 +200,7 @@ public class MenuAdapter {
     private void viewClicked(View v) {
         if (mIsMenuOpen && !mIsAnimationRun) {
             mClickedView = v;
-            int childIndex = mMenuWrapper.indexOfChild(v);
+            int childIndex = ((ViewGroup)v.getParent()).indexOfChild(v);
             if (childIndex == -1) {
                 return;
             }
