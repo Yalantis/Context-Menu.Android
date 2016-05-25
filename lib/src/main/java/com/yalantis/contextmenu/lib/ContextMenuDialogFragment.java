@@ -156,7 +156,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
     @Override
     public void onClick(View v) {
         if (mItemClickListener != null) {
-            mItemClickListener.onMenuItemClick(v, mWrapperButtons.indexOfChild(v));
+            mItemClickListener.onMenuItemClick(v, ((ViewGroup) v.getParent()).indexOfChild(v));
         }
         close();
     }
@@ -164,7 +164,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
     @Override
     public void onLongClick(View v) {
         if (mItemLongClickListener != null) {
-            mItemLongClickListener.onMenuItemLongClick(v, mWrapperButtons.indexOfChild(v));
+            mItemLongClickListener.onMenuItemLongClick(v, ((ViewGroup) v.getParent()).indexOfChild(v));
         }
         close();
     }

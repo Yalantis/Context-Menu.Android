@@ -5,6 +5,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.ColorRes;
+import android.support.annotation.StyleRes;
 import android.widget.ImageView;
 
 public class MenuObject implements Parcelable {
@@ -82,7 +84,7 @@ public class MenuObject implements Parcelable {
      * Use {@link #setMenuTextAppearanceStyle(int)} to set all text style params at one place
      */
     @Deprecated
-    public void setTextColor(int mTextColor) {
+    public void setTextColor(@ColorRes int mTextColor) {
         this.mTextColor = mTextColor;
     }
 
@@ -130,6 +132,7 @@ public class MenuObject implements Parcelable {
         mBitmap = null;
     }
 
+    @StyleRes
     public int getMenuTextAppearanceStyle() {
         return mMenuTextAppearenseStyle;
     }
@@ -138,15 +141,16 @@ public class MenuObject implements Parcelable {
      * Set style resource id, it will be used for setting text appearance of menu item title.
      * For better effect your style should extend TextView.DefaultStyle
      */
-    public void setMenuTextAppearanceStyle(int mMenuTextAppearanceStyle) {
+    public void setMenuTextAppearanceStyle(@StyleRes int mMenuTextAppearanceStyle) {
         this.mMenuTextAppearenseStyle = mMenuTextAppearanceStyle;
     }
 
+    @ColorRes
     public int getDividerColor() {
         return mDividerColor;
     }
 
-    public void setDividerColor(int mDividerColor) {
+    public void setDividerColor(@ColorRes int mDividerColor) {
         this.mDividerColor = mDividerColor;
     }
 

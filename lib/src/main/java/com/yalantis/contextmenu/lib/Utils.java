@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,22 +25,33 @@ public class Utils {
         return actionBarSize;
     }
 
-    public static TextView getItemTextView(Context context, MenuObject menuItem, int menuItemSize) {
+    public static TextView getItemTextView(Context context, MenuObject menuItem, int menuItemSize,
+                                           View.OnClickListener onCLick, View.OnLongClickListener onLongClick) {
         TextView itemTextView = new TextView(context);
         RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, menuItemSize);
         itemTextView.setLayoutParams(textLayoutParams);
-//        itemTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.menu_text_size));
+        itemTextView.setOnClickListener(onCLick);
+        itemTextView.setOnLongClickListener(onLongClick);
         itemTextView.setText(menuItem.getTitle());
         itemTextView.setPadding(0, 0, (int) context.getResources().getDimension(R.dimen.text_right_padding), 0);
         itemTextView.setGravity(Gravity.CENTER_VERTICAL);
         int textColor = menuItem.getTextColor() == 0 ?
-                context.getResources().getColor(android.R.color.white) :
+                android.R.color.white :
                 menuItem.getTextColor();
-        itemTextView.setTextColor(textColor);
-        itemTextView.setTextAppearance(context, menuItem.getMenuTextAppearanceStyle() > 0
+
+        itemTextView.setTextColor(ContextCompat.getColor(context, textColor));
+
+        int styleResId = menuItem.getMenuTextAppearanceStyle() > 0
                 ? menuItem.getMenuTextAppearanceStyle()
-                : R.style.TextView_DefaultStyle);
+                : R.style.TextView_DefaultStyle;
+
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+            itemTextView.setTextAppearance(context, styleResId);
+        } else {
+            itemTextView.setTextAppearance(styleResId);
+        }
+
         return itemTextView;
     }
 
@@ -78,9 +90,9 @@ public class Utils {
         dividerView.setLayoutParams(viewLayoutParams);
         dividerView.setClickable(true);
         int dividerColor = menuItem.getDividerColor() == Integer.MAX_VALUE ?
-                context.getResources().getColor(R.color.divider_color) :
+                R.color.divider_color :
                 menuItem.getDividerColor();
-        dividerView.setBackgroundColor(dividerColor);
+        dividerView.setBackgroundColor(ContextCompat.getColor(context, dividerColor));
         return dividerView;
     }
 
