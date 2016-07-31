@@ -6,15 +6,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.widget.ImageView;
 
 public class MenuObject implements Parcelable {
 
+    @IdRes private int mid;
+    private int mTitleResource;
     private String mTitle;
     // bg
     private Drawable mBgDrawable;
-    private int mBgColor;
+    @ColorRes private int mBgColor;
     private int mBgResource;
     // image
     private Drawable mDrawable;
@@ -26,9 +30,15 @@ public class MenuObject implements Parcelable {
     // text
     private int mTextColor;
     // divider
+    @ColorRes
     private int mDividerColor = Integer.MAX_VALUE;
 
-    private int mMenuTextAppearenseStyle;
+    private int mMenuTextAppearanceStyle;
+
+    public MenuObject(@StringRes int id) {
+        this.mTitleResource = id;
+        this.mTitle = "";
+    }
 
     public MenuObject(String title) {
         this.mTitle = title;
@@ -36,6 +46,22 @@ public class MenuObject implements Parcelable {
 
     public MenuObject() {
         this.mTitle = "";
+    }
+
+    public int getId() {
+        return mid;
+    }
+
+    public void setId(int mid) {
+        this.mid = mid;
+    }
+
+    public int getTitleId() {
+        return mTitleResource;
+    }
+
+    public void setTitleId(int titleResource) {
+        mTitleResource = titleResource;
     }
 
     public String getTitle() {
@@ -56,12 +82,13 @@ public class MenuObject implements Parcelable {
         mBgResource = 0;
     }
 
+    @ColorRes
     public int getBgColor() {
         return mBgColor;
     }
 
-    public void setBgColor(int mBgColor) {
-        this.mBgColor = mBgColor;
+    public void setBgColor(@ColorRes int bgColor) {
+        this.mBgColor = bgColor;
         mBgResource = 0;
         mBgDrawable = null;
     }
@@ -134,7 +161,7 @@ public class MenuObject implements Parcelable {
 
     @StyleRes
     public int getMenuTextAppearanceStyle() {
-        return mMenuTextAppearenseStyle;
+        return mMenuTextAppearanceStyle;
     }
 
     /**
@@ -142,7 +169,7 @@ public class MenuObject implements Parcelable {
      * For better effect your style should extend TextView.DefaultStyle
      */
     public void setMenuTextAppearanceStyle(@StyleRes int mMenuTextAppearanceStyle) {
-        this.mMenuTextAppearenseStyle = mMenuTextAppearanceStyle;
+        this.mMenuTextAppearanceStyle = mMenuTextAppearanceStyle;
     }
 
     @ColorRes
@@ -173,6 +200,8 @@ public class MenuObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.mid);
+        dest.writeInt(this.mTitleResource);
         dest.writeString(this.mTitle);
         dest.writeParcelable(mBgDrawable == null ? null :
                 ((BitmapDrawable) this.mBgDrawable).getBitmap(), flags);
@@ -186,10 +215,12 @@ public class MenuObject implements Parcelable {
         dest.writeInt(this.mScaleType == null ? -1 : this.mScaleType.ordinal());
         dest.writeInt(this.mTextColor);
         dest.writeInt(this.mDividerColor);
-        dest.writeInt(this.mMenuTextAppearenseStyle);
+        dest.writeInt(this.mMenuTextAppearanceStyle);
     }
 
     private MenuObject(Parcel in) {
+        this.mid = in.readInt();
+        this.mTitleResource = in.readInt();
         this.mTitle = in.readString();
         Bitmap bitmapBgDrawable = in.readParcelable(Bitmap.class.getClassLoader());
         if (bitmapBgDrawable != null) {
@@ -208,7 +239,7 @@ public class MenuObject implements Parcelable {
         this.mScaleType = tmpMScaleType == -1 ? null : ImageView.ScaleType.values()[tmpMScaleType];
         this.mTextColor = in.readInt();
         this.mDividerColor = in.readInt();
-        this.mMenuTextAppearenseStyle = in.readInt();
+        this.mMenuTextAppearanceStyle = in.readInt();
     }
 
     public static final Creator<MenuObject> CREATOR = new Creator<MenuObject>() {
