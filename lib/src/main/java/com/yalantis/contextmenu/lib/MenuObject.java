@@ -14,7 +14,7 @@ import android.widget.ImageView;
 public class MenuObject implements Parcelable {
 
     @IdRes private int mid;
-    private int mTitleResource;
+    @StringRes private int mTitleRes;
     private String mTitle;
     // bg
     private Drawable mBgDrawable;
@@ -36,7 +36,7 @@ public class MenuObject implements Parcelable {
     private int mMenuTextAppearanceStyle;
 
     public MenuObject(@StringRes int id) {
-        this.mTitleResource = id;
+        this.mTitleRes = id;
         this.mTitle = "";
     }
 
@@ -48,20 +48,22 @@ public class MenuObject implements Parcelable {
         this.mTitle = "";
     }
 
+    @IdRes
     public int getId() {
         return mid;
     }
 
-    public void setId(int mid) {
+    public void setId(@IdRes int mid) {
         this.mid = mid;
     }
 
-    public int getTitleId() {
-        return mTitleResource;
+    @StringRes
+    public int getTitleRes() {
+        return mTitleRes;
     }
 
-    public void setTitleId(int titleResource) {
-        mTitleResource = titleResource;
+    public void setTitleRes(@StringRes int titleResource) {
+        mTitleRes = titleResource;
     }
 
     public String getTitle() {
@@ -201,7 +203,7 @@ public class MenuObject implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.mid);
-        dest.writeInt(this.mTitleResource);
+        dest.writeInt(this.mTitleRes);
         dest.writeString(this.mTitle);
         dest.writeParcelable(mBgDrawable == null ? null :
                 ((BitmapDrawable) this.mBgDrawable).getBitmap(), flags);
@@ -220,7 +222,7 @@ public class MenuObject implements Parcelable {
 
     private MenuObject(Parcel in) {
         this.mid = in.readInt();
-        this.mTitleResource = in.readInt();
+        this.mTitleRes = in.readInt();
         this.mTitle = in.readString();
         Bitmap bitmapBgDrawable = in.readParcelable(Bitmap.class.getClassLoader());
         if (bitmapBgDrawable != null) {

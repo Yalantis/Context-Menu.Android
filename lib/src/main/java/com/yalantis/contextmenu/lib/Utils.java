@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +33,8 @@ public class Utils {
         itemTextView.setLayoutParams(textLayoutParams);
         itemTextView.setPadding(0, 0, (int) context.getResources().getDimension(R.dimen.text_right_padding), 0);
         itemTextView.setGravity(Gravity.CENTER_VERTICAL);
-        if (menuItem.getTitleId() != 0) {
-            itemTextView.setText(context.getString(menuItem.getTitleId()));
+        if (menuItem.getTitleRes() != 0) {
+            itemTextView.setText(context.getString(menuItem.getTitleRes()));
         } else {
             itemTextView.setText(menuItem.getTitle());
         }
@@ -140,7 +139,7 @@ public class Utils {
         } else if (menuItem.getBgResource() != 0) {
             imageWrapper.setBackgroundResource(menuItem.getBgResource());
         } else {
-            imageWrapper.setBackgroundColor(context.getResources().getColor(R.color.menu_item_background));
+            imageWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_item_background));
         }
         return imageWrapper;
     }

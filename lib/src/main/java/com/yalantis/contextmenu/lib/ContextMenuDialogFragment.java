@@ -18,6 +18,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
 import java.util.List;
+
 @SuppressWarnings("unused")
 public class ContextMenuDialogFragment extends DialogFragment implements OnItemClickListener, OnItemLongClickListener {
 
@@ -49,27 +50,27 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
     }
 
     @Deprecated
-    public static ContextMenuDialogFragment newInstance(int actionBarSize, List<MenuObject> menuObjects, int animationDelay, int animationDuration, int hideAnimationDuration) {
+    public static ContextMenuDialogFragment newInstance(int actionBarSize, List<MenuObject> menuObjects, int animationDelay, int animationDuration) {
         MenuParams params = new MenuParams();
         params.setActionBarSize(actionBarSize);
         params.setMenuObjects(menuObjects);
         params.setAnimationDelay(animationDelay);
         params.setShowAnimationDuration(animationDuration);
-        params.setHideAnimationDuration(hideAnimationDuration);
+        params.setHideAnimationDuration(animationDuration);
         return newInstance(params);
     }
 
     @Deprecated
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static ContextMenuDialogFragment newInstance(int actionBarSize, List<MenuObject> menuObjects,
-                                                        int animationDelay, int animationDuration, int hideAnimationDuration,
+                                                        int animationDelay, int animationDuration,
                                                         boolean fitsSystemWindow, boolean clipToPadding) {
         MenuParams params = new MenuParams();
         params.setActionBarSize(actionBarSize);
         params.setMenuObjects(menuObjects);
         params.setAnimationDelay(animationDelay);
         params.setShowAnimationDuration(animationDuration);
-        params.setHideAnimationDuration(hideAnimationDuration);
+        params.setHideAnimationDuration(animationDuration);
         params.setFitsSystemWindow(fitsSystemWindow);
         params.setClipToPadding(clipToPadding);
         return newInstance(params);
