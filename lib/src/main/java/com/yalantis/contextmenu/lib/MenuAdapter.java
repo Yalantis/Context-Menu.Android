@@ -33,14 +33,17 @@ public class MenuAdapter {
     private boolean mIsMenuOpen = false;
     private boolean mIsAnimationRun = false;
     private int mMenuItemSize;
-    private int mAnimationDurationMilis = ANIMATION_DURATION_MILLIS;
+    private int mShowAnimationDurationMillis = ANIMATION_DURATION_MILLIS;
+    private int mHideAnimationDurationMillis = ANIMATION_DURATION_MILLIS;
+    private boolean mIsTextClickable;
 
     public MenuAdapter(Context context, LinearLayout menuWrapper, LinearLayout textWrapper, List<MenuObject> menuObjects,
-                       int actionBarHeight) {
+                       int actionBarHeight, boolean textClickable) {
         this.mContext = context;
         this.mMenuWrapper = menuWrapper;
         this.mTextWrapper = textWrapper;
         this.mMenuObjects = menuObjects;
+        this.mIsTextClickable = textClickable;
 
 /**
  /       Make menu looks better by setting toolbar height as itemSize.
@@ -70,8 +73,13 @@ public class MenuAdapter {
     private void setViews() {
         for (int i = 0; i < mMenuObjects.size(); i++) {
             MenuObject menuObject = mMenuObjects.get(i);
-            mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize,
-                    clickItem, longClickItem));
+            if (mIsTextClickable) {
+                mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize,
+                        clickItem, longClickItem));
+            } else {
+                mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize));
+            }
+
             mMenuWrapper.addView(Utils.getImageWrapper(mContext, menuObject, mMenuItemSize,
                     clickItem, longClickItem, i != mMenuObjects.size() - 1));
         }
@@ -150,7 +158,10 @@ public class MenuAdapter {
 
         AnimatorSet animatorFullSet = new AnimatorSet();
         animatorFullSet.playTogether(imageCloseAnimatorSet, textCloseAnimatorSet);
-        animatorFullSet.setDuration(mAnimationDurationMilis);
+
+        if (isCloseAnimation) animatorFullSet.setDuration(mHideAnimationDurationMillis);
+        else animatorFullSet.setDuration(mShowAnimationDurationMillis);
+
         animatorFullSet.addListener(mCloseOpenAnimatorListener);
         animatorFullSet.setStartDelay(0);
         animatorFullSet.setInterpolator(new HesitateInterpolator());
@@ -259,7 +270,7 @@ public class MenuAdapter {
 
         AnimatorSet fullAnimatorSet = new AnimatorSet();
         fullAnimatorSet.playTogether(imageFullAnimatorSet, textFullAnimatorSet);
-        fullAnimatorSet.setDuration(mAnimationDurationMilis);
+        fullAnimatorSet.setDuration(mHideAnimationDurationMillis);
         fullAnimatorSet.setInterpolator(new HesitateInterpolator());
         fullAnimatorSet.start();
     }
@@ -285,10 +296,14 @@ public class MenuAdapter {
         mIsMenuOpen = !mIsMenuOpen;
     }
 
-    public void setAnimationDuration(int durationMillis) {
-        mAnimationDurationMilis = durationMillis;
-        mAnimatorSetShowMenu.setDuration(mAnimationDurationMilis);
-        mAnimatorSetHideMenu.setDuration(mAnimationDurationMilis);
+    public void setShowAnimationDuration(int durationMillis) {
+        mShowAnimationDurationMillis = durationMillis;
+        mAnimatorSetShowMenu.setDuration(mShowAnimationDurationMillis);
+    }
+
+    public void setHideAnimationDuration(int durationMillis) {
+        mHideAnimationDurationMillis = durationMillis;
+        mAnimatorSetHideMenu.setDuration(mHideAnimationDurationMillis);
     }
 
     private Animator.AnimatorListener mCloseOpenAnimatorListener = new Animator.AnimatorListener() {
@@ -333,5 +348,4 @@ public class MenuAdapter {
         public void onAnimationRepeat(Animator animation) {
         }
     };
-
 }

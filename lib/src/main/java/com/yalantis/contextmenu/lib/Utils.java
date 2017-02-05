@@ -25,17 +25,20 @@ public class Utils {
         return actionBarSize;
     }
 
-    public static TextView getItemTextView(Context context, MenuObject menuItem, int menuItemSize,
-                                           View.OnClickListener onCLick, View.OnLongClickListener onLongClick) {
+    public static TextView getItemTextView(Context context, MenuObject menuItem, int menuItemSize) {
         TextView itemTextView = new TextView(context);
         RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, menuItemSize);
+
         itemTextView.setLayoutParams(textLayoutParams);
-        itemTextView.setOnClickListener(onCLick);
-        itemTextView.setOnLongClickListener(onLongClick);
-        itemTextView.setText(menuItem.getTitle());
         itemTextView.setPadding(0, 0, (int) context.getResources().getDimension(R.dimen.text_right_padding), 0);
         itemTextView.setGravity(Gravity.CENTER_VERTICAL);
+        if (menuItem.getTitleRes() != 0) {
+            itemTextView.setText(context.getString(menuItem.getTitleRes()));
+        } else {
+            itemTextView.setText(menuItem.getTitle());
+        }
+
         int textColor = menuItem.getTextColor() == 0 ?
                 android.R.color.white :
                 menuItem.getTextColor();
@@ -51,6 +54,18 @@ public class Utils {
         } else {
             itemTextView.setTextAppearance(styleResId);
         }
+
+        return itemTextView;
+    }
+
+    public static TextView getItemTextView(Context context, MenuObject menuItem, int menuItemSize,
+                                           View.OnClickListener onCLick, View.OnLongClickListener onLongClick) {
+
+        TextView itemTextView = getItemTextView(context, menuItem, menuItemSize);
+
+        if (menuItem.getId() != 0) itemTextView.setId(menuItem.getId());
+        itemTextView.setOnClickListener(onCLick);
+        itemTextView.setOnLongClickListener(onLongClick);
 
         return itemTextView;
     }
@@ -83,6 +98,7 @@ public class Utils {
         return imageView;
     }
 
+    @SuppressWarnings("ResourceType")
     public static View getDivider(Context context, MenuObject menuItem) {
         View dividerView = new View(context);
         RelativeLayout.LayoutParams viewLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.divider_height));
@@ -105,12 +121,15 @@ public class Utils {
         imageWrapper.setOnClickListener(onCLick);
         imageWrapper.setOnLongClickListener(onLongClick);
         imageWrapper.addView(Utils.getItemImageButton(context, menuItem));
+
+        if (menuItem.getId() != 0) imageWrapper.setId(menuItem.getId());
+
         if (showDivider) {
             imageWrapper.addView(getDivider(context, menuItem));
         }
 
         if (menuItem.getBgColor() != 0) {
-            imageWrapper.setBackgroundColor(menuItem.getBgColor());
+            imageWrapper.setBackgroundColor(ContextCompat.getColor(context, menuItem.getBgColor()));
         } else if (menuItem.getBgDrawable() != null) {
             if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 imageWrapper.setBackgroundDrawable(menuItem.getBgDrawable());
@@ -120,9 +139,8 @@ public class Utils {
         } else if (menuItem.getBgResource() != 0) {
             imageWrapper.setBackgroundResource(menuItem.getBgResource());
         } else {
-            imageWrapper.setBackgroundColor(context.getResources().getColor(R.color.menu_item_background));
+            imageWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_item_background));
         }
         return imageWrapper;
     }
-
 }

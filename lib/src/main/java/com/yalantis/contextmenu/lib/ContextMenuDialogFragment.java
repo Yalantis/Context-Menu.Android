@@ -19,6 +19,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class ContextMenuDialogFragment extends DialogFragment implements OnItemClickListener, OnItemLongClickListener {
 
     public static final String TAG = ContextMenuDialogFragment.class.getSimpleName();
@@ -54,7 +55,8 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
         params.setActionBarSize(actionBarSize);
         params.setMenuObjects(menuObjects);
         params.setAnimationDelay(animationDelay);
-        params.setAnimationDuration(animationDuration);
+        params.setShowAnimationDuration(animationDuration);
+        params.setHideAnimationDuration(animationDuration);
         return newInstance(params);
     }
 
@@ -67,7 +69,8 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
         params.setActionBarSize(actionBarSize);
         params.setMenuObjects(menuObjects);
         params.setAnimationDelay(animationDelay);
-        params.setAnimationDuration(animationDuration);
+        params.setShowAnimationDuration(animationDuration);
+        params.setHideAnimationDuration(animationDuration);
         params.setFitsSystemWindow(fitsSystemWindow);
         params.setClipToPadding(clipToPadding);
         return newInstance(params);
@@ -127,10 +130,11 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
 
     private void initDropDownMenuAdapter() {
         mDropDownMenuAdapter = new MenuAdapter(getActivity(), mWrapperButtons, mWrapperText,
-                mMenuParams.getMenuObjects(), mMenuParams.getActionBarSize());
+                mMenuParams.getMenuObjects(), mMenuParams.getActionBarSize(), mMenuParams.isTextClickable());
         mDropDownMenuAdapter.setOnItemClickListener(this);
         mDropDownMenuAdapter.setOnItemLongClickListener(this);
-        mDropDownMenuAdapter.setAnimationDuration(mMenuParams.getAnimationDuration());
+        mDropDownMenuAdapter.setShowAnimationDuration(mMenuParams.getShowAnimationDuration());
+        mDropDownMenuAdapter.setHideAnimationDuration(mMenuParams.getHideAnimationDuration());
     }
 
     private void close() {
