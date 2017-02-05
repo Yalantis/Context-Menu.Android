@@ -72,24 +72,30 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
         MenuObject close = new MenuObject();
         close.setResource(R.drawable.icn_close);
+        close.setBgDrawable(getApplicationContext().getResources().getDrawable(R.drawable.touchable_background_white, null));
 
         MenuObject send = new MenuObject("Send message");
         send.setResource(R.drawable.icn_1);
+        send.setBgDrawable(getApplicationContext().getResources().getDrawable(R.drawable.touchable_background_white, null));
 
         MenuObject like = new MenuObject("Like profile");
         Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.icn_2);
         like.setBitmap(b);
+        like.setBgDrawable(getApplicationContext().getResources().getDrawable(R.drawable.touchable_background_white, null));
 
         MenuObject addFr = new MenuObject("Add to friends");
         BitmapDrawable bd = new BitmapDrawable(getResources(),
                 BitmapFactory.decodeResource(getResources(), R.drawable.icn_3));
         addFr.setDrawable(bd);
+        addFr.setBgDrawable(getApplicationContext().getResources().getDrawable(R.drawable.touchable_background_white, null));
 
         MenuObject addFav = new MenuObject("Add to favorites");
         addFav.setResource(R.drawable.icn_4);
+        addFav.setBgDrawable(getApplicationContext().getResources().getDrawable(R.drawable.touchable_background_white, null));
 
         MenuObject block = new MenuObject("Block user");
         block.setResource(R.drawable.icn_5);
+        block.setBgDrawable(getApplicationContext().getResources().getDrawable(R.drawable.touchable_background_white, null));
 
         menuObjects.add(close);
         menuObjects.add(send);

@@ -2,5 +2,7 @@
 <resources>
 
     <color name="text_color">#222222</color>
+    <color name="grey">#AAAAAA</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>
