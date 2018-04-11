@@ -2,6 +2,7 @@ package com.yalantis.contextmenu.lib;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -31,10 +32,12 @@ public class MenuObject implements Parcelable {
     private int mMenuTextAppearenseStyle;
 
     public MenuObject(String title) {
+        this();
         this.mTitle = title;
     }
 
     public MenuObject() {
+        this.mBgColor = -1;
         this.mTitle = "";
     }
 
@@ -50,13 +53,33 @@ public class MenuObject implements Parcelable {
         return mBgDrawable;
     }
 
+    @Deprecated
     public void setBgDrawable(Drawable mBgDrawable) {
         this.mBgDrawable = mBgDrawable;
-        mBgColor = 0;
+        mBgColor = -1;
         mBgResource = 0;
     }
 
+    private void setBgDrawableInternal(Drawable mBgDrawable) {
+        this.mBgDrawable = mBgDrawable;
+        mBgColor = -1;
+        mBgResource = 0;
+    }
+
+    public void setBgDrawable(ColorDrawable mBgDrawable) {
+        setBgDrawableInternal(mBgDrawable);
+    }
+
+    public void setBgDrawable(BitmapDrawable mBgDrawable) {
+        setBgDrawableInternal(mBgDrawable);
+    }
+
     public int getBgColor() {
+        int color = getBgColorInternal();
+        return ( color != -1) ? color : 0;
+    }
+
+    protected int getBgColorInternal() {
         return mBgColor;
     }
 
@@ -72,7 +95,7 @@ public class MenuObject implements Parcelable {
 
     public void setBgResource(int mBgResource) {
         this.mBgResource = mBgResource;
-        mBgColor = 0;
+        mBgColor = -1;
         mBgDrawable = null;
     }
 
@@ -125,7 +148,23 @@ public class MenuObject implements Parcelable {
         return mDrawable;
     }
 
+    @Deprecated
     public void setDrawable(Drawable mDrawable) {
+        this.mDrawable = mDrawable;
+        mColor = 0;
+        mResource = 0;
+        mBitmap = null;
+    }
+
+    public void setDrawable(ColorDrawable mDrawable) {
+        setDrawableInternal(mDrawable);
+    }
+
+    public void setDrawable(BitmapDrawable mDrawable) {
+        setDrawableInternal(mDrawable);
+    }
+
+    private void setDrawableInternal(Drawable mDrawable) {
         this.mDrawable = mDrawable;
         mColor = 0;
         mResource = 0;
@@ -173,9 +212,14 @@ public class MenuObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+
         dest.writeString(this.mTitle);
-        dest.writeParcelable(mBgDrawable == null ? null :
-                ((BitmapDrawable) this.mBgDrawable).getBitmap(), flags);
+        if (mBgDrawable instanceof BitmapDrawable || mBgDrawable == null) {
+            dest.writeParcelable(mBgDrawable == null ? null :
+                    ((BitmapDrawable) this.mBgDrawable).getBitmap(), flags);
+        } else if (mBgDrawable instanceof ColorDrawable) {
+            dest.writeInt(((ColorDrawable) mBgDrawable).getColor());
+        }
         dest.writeInt(this.mBgColor);
         dest.writeInt(this.mBgResource);
         dest.writeParcelable(mDrawable == null ? null :
@@ -194,6 +238,8 @@ public class MenuObject implements Parcelable {
         Bitmap bitmapBgDrawable = in.readParcelable(Bitmap.class.getClassLoader());
         if (bitmapBgDrawable != null) {
             this.mBgDrawable = new BitmapDrawable(bitmapBgDrawable);
+        } else {
+            this.mBgDrawable = new ColorDrawable(in.readInt());
         }
         this.mBgColor = in.readInt();
         this.mBgResource = in.readInt();

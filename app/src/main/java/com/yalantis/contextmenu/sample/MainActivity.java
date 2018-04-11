@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     }
 
     private void initToolbar() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        TextView mToolBarTextView = findViewById(R.id.text_view_toolbar_title);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);

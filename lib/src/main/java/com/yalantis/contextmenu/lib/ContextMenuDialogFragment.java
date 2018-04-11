@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,7 +93,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
 
     @SuppressLint("NewApi")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
         rootView.setFitsSystemWindows(mMenuParams.isFitsSystemWindow());
         ((ViewGroup) rootView).setClipToPadding(mMenuParams.isClipToPadding());
@@ -112,7 +113,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
                 @Override
                 public void onClick(View v) {
                     if (isAdded()) {
-                        dismiss();
+                        dismissAllowingStateLoss();
                     }
                 }
             });
@@ -121,8 +122,8 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
     }
 
     private void initViews(View view) {
-        mWrapperButtons = (LinearLayout) view.findViewById(R.id.wrapper_buttons);
-        mWrapperText = (LinearLayout) view.findViewById(R.id.wrapper_text);
+        mWrapperButtons = view.findViewById(R.id.wrapper_buttons);
+        mWrapperText = view.findViewById(R.id.wrapper_text);
     }
 
     private void initDropDownMenuAdapter() {
@@ -137,7 +138,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                dismiss();
+                dismissAllowingStateLoss();
             }
         }, mMenuParams.getAnimationDelay());
     }

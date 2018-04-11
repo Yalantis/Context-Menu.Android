@@ -109,7 +109,7 @@ public class Utils {
             imageWrapper.addView(getDivider(context, menuItem));
         }
 
-        if (menuItem.getBgColor() != 0) {
+        if (menuItem.getBgColorInternal() != -1) {
             imageWrapper.setBackgroundColor(menuItem.getBgColor());
         } else if (menuItem.getBgDrawable() != null) {
             if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
