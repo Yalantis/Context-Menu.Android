@@ -236,11 +236,8 @@ public class MenuObject implements Parcelable {
     private MenuObject(Parcel in) {
         this.mTitle = in.readString();
         Bitmap bitmapBgDrawable = in.readParcelable(Bitmap.class.getClassLoader());
-        if (bitmapBgDrawable != null) {
-            this.mBgDrawable = new BitmapDrawable(bitmapBgDrawable);
-        } else {
-            this.mBgDrawable = new ColorDrawable(in.readInt());
-        }
+        this.mBgDrawable = (bitmapBgDrawable != null)
+                ? new BitmapDrawable(bitmapBgDrawable) : new ColorDrawable(in.readInt());
         this.mBgColor = in.readInt();
         this.mBgResource = in.readInt();
         Bitmap bitmapDrawable = in.readParcelable(Bitmap.class.getClassLoader());
