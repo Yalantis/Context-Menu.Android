@@ -42,9 +42,7 @@ public class MenuAdapter {
         this.mTextWrapper = textWrapper;
         this.mMenuObjects = menuObjects;
 
-/**
- /       Make menu looks better by setting toolbar height as itemSize.
- */
+        // Make menu looks better by setting toolbar height as itemSize.
         this.mMenuItemSize = actionBarHeight;
         setViews();
         resetAnimations();

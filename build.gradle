@@ -1,10 +1,14 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:3.1.0'
     }
 }
 
@@ -18,7 +22,9 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
-
-apply plugin: 'android-reporting'
