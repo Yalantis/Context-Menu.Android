@@ -15,7 +15,22 @@ Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile
 *For a working implementation, have a look at the ```app``` module*
 
 #### 	1. Clone repository and add sources into your project or use Gradle: 
-``` compile 'com.yalantis:contextmenu:1.0.7' ```
+
+Add it in your root build.gradle at the end of repositories:
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+Add the dependency
+```
+	dependencies {
+	        implementation 'com.github.Yalantis:Context-Menu.Android:1.0.8'
+	}
+```
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
 You can use any `resource, bitmap, drawable, color` as image:  
 ```
@@ -143,6 +158,11 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
   * Android Honeycomb 3.0+
 
 # Changelog
+
+### Version: 1.0.8
+
+  * added transparent menu background support
+  * dependencies actualized
 
 ### Version: 1.0.7
 
