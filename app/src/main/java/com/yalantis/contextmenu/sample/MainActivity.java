@@ -164,6 +164,21 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     @Override
     public void onMenuItemClick(View clickedView, int position) {
         Toast.makeText(this, "Clicked on position: " + position, Toast.LENGTH_SHORT).show();
+        
+        
+
+        if (position == 1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, mainFragment , null).addToBackStack(null).commit();
+        }
+
+        if (position == 2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, actuFragment , null).addToBackStack(null).commit();
+        }
+
+        if (position == 3) {
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unity3d.com/fr"));
+            startActivityForResult(i,3);
+        }
     }
 
     @Override
