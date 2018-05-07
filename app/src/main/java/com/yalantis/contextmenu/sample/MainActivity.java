@@ -179,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unity3d.com/fr"));
             startActivityForResult(i,3);
         }
+        
+       // add button 4 [+]  if (position == 4) { getSupportFragmentManager or Intent  }
     }
 
     @Override
