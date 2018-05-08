@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/menu_text_size"
-                android:text="@string/text" />
+                android:text="newFragment_actu" />
         </LinearLayout>
     </LinearLayout>
 
