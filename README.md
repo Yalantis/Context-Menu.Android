@@ -4,11 +4,11 @@
 
 #### You can easily add awesome animated context menu to  your app. 
 
-Check this [project on dribbble] (https://dribbble.com/shots/1785274-Menu-Animation-for-Additional-Functions?list=users&offset=17)
+Check this [project on dribbble](https://dribbble.com/shots/1785274-Menu-Animation-for-Additional-Functions?list=users&offset=17)
 
-Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile-Animations-Interactions)  
+Check this [project on Behance](https://www.behance.net/gallery/20411445/Mobile-Animations-Interactions)  
 
-![ContextMenu](https://d13yacurqjgara.cloudfront.net/users/125056/screenshots/1785274/99miles-profile-light_1-1-4.gif)
+<image src="https://cdn.dribbble.com/users/125056/screenshots/1785274/99miles-profile-light_1-1-4.gif"/>
 
 ### Usage:
 
