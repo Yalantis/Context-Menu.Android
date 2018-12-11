@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="tool_bar_text_size">22sp</dimen>
+    <dimen name="main_screen_side_padding">10dp</dimen>
+    <dimen name="text_top_padding">25dp</dimen>
+    <dimen name="title_text_size">26sp</dimen>
+    <dimen name="tool_bar_height">56dp</dimen>
+
+</resources>

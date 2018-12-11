@@ -1,0 +1,10 @@
+<resources>
+
+    <dimen name="menu_item_padding">2dp</dimen>
+    <dimen name="text_right_padding">28dp</dimen>
+    <dimen name="text_right_translation">8dp</dimen>
+    <dimen name="text_wrapper_right_margin">-8dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="menu_text_size">15sp</dimen>
+
+</resources>
