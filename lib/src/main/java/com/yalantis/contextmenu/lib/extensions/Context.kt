@@ -121,7 +121,7 @@ fun Context.getImageWrapper(
 
     menuItem.apply {
         when {
-            bgColorInternal != -1 -> setBackgroundColor(bgColor)
+            bgColor != 0 -> setBackgroundColor(bgColor)
             bgDrawable != null -> {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     setBackgroundDrawable(bgDrawable)
