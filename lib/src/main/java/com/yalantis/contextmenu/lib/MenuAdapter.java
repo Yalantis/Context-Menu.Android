@@ -9,6 +9,8 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
+import com.yalantis.contextmenu.lib.extensions.ContextKt;
+import com.yalantis.contextmenu.lib.extensions.ViewKt;
 import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener;
 
@@ -68,9 +70,9 @@ public class MenuAdapter {
     private void setViews() {
         for (int i = 0; i < mMenuObjects.size(); i++) {
             MenuObject menuObject = mMenuObjects.get(i);
-            mTextWrapper.addView(Utils.getItemTextView(mContext, menuObject, mMenuItemSize,
+            mTextWrapper.addView(ContextKt.getItemTextView(mContext, menuObject, mMenuItemSize,
                     clickItem, longClickItem));
-            mMenuWrapper.addView(Utils.getImageWrapper(mContext, menuObject, mMenuItemSize,
+            mMenuWrapper.addView(ContextKt.getImageWrapper(mContext, menuObject, mMenuItemSize,
                     clickItem, longClickItem, i != mMenuObjects.size() - 1));
         }
     }
@@ -161,19 +163,19 @@ public class MenuAdapter {
     private void fillOpenClosingAnimations(boolean isCloseAnimation, List<Animator> textAnimations, List<Animator> imageAnimations, int wrapperPosition) {
         AnimatorSet textAnimatorSet = new AnimatorSet();
         Animator textAppearance = isCloseAnimation ?
-                AnimatorUtils.alphaDisappear(mTextWrapper.getChildAt(wrapperPosition))
-                : AnimatorUtils.alphaAppear(mTextWrapper.getChildAt(wrapperPosition));
+                ViewKt.alphaDisappear(mTextWrapper.getChildAt(wrapperPosition))
+                : ViewKt.alphaAppear(mTextWrapper.getChildAt(wrapperPosition));
 
         Animator textTranslation = isCloseAnimation ?
-                AnimatorUtils.translationRight(mTextWrapper.getChildAt(wrapperPosition), mContext.getResources().getDimension(R.dimen.text_right_translation))
-                : AnimatorUtils.translationLeft(mTextWrapper.getChildAt(wrapperPosition), mContext.getResources().getDimension(R.dimen.text_right_translation));
+                ViewKt.translationRight(mTextWrapper.getChildAt(wrapperPosition), mContext.getResources().getDimension(R.dimen.text_right_translation))
+                : ViewKt.translationLeft(mTextWrapper.getChildAt(wrapperPosition), mContext.getResources().getDimension(R.dimen.text_right_translation));
 
         textAnimatorSet.playTogether(textAppearance, textTranslation);
         textAnimations.add(textAnimatorSet);
 
         Animator imageRotation = isCloseAnimation ?
-                wrapperPosition == 0 ? AnimatorUtils.rotationCloseToRight(mMenuWrapper.getChildAt(wrapperPosition)) : AnimatorUtils.rotationCloseVertical(mMenuWrapper.getChildAt(wrapperPosition))
-                : wrapperPosition == 0 ? AnimatorUtils.rotationOpenFromRight(mMenuWrapper.getChildAt(wrapperPosition)) : AnimatorUtils.rotationOpenVertical(mMenuWrapper.getChildAt(wrapperPosition));
+                wrapperPosition == 0 ? ViewKt.rotationCloseToRight(mMenuWrapper.getChildAt(wrapperPosition)) : ViewKt.rotationCloseVertical(mMenuWrapper.getChildAt(wrapperPosition))
+                : wrapperPosition == 0 ? ViewKt.rotationOpenFromRight(mMenuWrapper.getChildAt(wrapperPosition)) : ViewKt.rotationOpenVertical(mMenuWrapper.getChildAt(wrapperPosition));
         imageAnimations.add(imageRotation);
     }
 
@@ -217,8 +219,8 @@ public class MenuAdapter {
         for (int i = 0; i < childIndex; i++) {
             View view = mMenuWrapper.getChildAt(i);
             resetVerticalAnimation(view, true);
-            closeToBottomImageAnimatorList.add(AnimatorUtils.rotationCloseVertical(view));
-            fadeOutTextTopAnimatorList.add(AnimatorUtils.fadeOutSet(mTextWrapper.getChildAt(i), mContext.getResources().getDimension(R.dimen.text_right_translation)));
+            closeToBottomImageAnimatorList.add(ViewKt.rotationCloseVertical(view));
+            fadeOutTextTopAnimatorList.add(ViewKt.fadeOutSet(mTextWrapper.getChildAt(i), mContext.getResources().getDimension(R.dimen.text_right_translation)));
         }
         AnimatorSet closeToBottom = new AnimatorSet();
         closeToBottom.playSequentially(closeToBottomImageAnimatorList);
@@ -230,8 +232,8 @@ public class MenuAdapter {
         for (int i = getItemCount() - 1; i > childIndex; i--) {
             View view = mMenuWrapper.getChildAt(i);
             resetVerticalAnimation(view, false);
-            closeToTopAnimatorObjects.add(AnimatorUtils.rotationCloseVertical(view));
-            fadeOutTextBottomAnimatorList.add(AnimatorUtils.fadeOutSet(mTextWrapper.getChildAt(i), mContext.getResources().getDimension(R.dimen.text_right_translation)));
+            closeToTopAnimatorObjects.add(ViewKt.rotationCloseVertical(view));
+            fadeOutTextBottomAnimatorList.add(ViewKt.fadeOutSet(mTextWrapper.getChildAt(i), mContext.getResources().getDimension(R.dimen.text_right_translation)));
         }
         AnimatorSet closeToTop = new AnimatorSet();
         closeToTop.playSequentially(closeToTopAnimatorObjects);
@@ -239,9 +241,9 @@ public class MenuAdapter {
         fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList);
 
         resetSideAnimation(mMenuWrapper.getChildAt(childIndex));
-        ObjectAnimator closeToRight = AnimatorUtils.rotationCloseToRight(mMenuWrapper.getChildAt(childIndex));
+        ObjectAnimator closeToRight = ViewKt.rotationCloseToRight(mMenuWrapper.getChildAt(childIndex));
         closeToRight.addListener(mChosenItemFinishAnimatorListener);
-        AnimatorSet fadeOutChosenText = AnimatorUtils.fadeOutSet(mTextWrapper.getChildAt(childIndex), mContext.getResources().getDimension(R.dimen.text_right_translation));
+        AnimatorSet fadeOutChosenText = ViewKt.fadeOutSet(mTextWrapper.getChildAt(childIndex), mContext.getResources().getDimension(R.dimen.text_right_translation));
 
         AnimatorSet imageFullAnimatorSet = new AnimatorSet();
         imageFullAnimatorSet.play(closeToBottom).with(closeToTop);

@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.*
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.R
-import com.yalantis.contextmenu.lib.Utils
 
 fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, color)
 
@@ -115,9 +114,9 @@ fun Context.getImageWrapper(
 
     setOnClickListener(onCLick)
     setOnLongClickListener(onLongClick)
-    addView(Utils.getItemImageButton(context, menuItem))
+    addView(getItemImageButton(menuItem))
     if (showDivider) {
-        addView(Utils.getDivider(context, menuItem))
+        addView(getDivider(menuItem))
     }
 
     menuItem.apply {
