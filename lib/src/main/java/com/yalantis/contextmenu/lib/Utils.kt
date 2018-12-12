@@ -77,12 +77,12 @@ object Utils {
                 setPadding(paddingValue, paddingValue, paddingValue, paddingValue)
                 setBackgroundColor(Color.TRANSPARENT)
 
-                menuItem.let {
+                menuItem.apply {
                     when {
-                        it.color != 0 -> setImageDrawable(ColorDrawable(it.color))
-                        it.resource != 0 -> setImageResource(it.resource)
-                        it.bitmap != null -> setImageBitmap(it.bitmap)
-                        it.drawable != null -> setImageDrawable(it.drawable)
+                        color != 0 -> setImageDrawable(ColorDrawable(color))
+                        resource != 0 -> setImageResource(resource)
+                        bitmap != null -> setImageBitmap(bitmap)
+                        drawable != null -> setImageDrawable(drawable)
                     }
                 }
             }
@@ -122,17 +122,17 @@ object Utils {
             addView(getDivider(context, menuItem))
         }
 
-        menuItem.let {
+        menuItem.apply {
             when {
-                it.bgColorInternal != -1 -> setBackgroundColor(it.bgColor)
-                it.bgDrawable != null -> {
+                bgColorInternal != -1 -> setBackgroundColor(bgColor)
+                bgDrawable != null -> {
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        setBackgroundDrawable(it.bgDrawable)
+                        setBackgroundDrawable(bgDrawable)
                     } else {
-                        background = it.bgDrawable
+                        background = bgDrawable
                     }
                 }
-                it.bgResource != 0 -> setBackgroundResource(it.bgResource)
+                bgResource != 0 -> setBackgroundResource(bgResource)
                 else -> setBackgroundColor(context.getColorCompat(R.color.menu_item_background))
 
             }

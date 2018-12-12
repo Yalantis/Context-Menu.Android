@@ -79,7 +79,7 @@ public class MenuObject implements Parcelable {
         return ( color != -1) ? color : 0;
     }
 
-    protected int getBgColorInternal() {
+    public int getBgColorInternal() {
         return mBgColor;
     }
 

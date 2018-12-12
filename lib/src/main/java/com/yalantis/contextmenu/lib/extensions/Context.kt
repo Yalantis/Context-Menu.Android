@@ -1,10 +1,137 @@
 package com.yalantis.contextmenu.lib.extensions
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.support.annotation.ColorRes
 import android.support.annotation.DimenRes
 import android.support.v4.content.ContextCompat
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
+import com.yalantis.contextmenu.lib.MenuObject
+import com.yalantis.contextmenu.lib.R
+import com.yalantis.contextmenu.lib.Utils
 
 fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, color)
 
 fun Context.getDimension(@DimenRes dimen: Int) = resources.getDimension(dimen).toInt()
+
+fun Context.getDefaultActionBarSize(): Int {
+    val styledAttrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+    val actionBarSize = styledAttrs.getDimension(0, 0f).toInt()
+    styledAttrs.recycle()
+    return actionBarSize
+}
+
+fun Context.getItemTextView(
+        menuItem: MenuObject,
+        menuItemSize: Int,
+        onCLick: View.OnClickListener,
+        onLongClick: View.OnLongClickListener
+): TextView = TextView(this).apply {
+    val textColor = if (menuItem.textColor == 0) {
+        android.R.color.white
+    } else {
+        menuItem.textColor
+    }
+
+    val styleResId = if (menuItem.menuTextAppearanceStyle > 0) {
+        menuItem.menuTextAppearanceStyle
+    } else {
+        R.style.TextView_DefaultStyle
+    }
+
+    layoutParams = RelativeLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            menuItemSize
+    )
+    text = menuItem.title
+    gravity = Gravity.CENTER_VERTICAL
+
+    setOnClickListener(onCLick)
+    setOnLongClickListener(onLongClick)
+    setPadding(0, 0, getDimension(R.dimen.text_right_padding), 0)
+    setTextColor(getColorCompat(textColor))
+
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        setTextAppearance(context, styleResId)
+    } else {
+        setTextAppearance(styleResId)
+    }
+}
+
+fun Context.getItemImageButton(menuItem: MenuObject): ImageView =
+        ImageButton(this).apply {
+            val paddingValue = getDimension(R.dimen.menu_item_padding)
+
+            layoutParams = RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = false
+            isFocusable = false
+            scaleType = menuItem.scaleType
+
+            setPadding(paddingValue, paddingValue, paddingValue, paddingValue)
+            setBackgroundColor(Color.TRANSPARENT)
+
+            menuItem.apply {
+                when {
+                    color != 0 -> setImageDrawable(ColorDrawable(color))
+                    resource != 0 -> setImageResource(resource)
+                    bitmap != null -> setImageBitmap(bitmap)
+                    drawable != null -> setImageDrawable(drawable)
+                }
+            }
+        }
+
+fun Context.getDivider(menuItem: MenuObject): View = View(this).apply {
+    val dividerColor = if (menuItem.dividerColor == Integer.MAX_VALUE) {
+        R.color.divider_color
+    } else {
+        menuItem.dividerColor
+    }
+
+    layoutParams = RelativeLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            getDimension(R.dimen.divider_height)
+    ).apply { addRule(RelativeLayout.ALIGN_PARENT_BOTTOM) }
+    isClickable = true
+
+    setBackgroundColor(getColorCompat(dividerColor))
+}
+
+fun Context.getImageWrapper(
+        menuItem: MenuObject,
+        menuItemSize: Int,
+        onCLick: View.OnClickListener,
+        onLongClick: View.OnLongClickListener,
+        showDivider: Boolean
+): RelativeLayout = RelativeLayout(this).apply {
+    layoutParams = LinearLayout.LayoutParams(menuItemSize, menuItemSize)
+
+    setOnClickListener(onCLick)
+    setOnLongClickListener(onLongClick)
+    addView(Utils.getItemImageButton(context, menuItem))
+    if (showDivider) {
+        addView(Utils.getDivider(context, menuItem))
+    }
+
+    menuItem.apply {
+        when {
+            bgColorInternal != -1 -> setBackgroundColor(bgColor)
+            bgDrawable != null -> {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    setBackgroundDrawable(bgDrawable)
+                } else {
+                    background = bgDrawable
+                }
+            }
+            bgResource != 0 -> setBackgroundResource(bgResource)
+            else -> setBackgroundColor(getColorCompat(R.color.menu_item_background))
+        }
+    }
+}
