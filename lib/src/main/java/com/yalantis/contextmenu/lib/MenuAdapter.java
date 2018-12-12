@@ -161,8 +161,8 @@ public class MenuAdapter {
     private void fillOpenClosingAnimations(boolean isCloseAnimation, List<Animator> textAnimations, List<Animator> imageAnimations, int wrapperPosition) {
         AnimatorSet textAnimatorSet = new AnimatorSet();
         Animator textAppearance = isCloseAnimation ?
-                AnimatorUtils.alfaDisappear(mTextWrapper.getChildAt(wrapperPosition))
-                : AnimatorUtils.alfaAppear(mTextWrapper.getChildAt(wrapperPosition));
+                AnimatorUtils.alphaDisappear(mTextWrapper.getChildAt(wrapperPosition))
+                : AnimatorUtils.alphaAppear(mTextWrapper.getChildAt(wrapperPosition));
 
         Animator textTranslation = isCloseAnimation ?
                 AnimatorUtils.translationRight(mTextWrapper.getChildAt(wrapperPosition), mContext.getResources().getDimension(R.dimen.text_right_translation))
