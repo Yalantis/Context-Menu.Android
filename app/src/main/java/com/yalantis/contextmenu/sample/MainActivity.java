@@ -71,14 +71,14 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         List<MenuObject> menuObjects = new ArrayList<>();
 
         MenuObject close = new MenuObject();
-        close.setResource(R.drawable.icn_close);
+        close.setResourceValue(R.drawable.icn_close);
 
         MenuObject send = new MenuObject("Send message");
-        send.setResource(R.drawable.icn_1);
+        send.setResourceValue(R.drawable.icn_1);
 
         MenuObject like = new MenuObject("Like profile");
         Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.icn_2);
-        like.setBitmap(b);
+        like.setBitmapValue(b);
 
         MenuObject addFr = new MenuObject("Add to friends");
         BitmapDrawable bd = new BitmapDrawable(getResources(),
@@ -86,10 +86,10 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         addFr.setDrawable(bd);
 
         MenuObject addFav = new MenuObject("Add to favorites");
-        addFav.setResource(R.drawable.icn_4);
+        addFav.setResourceValue(R.drawable.icn_4);
 
         MenuObject block = new MenuObject("Block user");
-        block.setResource(R.drawable.icn_5);
+        block.setResourceValue(R.drawable.icn_5);
 
         menuObjects.add(close);
         menuObjects.add(send);
