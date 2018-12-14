@@ -39,6 +39,7 @@ open class MenuObject(var title: String = "") : Parcelable {
         bgDrawable = if (bitmapBgDrawable == null) {
             ColorDrawable(parcel.readInt())
         } else {
+            // TODO create BitmapDrawable with resources
             BitmapDrawable(bitmapBgDrawable)
         }
 
@@ -46,6 +47,7 @@ open class MenuObject(var title: String = "") : Parcelable {
         bgResource = parcel.readInt()
 
         val bitmapDrawable = parcel.readParcelable<Bitmap>(Bitmap::class.java.classLoader)
+        // TODO create BitmapDrawable with resources
         bitmapDrawable?.let { drawable = BitmapDrawable(it) }
 
         color = parcel.readInt()
