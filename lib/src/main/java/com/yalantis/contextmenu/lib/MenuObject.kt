@@ -106,7 +106,7 @@ open class MenuObject(var title: String = "") : Parcelable {
     fun setBgResourceValue(value: Int) {
         bgResource = value
         bgDrawable = null
-        bgColor = -1
+        bgColor = 0
     }
 
     fun setColorValue(value: Int) {
@@ -132,7 +132,7 @@ open class MenuObject(var title: String = "") : Parcelable {
 
     private fun setBgDrawableInternal(drawable: Drawable) {
         bgDrawable = drawable
-        bgColor = -1
+        bgColor = 0
         bgResource = 0
     }
 
