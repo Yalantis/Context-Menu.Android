@@ -265,11 +265,6 @@ class MenuAdapter(
             )
         }
 
-        val closeToBottom = AnimatorSet()
-        closeToBottom.playSequentially(closeToBottomImageAnimatorList)
-        val fadeOutTop = AnimatorSet()
-        fadeOutTop.playSequentially(fadeOutTextTopAnimatorList)
-
         val fadeOutTextBottomAnimatorList = mutableListOf<Animator>()
         val closeToTopAnimatorObjects = mutableListOf<Animator>()
 
@@ -282,12 +277,18 @@ class MenuAdapter(
             )
         }
 
+        resetSideAnimation(menuWrapper.getChildAt(childIndex))
+
+        val closeToBottom = AnimatorSet()
+        closeToBottom.playSequentially(closeToBottomImageAnimatorList)
+        val fadeOutTop = AnimatorSet()
+        fadeOutTop.playSequentially(fadeOutTextTopAnimatorList)
+
         val closeToTop = AnimatorSet()
         closeToTop.playSequentially(closeToTopAnimatorObjects)
         val fadeOutBottom = AnimatorSet()
         fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList)
 
-        resetSideAnimation(menuWrapper.getChildAt(childIndex))
         val closeToRight = menuWrapper.getChildAt(childIndex).rotationCloseToRight()
         closeToRight.onAnimationEnd {
             toggleIsAnimationRun()
