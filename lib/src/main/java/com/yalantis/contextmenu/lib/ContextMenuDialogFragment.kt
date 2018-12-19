@@ -62,30 +62,32 @@ class ContextMenuDialogFragment : DialogFragment() {
     }
 
     private fun initDropDownMenuAdapter() {
-        dropDownMenuAdapter = MenuAdapter(
-                activity,
-                wrapper_buttons,
-                wrapper_text,
-                menuParams.menuObjects,
-                menuParams.actionBarSize
-        ).apply {
-            setAnimationDuration(menuParams.animationDuration)
+        activity?.let {
+            dropDownMenuAdapter = MenuAdapter(
+                    it,
+                    wrapper_buttons,
+                    wrapper_text,
+                    menuParams.menuObjects,
+                    menuParams.actionBarSize
+            ).apply {
+                setAnimationDuration(menuParams.animationDuration)
 
-            setOnItemClickListener(object : OnItemClickListener {
-                override fun onClick(view: View) {
-                    val position = (view.parent as ViewGroup).indexOfChild(view)
-                    menuItemClickListener?.onMenuItemClick(view, position)
-                    close()
-                }
-            })
+                setOnItemClickListener(object : OnItemClickListener {
+                    override fun onClick(view: View) {
+                        val position = (view.parent as ViewGroup).indexOfChild(view)
+                        menuItemClickListener?.onMenuItemClick(view, position)
+                        close()
+                    }
+                })
 
-            setOnItemLongClickListener(object : OnItemLongClickListener {
-                override fun onLongClick(view: View) {
-                    val position = (view.parent as ViewGroup).indexOfChild(view)
-                    menuItemLongClickListener?.onMenuItemLongClick(view, position)
-                    close()
-                }
-            })
+                setOnItemLongClickListener(object : OnItemLongClickListener {
+                    override fun onLongClick(view: View) {
+                        val position = (view.parent as ViewGroup).indexOfChild(view)
+                        menuItemLongClickListener?.onMenuItemLongClick(view, position)
+                        close()
+                    }
+                })
+            }
         }
     }
 

@@ -15,7 +15,7 @@ data class MenuParams(
         var actionBarSize: Int = 0,
         var menuObjects: List<MenuObject> = listOf(),
         var animationDelay: Int = 0,
-        var animationDuration: Int = MenuAdapter.ANIMATION_DURATION_MILLIS,
+        var animationDuration: Int = MenuAdapter.ANIMATION_DURATION_MILLIS.toInt(),
         var isFitsSystemWindow: Boolean = false,
         var isClipToPadding: Boolean = true,
         var isClosableOutside: Boolean = false

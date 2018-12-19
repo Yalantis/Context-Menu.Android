@@ -26,13 +26,24 @@ class MenuAdapter(
 
     private var clickedView: View? = null
 
-    private val hideMenuAnimatorSet: AnimatorSet by lazy { setOpenCloseAnimation(false) }
-    private val showMenuAnimatorSet: AnimatorSet by lazy { setOpenCloseAnimation(true) }
+    private val hideMenuAnimatorSet: AnimatorSet by lazy { setOpenCloseAnimation(true) }
+    private val showMenuAnimatorSet: AnimatorSet by lazy { setOpenCloseAnimation(false) }
 
     private var isMenuOpen = false
     private var isAnimationRun = false
 
     private var animationDurationMillis = ANIMATION_DURATION_MILLIS
+
+    private val itemClickListener = View.OnClickListener { view ->
+        onItemClickListenerCalled = onItemClickListener
+        viewClicked(view)
+    }
+
+    private val itemLongClickListener = View.OnLongClickListener { view ->
+        onItemLongClickListenerCalled = onItemLongClickListener
+        viewClicked(view)
+        true
+    }
 
     init {
         setViews()
@@ -44,6 +55,27 @@ class MenuAdapter(
 
     fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
         onItemLongClickListener = listener
+    }
+
+    fun setAnimationDuration(durationMillis: Int) {
+        animationDurationMillis = durationMillis.toLong()
+        showMenuAnimatorSet.duration = animationDurationMillis
+        hideMenuAnimatorSet.duration = animationDurationMillis
+    }
+
+    fun menuToggle() {
+        if (!isAnimationRun) {
+            resetAnimations()
+            isAnimationRun = true
+
+            if (isMenuOpen) {
+                hideMenuAnimatorSet.start()
+            } else {
+                showMenuAnimatorSet.start()
+            }
+
+            toggleIsMenuOpen()
+        }
     }
 
     fun getItemCount() = menuObjects.size
@@ -154,7 +186,7 @@ class MenuAdapter(
                     AnimatorSet().apply { playSequentially(imageAnimations) }
             )
             setInterpolator(HesitateInterpolator())
-            addListener(mCloseOpenAnimatorListener)
+            onAnimationEnd { toggleIsAnimationRun() }
         }
     }
 
@@ -225,9 +257,9 @@ class MenuAdapter(
         val closeToBottomImageAnimatorList = mutableListOf<Animator>()
 
         for (i in 0 until childIndex) {
-            val view = menuWrapper.getChildAt(i)
-            resetVerticalAnimation(view, true)
-            closeToBottomImageAnimatorList.add(view.rotationCloseVertical())
+            val menuWrapperChild = menuWrapper.getChildAt(i)
+            resetVerticalAnimation(menuWrapperChild, true)
+            closeToBottomImageAnimatorList.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextTopAnimatorList.add(
                     textWrapper.getChildAt(i).fadeOutSet(getTextRightTranslation())
             )
@@ -241,21 +273,63 @@ class MenuAdapter(
         val fadeOutTextBottomAnimatorList = mutableListOf<Animator>()
         val closeToTopAnimatorObjects = mutableListOf<Animator>()
 
-        // TODO continue it
+        for (i in getLastItemPosition() downTo childIndex + 1) {
+            val menuWrapperChild = menuWrapper.getChildAt(i)
+            resetVerticalAnimation(menuWrapperChild, false)
+            closeToTopAnimatorObjects.add(menuWrapperChild.rotationCloseVertical())
+            fadeOutTextBottomAnimatorList.add(
+                    textWrapper.getChildAt(i).fadeOutSet(getTextRightTranslation())
+            )
+        }
+
+        val closeToTop = AnimatorSet()
+        closeToTop.playSequentially(closeToTopAnimatorObjects)
+        val fadeOutBottom = AnimatorSet()
+        fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList)
+
+        resetSideAnimation(menuWrapper.getChildAt(childIndex))
+        val closeToRight = menuWrapper.getChildAt(childIndex).rotationCloseToRight()
+        closeToRight.onAnimationEnd {
+            toggleIsAnimationRun()
+
+            clickedView?.let { notNullView ->
+                onItemClickListenerCalled?.onClick(notNullView)
+                onItemLongClickListenerCalled?.onLongClick(notNullView)
+            }
+        }
+        val fadeOutChosenText =
+                textWrapper.getChildAt(childIndex).fadeOutSet(getTextRightTranslation())
+
+        val imageFullAnimatorSet = AnimatorSet()
+        imageFullAnimatorSet.play(closeToBottom).with(closeToTop)
+        val textFullAnimatorSet = AnimatorSet()
+        textFullAnimatorSet.play(fadeOutTop).with(fadeOutBottom)
+
+        if (closeToBottomImageAnimatorList.size >= closeToTopAnimatorObjects.size) {
+            imageFullAnimatorSet.play(closeToBottom).before(closeToRight)
+            textFullAnimatorSet.play(fadeOutTop).before(fadeOutChosenText)
+        } else {
+            imageFullAnimatorSet.play(closeToTop).before(closeToRight)
+            textFullAnimatorSet.play(fadeOutBottom).before(fadeOutChosenText)
+        }
+
+        AnimatorSet().apply {
+            playTogether(imageFullAnimatorSet, textFullAnimatorSet)
+            duration = animationDurationMillis
+            setInterpolator(HesitateInterpolator())
+            start()
+        }
     }
 
     private fun getTextRightTranslation() =
             context.getDimension(R.dimen.text_right_translation).toFloat()
 
-    private val itemClickListener = View.OnClickListener { view ->
-        onItemClickListenerCalled = onItemClickListener
-        viewClicked(view)
+    private fun toggleIsAnimationRun() {
+        isAnimationRun = !isAnimationRun
     }
 
-    private val itemLongClickListener = View.OnLongClickListener { view ->
-        onItemLongClickListenerCalled = onItemLongClickListener
-        viewClicked(view)
-        true
+    private fun toggleIsMenuOpen() {
+        isMenuOpen = !isMenuOpen
     }
 
     companion object {
