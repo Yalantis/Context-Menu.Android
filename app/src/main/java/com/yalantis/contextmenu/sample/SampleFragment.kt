@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.yalantis.contextmenu.R
 
-class MainFragment : Fragment() {
+class SampleFragment : Fragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_main, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_sample, container, false)
 }
