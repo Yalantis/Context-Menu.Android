@@ -74,7 +74,7 @@ open class MenuObject(var title: String = "") : Parcelable {
 
             when (drawable) {
                 null -> writeParcelable(null, flags)
-                is BitmapDrawable -> writeParcelable((bgDrawable as BitmapDrawable).bitmap, flags)
+                is BitmapDrawable -> writeParcelable((drawable as BitmapDrawable).bitmap, flags)
             }
 
             writeInt(color)
