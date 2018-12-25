@@ -24,7 +24,7 @@ class ContextMenuDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.MenuFragmentStyle)
-        menuParams = arguments?.getParcelable(ARGS_MENU_PARAMS) as MenuParams
+        menuParams = arguments?.getParcelable(ARGS_MENU_PARAMS) as? MenuParams ?: MenuParams()
     }
 
     override fun onCreateView(

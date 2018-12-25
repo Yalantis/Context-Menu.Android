@@ -9,7 +9,7 @@ fun Animator.onAnimationEnd(onAnimationEnd: (Animator?) -> Unit) {
         }
 
         override fun onAnimationEnd(animation: Animator?) {
-            onAnimationEnd.invoke(animation)
+            onAnimationEnd(animation)
         }
 
         override fun onAnimationCancel(animation: Animator?) {
