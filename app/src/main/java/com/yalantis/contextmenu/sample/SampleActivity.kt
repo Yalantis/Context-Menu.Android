@@ -124,6 +124,26 @@ class SampleActivity : AppCompatActivity() {
     }
 
     private fun getMenuObjects() = mutableListOf<MenuObject>().apply {
+        // You can use any [resource, bitmap, drawable, color] as image:
+        // item.setResourceValue(...)
+        // item.setBitmapValue(...)
+        // item.drawable = ...
+        // item.setColorValue(...)
+
+        // You can set image ScaleType:
+        // item.scaleType = ScaleType.FIT_XY
+
+        // You can use any [resource, drawable, color] as background:
+        // item.setBgResourceValue(...)
+        // item.setBgDrawable(...)
+        // item.setBgColorValue(...)
+
+        // You can use any [color] as text color:
+        // item.textColor = ...
+
+        // You can set any [color] as divider color:
+        // item.dividerColor = ...
+
         val close = MenuObject().apply { setResourceValue(R.drawable.icn_close) }
         val send = MenuObject("Send message").apply { setResourceValue(R.drawable.icn_1) }
         val like = MenuObject("Like profile").apply {
