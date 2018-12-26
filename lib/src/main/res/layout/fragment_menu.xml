@@ -21,7 +21,7 @@
             android:id="@+id/wrapper_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/text_wrapper_right_margin"
+            android:layout_marginEnd="@dimen/text_wrapper_end_margin"
             android:layout_toStartOf="@id/wrapper_buttons"
             android:gravity="end"
             android:orientation="vertical" />
