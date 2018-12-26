@@ -129,11 +129,17 @@ class MenuAdapter(
     private fun resetSideAnimation(view: View) {
         if (!isMenuOpen) {
             ViewHelper.setRotation(view, 0f)
-            ViewHelper.setRotationY(view, -90f)
+            ViewHelper.setRotationY(
+                    view,
+                    if (context.isLayoutDirectionRtl()) 90f else -90f
+            )
             ViewHelper.setRotationX(view, 0f)
         }
 
-        ViewHelper.setPivotX(view, actionBarSize.toFloat())
+        ViewHelper.setPivotX(
+                view,
+                if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
+        )
         ViewHelper.setPivotY(view, (actionBarSize / 2).toFloat())
     }
 
@@ -208,27 +214,26 @@ class MenuAdapter(
                 }
 
                 val textTranslation = if (isCloseAnimation) {
-                    translationRight(getTextRightTranslation())
+                    translationEnd(getTextEndTranslation())
                 } else {
-                    translationLeft(getTextRightTranslation())
+                    translationStart(getTextEndTranslation())
                 }
 
                 playTogether(textAppearance, textTranslation)
             })
-
         }
 
         menuWrapper.getChildAt(wrapperPosition).apply {
             imageAnimations.add(
                     if (isCloseAnimation) {
                         if (wrapperPosition == 0) {
-                            rotationCloseToRight()
+                            rotationCloseToEnd()
                         } else {
                             rotationCloseVertical()
                         }
                     } else {
                         if (wrapperPosition == 0) {
-                            rotationOpenFromRight()
+                            rotationOpenFromEnd()
                         } else {
                             rotationOpenVertical()
                         }
@@ -261,7 +266,7 @@ class MenuAdapter(
             resetVerticalAnimation(menuWrapperChild, true)
             closeToBottomImageAnimatorList.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextTopAnimatorList.add(
-                    textWrapper.getChildAt(i).fadeOutSet(getTextRightTranslation())
+                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation())
             )
         }
 
@@ -273,7 +278,7 @@ class MenuAdapter(
             resetVerticalAnimation(menuWrapperChild, false)
             closeToTopAnimatorObjects.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextBottomAnimatorList.add(
-                    textWrapper.getChildAt(i).fadeOutSet(getTextRightTranslation())
+                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation())
             )
         }
 
@@ -289,8 +294,8 @@ class MenuAdapter(
         val fadeOutBottom = AnimatorSet()
         fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList)
 
-        val closeToRight = menuWrapper.getChildAt(childIndex).rotationCloseToRight()
-        closeToRight.onAnimationEnd {
+        val closeToEnd = menuWrapper.getChildAt(childIndex).rotationCloseToEnd()
+        closeToEnd.onAnimationEnd {
             toggleIsAnimationRun()
 
             clickedView?.let { notNullView ->
@@ -299,7 +304,7 @@ class MenuAdapter(
             }
         }
         val fadeOutChosenText =
-                textWrapper.getChildAt(childIndex).fadeOutSet(getTextRightTranslation())
+                textWrapper.getChildAt(childIndex).fadeOutSet(getTextEndTranslation())
 
         val imageFullAnimatorSet = AnimatorSet()
         imageFullAnimatorSet.play(closeToBottom).with(closeToTop)
@@ -307,10 +312,10 @@ class MenuAdapter(
         textFullAnimatorSet.play(fadeOutTop).with(fadeOutBottom)
 
         if (closeToBottomImageAnimatorList.size >= closeToTopAnimatorObjects.size) {
-            imageFullAnimatorSet.play(closeToBottom).before(closeToRight)
+            imageFullAnimatorSet.play(closeToBottom).before(closeToEnd)
             textFullAnimatorSet.play(fadeOutTop).before(fadeOutChosenText)
         } else {
-            imageFullAnimatorSet.play(closeToTop).before(closeToRight)
+            imageFullAnimatorSet.play(closeToTop).before(closeToEnd)
             textFullAnimatorSet.play(fadeOutBottom).before(fadeOutChosenText)
         }
 
@@ -322,8 +327,8 @@ class MenuAdapter(
         }
     }
 
-    private fun getTextRightTranslation() =
-            context.getDimension(R.dimen.text_right_translation).toFloat()
+    private fun getTextEndTranslation() =
+            context.getDimension(R.dimen.text_end_translation).toFloat()
 
     private fun toggleIsAnimationRun() {
         isAnimationRun = !isAnimationRun

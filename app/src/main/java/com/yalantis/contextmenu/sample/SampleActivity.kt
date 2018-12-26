@@ -87,7 +87,7 @@ class SampleActivity : AppCompatActivity() {
         }
 
         toolbar.apply {
-            setNavigationIcon(R.drawable.btn_back)
+            setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener { onBackPressed() }
         }
 

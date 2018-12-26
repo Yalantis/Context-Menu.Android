@@ -18,6 +18,9 @@ fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, 
 
 fun Context.getDimension(@DimenRes dimen: Int) = resources.getDimension(dimen).toInt()
 
+fun Context.isLayoutDirectionRtl(): Boolean =
+        resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+
 fun Context.getDefaultActionBarSize(): Int {
     val styledAttrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
     val actionBarSize = styledAttrs.getDimension(0, 0f).toInt()
@@ -52,7 +55,7 @@ fun Context.getItemTextView(
 
     setOnClickListener(onCLick)
     setOnLongClickListener(onLongClick)
-    setPadding(0, 0, getDimension(R.dimen.text_right_padding), 0)
+    setPadding(0, 0, getDimension(R.dimen.text_end_padding), 0)
     setTextColor(getColorCompat(textColor))
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
