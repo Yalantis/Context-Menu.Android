@@ -18,6 +18,9 @@ fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, 
 
 fun Context.getDimension(@DimenRes dimen: Int) = resources.getDimension(dimen).toInt()
 
+fun Context.isLayoutDirectionRtl(): Boolean =
+        resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+
 fun Context.getDefaultActionBarSize(): Int {
     val styledAttrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
     val actionBarSize = styledAttrs.getDimension(0, 0f).toInt()
