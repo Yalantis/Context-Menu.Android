@@ -11,6 +11,7 @@ android {
         targetSdkVersion 28
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName VERSION_NAME
+        vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {
