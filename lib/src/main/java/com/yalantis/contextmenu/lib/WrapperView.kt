@@ -54,6 +54,33 @@ open class WrapperView @JvmOverloads constructor(
         }
     }
 
+    fun showOnTheEndSide() {
+        wrapperButtons.layoutParams =
+                RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    addRule(RelativeLayout.ALIGN_PARENT_END)
+                }
+
+        wrapperText.apply {
+            gravity = Gravity.END
+            layoutParams =
+                    RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        addRule(RelativeLayout.START_OF, wrapperButtons.id)
+                        setMargins(
+                                0,
+                                0,
+                                context.getDimension(R.dimen.text_start_end_margin),
+                                0
+                        )
+                    }
+        }
+    }
+
     private fun setupScrollView() {
         setBackgroundColor(ContextCompat.getColor(context, R.color.menu_fragment_background))
         isFillViewport = true
@@ -76,13 +103,6 @@ open class WrapperView @JvmOverloads constructor(
                 wrapperButtons.apply {
                     id = ViewCompat.generateViewId()
                     orientation = LinearLayout.VERTICAL
-                    layoutParams =
-                            RelativeLayout.LayoutParams(
-                                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                    RelativeLayout.LayoutParams.WRAP_CONTENT
-                            ).apply {
-                                addRule(RelativeLayout.ALIGN_PARENT_END)
-                            }
                 }
         )
 
@@ -90,20 +110,6 @@ open class WrapperView @JvmOverloads constructor(
                 wrapperText.apply {
                     id = ViewCompat.generateViewId()
                     orientation = LinearLayout.VERTICAL
-                    gravity = Gravity.END
-                    layoutParams =
-                            RelativeLayout.LayoutParams(
-                                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                    RelativeLayout.LayoutParams.WRAP_CONTENT
-                            ).apply {
-                                addRule(RelativeLayout.START_OF, wrapperButtons.id)
-                                setMargins(
-                                        0,
-                                        0,
-                                        context.getDimension(R.dimen.text_start_end_margin),
-                                        0
-                                )
-                            }
                 }
         )
     }

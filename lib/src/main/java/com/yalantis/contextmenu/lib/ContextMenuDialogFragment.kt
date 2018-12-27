@@ -41,16 +41,20 @@ class ContextMenuDialogFragment : DialogFragment() {
             dropDownMenuAdapter.menuToggle()
         }, menuParams.animationDelay.toLong())
 
-        if (menuParams.isClosableOutside) {
-            wrapperView.rootRelativeLayout.setOnClickListener {
-                if (isAdded) {
-                    dismissAllowingStateLoss()
+        wrapperView.apply {
+            if (menuParams.isOnTheEndSide) {
+                showOnTheEndSide()
+            } else {
+                showOnTheStartSide()
+            }
+
+            if (menuParams.isClosableOutside) {
+                rootRelativeLayout.setOnClickListener {
+                    if (isAdded) {
+                        dismissAllowingStateLoss()
+                    }
                 }
             }
-        }
-
-        if (!menuParams.isOnTheEndSide) {
-            wrapperView.showOnTheStartSide()
         }
     }
 
