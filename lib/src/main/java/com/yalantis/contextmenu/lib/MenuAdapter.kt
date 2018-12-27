@@ -328,7 +328,7 @@ class MenuAdapter(
     }
 
     private fun getTextEndTranslation() =
-            context.getDimension(R.dimen.text_end_translation).toFloat()
+            context.getDimension(R.dimen.text_translation).toFloat()
 
     private fun toggleIsAnimationRun() {
         isAnimationRun = !isAnimationRun

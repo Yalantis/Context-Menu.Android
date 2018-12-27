@@ -18,7 +18,8 @@ data class MenuParams(
         var animationDuration: Int = MenuAdapter.ANIMATION_DURATION_MILLIS.toInt(),
         var isFitsSystemWindow: Boolean = false,
         var isClipToPadding: Boolean = true,
-        var isClosableOutside: Boolean = false
+        var isClosableOutside: Boolean = false,
+        var isOnTheEndSide: Boolean = true
 ) : Parcelable {
 
     private constructor(parcel: Parcel) : this(
@@ -26,6 +27,7 @@ data class MenuParams(
             parcel.createTypedArrayList(MenuObject.CREATOR) ?: listOf(),
             parcel.readInt(),
             parcel.readInt(),
+            parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte()
@@ -40,6 +42,7 @@ data class MenuParams(
             writeByte(if (isFitsSystemWindow) 1 else 0)
             writeByte(if (isClipToPadding) 1 else 0)
             writeByte(if (isClosableOutside) 1 else 0)
+            writeByte(if (isOnTheEndSide) 1 else 0)
         }
     }
 

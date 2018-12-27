@@ -55,7 +55,12 @@ fun Context.getItemTextView(
 
     setOnClickListener(onCLick)
     setOnLongClickListener(onLongClick)
-    setPadding(0, 0, getDimension(R.dimen.text_end_padding), 0)
+    setPadding(
+            getDimension(R.dimen.text_start_end_padding),
+            0,
+            getDimension(R.dimen.text_start_end_padding),
+            0
+    )
     setTextColor(getColorCompat(textColor))
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -125,13 +130,7 @@ fun Context.getImageWrapper(
     menuItem.apply {
         when {
             bgColor != 0 -> setBackgroundColor(bgColor)
-            bgDrawable != null -> {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    setBackgroundDrawable(bgDrawable)
-                } else {
-                    background = bgDrawable
-                }
-            }
+            bgDrawable != null -> background = bgDrawable
             bgResource != 0 -> setBackgroundResource(bgResource)
             else -> setBackgroundColor(getColorCompat(R.color.menu_item_background))
         }
