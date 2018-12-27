@@ -14,13 +14,6 @@ import android.widget.*
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.R
 
-fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, color)
-
-fun Context.getDimension(@DimenRes dimen: Int) = resources.getDimension(dimen).toInt()
-
-fun Context.isLayoutDirectionRtl(): Boolean =
-        resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
-
 fun Context.getDefaultActionBarSize(): Int {
     val styledAttrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
     val actionBarSize = styledAttrs.getDimension(0, 0f).toInt()
@@ -28,7 +21,14 @@ fun Context.getDefaultActionBarSize(): Int {
     return actionBarSize
 }
 
-fun Context.getItemTextView(
+internal fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, color)
+
+internal fun Context.getDimension(@DimenRes dimen: Int) = resources.getDimension(dimen).toInt()
+
+internal fun Context.isLayoutDirectionRtl(): Boolean =
+        resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+
+internal fun Context.getItemTextView(
         menuItem: MenuObject,
         menuItemSize: Int,
         onCLick: View.OnClickListener,
@@ -70,7 +70,7 @@ fun Context.getItemTextView(
     }
 }
 
-fun Context.getItemImageButton(menuItem: MenuObject): ImageView =
+internal fun Context.getItemImageButton(menuItem: MenuObject): ImageView =
         ImageButton(this).apply {
             val paddingValue = getDimension(R.dimen.menu_item_padding)
 
@@ -95,7 +95,7 @@ fun Context.getItemImageButton(menuItem: MenuObject): ImageView =
             }
         }
 
-fun Context.getDivider(menuItem: MenuObject): View = View(this).apply {
+internal fun Context.getDivider(menuItem: MenuObject): View = View(this).apply {
     val dividerColor = if (menuItem.dividerColor == Integer.MAX_VALUE) {
         R.color.divider_color
     } else {
@@ -111,7 +111,7 @@ fun Context.getDivider(menuItem: MenuObject): View = View(this).apply {
     setBackgroundColor(getColorCompat(dividerColor))
 }
 
-fun Context.getImageWrapper(
+internal fun Context.getImageWrapper(
         menuItem: MenuObject,
         menuItemSize: Int,
         onCLick: View.OnClickListener,
