@@ -130,19 +130,27 @@ class MenuAdapter(
     private fun resetSideAnimation(view: View) {
         if (!isMenuOpen) {
             ViewHelper.setRotation(view, 0f)
-            ViewHelper.setRotationY(
-                    view,
-                    if (context.isLayoutDirectionRtl()) 90f else -90f
-            )
+            ViewHelper.setRotationY(view, getRotationY())
             ViewHelper.setRotationX(view, 0f)
         }
 
-        ViewHelper.setPivotX(
-                view,
-                if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
-        )
+        ViewHelper.setPivotX(view, getPivotX())
         ViewHelper.setPivotY(view, (actionBarSize / 2).toFloat())
     }
+
+    private fun getRotationY() =
+            if (isOnTheEndSide) {
+                if (context.isLayoutDirectionRtl()) 90f else -90f
+            } else {
+                if (context.isLayoutDirectionRtl()) -90f else 90f
+            }
+
+    private fun getPivotX() =
+            if (isOnTheEndSide) {
+                if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
+            } else {
+                if (context.isLayoutDirectionRtl()) actionBarSize.toFloat() else 0f
+            }
 
     /**
      * Set starting params to text animations
@@ -215,9 +223,17 @@ class MenuAdapter(
                 }
 
                 val textTranslation = if (isCloseAnimation) {
-                    translationEnd(getTextEndTranslation())
+                    if (isOnTheEndSide) {
+                        translationEnd(getTextEndTranslation())
+                    } else {
+                        translationStart(getTextEndTranslation())
+                    }
                 } else {
-                    translationStart(getTextEndTranslation())
+                    if (isOnTheEndSide) {
+                        translationStart(getTextEndTranslation())
+                    } else {
+                        translationEnd(getTextEndTranslation())
+                    }
                 }
 
                 playTogether(textAppearance, textTranslation)
@@ -228,13 +244,21 @@ class MenuAdapter(
             imageAnimations.add(
                     if (isCloseAnimation) {
                         if (wrapperPosition == 0) {
-                            rotationCloseToEnd()
+                            if (isOnTheEndSide) {
+                                rotationCloseToEnd()
+                            } else {
+                                rotationCloseToStart()
+                            }
                         } else {
                             rotationCloseVertical()
                         }
                     } else {
                         if (wrapperPosition == 0) {
-                            rotationOpenFromEnd()
+                            if (isOnTheEndSide) {
+                                rotationOpenFromEnd()
+                            } else {
+                                rotationOpenFromStart()
+                            }
                         } else {
                             rotationOpenVertical()
                         }
@@ -267,7 +291,13 @@ class MenuAdapter(
             resetVerticalAnimation(menuWrapperChild, true)
             closeToBottomImageAnimatorList.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextTopAnimatorList.add(
-                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation())
+                    textWrapper.getChildAt(i).run {
+                        if (isOnTheEndSide) {
+                            fadeOutEndSet(getTextEndTranslation())
+                        } else {
+                            fadeOutStartSet(getTextEndTranslation())
+                        }
+                    }
             )
         }
 
@@ -279,7 +309,13 @@ class MenuAdapter(
             resetVerticalAnimation(menuWrapperChild, false)
             closeToTopAnimatorObjects.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextBottomAnimatorList.add(
-                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation())
+                    textWrapper.getChildAt(i).run {
+                        if (isOnTheEndSide) {
+                            fadeOutEndSet(getTextEndTranslation())
+                        } else {
+                            fadeOutStartSet(getTextEndTranslation())
+                        }
+                    }
             )
         }
 
@@ -295,7 +331,13 @@ class MenuAdapter(
         val fadeOutBottom = AnimatorSet()
         fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList)
 
-        val closeToEnd = menuWrapper.getChildAt(childIndex).rotationCloseToEnd()
+        val closeToEnd = menuWrapper.getChildAt(childIndex).run {
+            if (isOnTheEndSide) {
+                rotationCloseToEnd()
+            } else {
+                rotationCloseToStart()
+            }
+        }
         closeToEnd.onAnimationEnd {
             toggleIsAnimationRun()
 
@@ -305,7 +347,13 @@ class MenuAdapter(
             }
         }
         val fadeOutChosenText =
-                textWrapper.getChildAt(childIndex).fadeOutSet(getTextEndTranslation())
+                textWrapper.getChildAt(childIndex).run {
+                    if (isOnTheEndSide) {
+                        fadeOutEndSet(getTextEndTranslation())
+                    } else {
+                        fadeOutStartSet(getTextEndTranslation())
+                    }
+                }
 
         val imageFullAnimatorSet = AnimatorSet()
         imageFullAnimatorSet.play(closeToBottom).with(closeToTop)

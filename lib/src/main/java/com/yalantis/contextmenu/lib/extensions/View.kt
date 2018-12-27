@@ -20,12 +20,34 @@ internal fun View.rotationCloseToEnd(): ObjectAnimator {
     return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
 }
 
+internal fun View.rotationCloseToStart(): ObjectAnimator {
+    val from = 0f
+    var to = 90f
+
+    if (context.isLayoutDirectionRtl()) {
+        to = -90f
+    }
+
+    return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
+}
+
 internal fun View.rotationOpenFromEnd(): ObjectAnimator {
     var from = -90f
     val to = 0f
 
     if (context.isLayoutDirectionRtl()) {
         from = 90f
+    }
+
+    return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
+}
+
+internal fun View.rotationOpenFromStart(): ObjectAnimator {
+    var from = 90f
+    val to = 0f
+
+    if (context.isLayoutDirectionRtl()) {
+        from = -90f
     }
 
     return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
@@ -67,6 +89,10 @@ internal fun View.translationStart(x: Float): ObjectAnimator {
     return ObjectAnimator.ofFloat(this, TRANSLATION_X_PROPERTY, from, to)
 }
 
-internal fun View.fadeOutSet(x: Float): AnimatorSet = AnimatorSet().apply {
+internal fun View.fadeOutStartSet(x: Float): AnimatorSet = AnimatorSet().apply {
+    playTogether(alphaDisappear(), translationStart(x))
+}
+
+internal fun View.fadeOutEndSet(x: Float): AnimatorSet = AnimatorSet().apply {
     playTogether(alphaDisappear(), translationEnd(x))
 }
