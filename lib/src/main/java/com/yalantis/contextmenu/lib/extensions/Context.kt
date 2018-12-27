@@ -56,9 +56,9 @@ internal fun Context.getItemTextView(
     setOnClickListener(onCLick)
     setOnLongClickListener(onLongClick)
     setPadding(
-            getDimension(R.dimen.text_start_end_padding),
+            getDimension(R.dimen.text_start_end_padding_medium),
             0,
-            getDimension(R.dimen.text_start_end_padding),
+            getDimension(R.dimen.text_start_end_padding_small),
             0
     )
     setTextColor(getColorCompat(textColor))

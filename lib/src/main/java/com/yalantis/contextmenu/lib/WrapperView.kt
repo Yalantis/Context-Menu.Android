@@ -45,9 +45,9 @@ open class WrapperView @JvmOverloads constructor(
                     ).apply {
                         addRule(RelativeLayout.END_OF, wrapperButtons.id)
                         setMargins(
+                                0,
+                                0,
                                 context.getDimension(R.dimen.text_start_end_margin),
-                                0,
-                                0,
                                 0
                         )
                     }

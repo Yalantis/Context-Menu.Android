@@ -98,8 +98,7 @@ class SampleActivity : AppCompatActivity() {
         val menuParams = MenuParams(
                 actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
                 menuObjects = getMenuObjects(),
-                isClosableOutside = false,
-                isOnTheEndSide = false
+                isClosableOutside = false
         )
 
         contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams).apply {
