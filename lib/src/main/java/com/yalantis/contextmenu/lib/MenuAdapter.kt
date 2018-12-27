@@ -16,7 +16,8 @@ class MenuAdapter(
         private val menuWrapper: LinearLayout,
         private val textWrapper: LinearLayout,
         private val menuObjects: List<MenuObject>,
-        private val actionBarSize: Int
+        private val actionBarSize: Int,
+        private val isOnTheEndSide: Boolean
 ) {
 
     private var onItemClickListener: OnItemClickListener? = null

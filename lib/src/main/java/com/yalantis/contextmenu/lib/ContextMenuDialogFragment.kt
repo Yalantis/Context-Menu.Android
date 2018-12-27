@@ -3,11 +3,7 @@ package com.yalantis.contextmenu.lib
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.DialogFragment
-import android.support.v4.view.ViewCompat
 import android.view.*
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import com.yalantis.contextmenu.lib.extensions.getDimension
 import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener
 import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
@@ -73,7 +69,8 @@ class ContextMenuDialogFragment : DialogFragment() {
                     wrapperView.wrapperButtons,
                     wrapperView.wrapperText,
                     menuParams.menuObjects,
-                    menuParams.actionBarSize
+                    menuParams.actionBarSize,
+                    menuParams.isOnTheEndSide
             ).apply {
                 setAnimationDuration(menuParams.animationDuration)
 
