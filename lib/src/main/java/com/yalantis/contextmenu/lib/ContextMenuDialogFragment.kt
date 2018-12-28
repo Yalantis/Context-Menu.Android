@@ -42,10 +42,9 @@ class ContextMenuDialogFragment : DialogFragment() {
         }, menuParams.animationDelay.toLong())
 
         wrapperView.apply {
-            if (menuParams.isOnTheEndSide) {
-                showOnTheEndSide()
-            } else {
-                showOnTheStartSide()
+            when (menuParams.gravity) {
+                Gravity.END -> showOnTheEndSide()
+                Gravity.START -> showOnTheStartSide()
             }
 
             if (menuParams.isClosableOutside) {
@@ -74,7 +73,7 @@ class ContextMenuDialogFragment : DialogFragment() {
                     wrapperView.wrapperText,
                     menuParams.menuObjects,
                     menuParams.actionBarSize,
-                    menuParams.isOnTheEndSide
+                    menuParams.gravity
             ).apply {
                 setAnimationDuration(menuParams.animationDuration)
 

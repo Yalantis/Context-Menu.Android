@@ -17,7 +17,7 @@ class MenuAdapter(
         private val textWrapper: LinearLayout,
         private val menuObjects: List<MenuObject>,
         private val actionBarSize: Int,
-        private val isOnTheEndSide: Boolean
+        private val gravity: Gravity
 ) {
 
     private var onItemClickListener: OnItemClickListener? = null
@@ -139,17 +139,15 @@ class MenuAdapter(
     }
 
     private fun getRotationY() =
-            if (isOnTheEndSide) {
-                if (context.isLayoutDirectionRtl()) 90f else -90f
-            } else {
-                if (context.isLayoutDirectionRtl()) -90f else 90f
+            when (gravity) {
+                Gravity.END -> if (context.isLayoutDirectionRtl()) 90f else -90f
+                Gravity.START -> if (context.isLayoutDirectionRtl()) -90f else 90f
             }
 
     private fun getPivotX() =
-            if (isOnTheEndSide) {
-                if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
-            } else {
-                if (context.isLayoutDirectionRtl()) actionBarSize.toFloat() else 0f
+            when (gravity) {
+                Gravity.END -> if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
+                Gravity.START -> if (context.isLayoutDirectionRtl()) actionBarSize.toFloat() else 0f
             }
 
     /**
@@ -223,16 +221,14 @@ class MenuAdapter(
                 }
 
                 val textTranslation = if (isCloseAnimation) {
-                    if (isOnTheEndSide) {
-                        translationEnd(getTextEndTranslation())
-                    } else {
-                        translationStart(getTextEndTranslation())
+                    when (gravity) {
+                        Gravity.END -> translationEnd(getTextEndTranslation())
+                        Gravity.START -> translationStart(getTextEndTranslation())
                     }
                 } else {
-                    if (isOnTheEndSide) {
-                        translationStart(getTextEndTranslation())
-                    } else {
-                        translationEnd(getTextEndTranslation())
+                    when (gravity) {
+                        Gravity.END -> translationStart(getTextEndTranslation())
+                        Gravity.START -> translationEnd(getTextEndTranslation())
                     }
                 }
 
@@ -244,20 +240,18 @@ class MenuAdapter(
             imageAnimations.add(
                     if (isCloseAnimation) {
                         if (wrapperPosition == 0) {
-                            if (isOnTheEndSide) {
-                                rotationCloseToEnd()
-                            } else {
-                                rotationCloseToStart()
+                            when (gravity) {
+                                Gravity.END -> rotationCloseToEnd()
+                                Gravity.START -> rotationCloseToStart()
                             }
                         } else {
                             rotationCloseVertical()
                         }
                     } else {
                         if (wrapperPosition == 0) {
-                            if (isOnTheEndSide) {
-                                rotationOpenFromEnd()
-                            } else {
-                                rotationOpenFromStart()
+                            when (gravity) {
+                                Gravity.END -> rotationOpenFromEnd()
+                                Gravity.START -> rotationOpenFromStart()
                             }
                         } else {
                             rotationOpenVertical()
@@ -292,10 +286,9 @@ class MenuAdapter(
             closeToBottomImageAnimatorList.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextTopAnimatorList.add(
                     textWrapper.getChildAt(i).run {
-                        if (isOnTheEndSide) {
-                            fadeOutEndSet(getTextEndTranslation())
-                        } else {
-                            fadeOutStartSet(getTextEndTranslation())
+                        when (gravity) {
+                            Gravity.END -> fadeOutEndSet(getTextEndTranslation())
+                            Gravity.START -> fadeOutStartSet(getTextEndTranslation())
                         }
                     }
             )
@@ -310,10 +303,9 @@ class MenuAdapter(
             closeToTopAnimatorObjects.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextBottomAnimatorList.add(
                     textWrapper.getChildAt(i).run {
-                        if (isOnTheEndSide) {
-                            fadeOutEndSet(getTextEndTranslation())
-                        } else {
-                            fadeOutStartSet(getTextEndTranslation())
+                        when (gravity) {
+                            Gravity.END -> fadeOutEndSet(getTextEndTranslation())
+                            Gravity.START -> fadeOutStartSet(getTextEndTranslation())
                         }
                     }
             )
@@ -332,10 +324,9 @@ class MenuAdapter(
         fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList)
 
         val closeToEnd = menuWrapper.getChildAt(childIndex).run {
-            if (isOnTheEndSide) {
-                rotationCloseToEnd()
-            } else {
-                rotationCloseToStart()
+            when (gravity) {
+                Gravity.END -> rotationCloseToEnd()
+                Gravity.START -> rotationCloseToStart()
             }
         }
         closeToEnd.onAnimationEnd {
@@ -348,10 +339,9 @@ class MenuAdapter(
         }
         val fadeOutChosenText =
                 textWrapper.getChildAt(childIndex).run {
-                    if (isOnTheEndSide) {
-                        fadeOutEndSet(getTextEndTranslation())
-                    } else {
-                        fadeOutStartSet(getTextEndTranslation())
+                    when (gravity) {
+                        Gravity.END -> fadeOutEndSet(getTextEndTranslation())
+                        Gravity.START -> fadeOutStartSet(getTextEndTranslation())
                     }
                 }
 
