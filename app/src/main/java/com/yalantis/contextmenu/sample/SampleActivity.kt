@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.yalantis.contextmenu.R
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
+import com.yalantis.contextmenu.lib.Gravity
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.MenuParams
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
@@ -22,10 +23,13 @@ import kotlinx.android.synthetic.main.toolbar.*
 class SampleActivity : AppCompatActivity() {
 
     private lateinit var contextMenuDialogFragment: ContextMenuDialogFragment
+    private lateinit var menuParams: MenuParams
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
+
+        menuParams = getMenuParamsForEndSide()
 
         initToolbar()
         initMenuFragment()
@@ -92,15 +96,18 @@ class SampleActivity : AppCompatActivity() {
         }
 
         tvToolbarTitle.text = "Samantha"
+        tvToolbarTitle.setOnClickListener {
+            menuParams = if (menuParams.gravity == Gravity.END) {
+                getMenuParamsForStartSide()
+            } else {
+                getMenuParamsForEndSide()
+            }
+
+            initMenuFragment()
+        }
     }
 
     private fun initMenuFragment() {
-        val menuParams = MenuParams(
-                actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
-                menuObjects = getMenuObjects(),
-                isClosableOutside = false
-        )
-
         contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams).apply {
             setItemClickListener(object : OnMenuItemClickListener {
                 override fun onMenuItemClick(clickedView: View, position: Int) {
@@ -122,6 +129,21 @@ class SampleActivity : AppCompatActivity() {
             })
         }
     }
+
+    private fun getMenuParamsForEndSide() =
+            MenuParams(
+                    actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
+                    menuObjects = getMenuObjects(),
+                    isClosableOutside = false
+            )
+
+    private fun getMenuParamsForStartSide() =
+            MenuParams(
+                    actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
+                    menuObjects = getMenuObjects(),
+                    isClosableOutside = false,
+                    gravity = Gravity.START
+            )
 
     private fun getMenuObjects() = mutableListOf<MenuObject>().apply {
         // You can use any [resource, bitmap, drawable, color] as image:
