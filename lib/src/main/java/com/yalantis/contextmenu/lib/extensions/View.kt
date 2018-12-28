@@ -3,51 +3,36 @@ package com.yalantis.contextmenu.lib.extensions
 import android.view.View
 import com.nineoldandroids.animation.AnimatorSet
 import com.nineoldandroids.animation.ObjectAnimator
+import com.yalantis.contextmenu.lib.Gravity
 
 private const val ROTATION_Y_PROPERTY = "rotationY"
 private const val ROTATION_X_PROPERTY = "rotationX"
 private const val ALPHA_PROPERTY = "alpha"
 private const val TRANSLATION_X_PROPERTY = "translationX"
 
-internal fun View.rotationCloseToEnd(): ObjectAnimator {
+internal fun View.rotationCloseHorizontal(gravity: Gravity): ObjectAnimator {
     val from = 0f
-    var to = -90f
+    var to = when (gravity) {
+        Gravity.END -> -90f
+        Gravity.START -> 90f
+    }
 
     if (context.isLayoutDirectionRtl()) {
-        to = 90f
+        to *= -1f
     }
 
     return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
 }
 
-internal fun View.rotationCloseToStart(): ObjectAnimator {
-    val from = 0f
-    var to = 90f
-
-    if (context.isLayoutDirectionRtl()) {
-        to = -90f
+internal fun View.rotationOpenHorizontal(gravity: Gravity): ObjectAnimator {
+    var from = when (gravity) {
+        Gravity.END -> -90f
+        Gravity.START -> 90f
     }
-
-    return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
-}
-
-internal fun View.rotationOpenFromEnd(): ObjectAnimator {
-    var from = -90f
     val to = 0f
 
     if (context.isLayoutDirectionRtl()) {
-        from = 90f
-    }
-
-    return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
-}
-
-internal fun View.rotationOpenFromStart(): ObjectAnimator {
-    var from = 90f
-    val to = 0f
-
-    if (context.isLayoutDirectionRtl()) {
-        from = -90f
+        from *= -1f
     }
 
     return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
@@ -89,10 +74,10 @@ internal fun View.translationStart(x: Float): ObjectAnimator {
     return ObjectAnimator.ofFloat(this, TRANSLATION_X_PROPERTY, from, to)
 }
 
-internal fun View.fadeOutStartSet(x: Float): AnimatorSet = AnimatorSet().apply {
-    playTogether(alphaDisappear(), translationStart(x))
-}
-
-internal fun View.fadeOutEndSet(x: Float): AnimatorSet = AnimatorSet().apply {
-    playTogether(alphaDisappear(), translationEnd(x))
+internal fun View.fadeOutSet(x: Float, gravity: Gravity): AnimatorSet = AnimatorSet().apply {
+    val translation = when (gravity) {
+        Gravity.END -> translationEnd(x)
+        Gravity.START -> translationStart(x)
+    }
+    playTogether(alphaDisappear(), translation)
 }

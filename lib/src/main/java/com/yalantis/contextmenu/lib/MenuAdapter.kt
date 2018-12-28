@@ -240,19 +240,13 @@ class MenuAdapter(
             imageAnimations.add(
                     if (isCloseAnimation) {
                         if (wrapperPosition == 0) {
-                            when (gravity) {
-                                Gravity.END -> rotationCloseToEnd()
-                                Gravity.START -> rotationCloseToStart()
-                            }
+                            rotationCloseHorizontal(gravity)
                         } else {
                             rotationCloseVertical()
                         }
                     } else {
                         if (wrapperPosition == 0) {
-                            when (gravity) {
-                                Gravity.END -> rotationOpenFromEnd()
-                                Gravity.START -> rotationOpenFromStart()
-                            }
+                            rotationOpenHorizontal(gravity)
                         } else {
                             rotationOpenVertical()
                         }
@@ -285,12 +279,7 @@ class MenuAdapter(
             resetVerticalAnimation(menuWrapperChild, true)
             closeToBottomImageAnimatorList.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextTopAnimatorList.add(
-                    textWrapper.getChildAt(i).run {
-                        when (gravity) {
-                            Gravity.END -> fadeOutEndSet(getTextEndTranslation())
-                            Gravity.START -> fadeOutStartSet(getTextEndTranslation())
-                        }
-                    }
+                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation(), gravity)
             )
         }
 
@@ -302,12 +291,7 @@ class MenuAdapter(
             resetVerticalAnimation(menuWrapperChild, false)
             closeToTopAnimatorObjects.add(menuWrapperChild.rotationCloseVertical())
             fadeOutTextBottomAnimatorList.add(
-                    textWrapper.getChildAt(i).run {
-                        when (gravity) {
-                            Gravity.END -> fadeOutEndSet(getTextEndTranslation())
-                            Gravity.START -> fadeOutStartSet(getTextEndTranslation())
-                        }
-                    }
+                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation(), gravity)
             )
         }
 
@@ -323,12 +307,7 @@ class MenuAdapter(
         val fadeOutBottom = AnimatorSet()
         fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList)
 
-        val closeToEnd = menuWrapper.getChildAt(childIndex).run {
-            when (gravity) {
-                Gravity.END -> rotationCloseToEnd()
-                Gravity.START -> rotationCloseToStart()
-            }
-        }
+        val closeToEnd = menuWrapper.getChildAt(childIndex).rotationCloseHorizontal(gravity)
         closeToEnd.onAnimationEnd {
             toggleIsAnimationRun()
 
@@ -338,12 +317,7 @@ class MenuAdapter(
             }
         }
         val fadeOutChosenText =
-                textWrapper.getChildAt(childIndex).run {
-                    when (gravity) {
-                        Gravity.END -> fadeOutEndSet(getTextEndTranslation())
-                        Gravity.START -> fadeOutStartSet(getTextEndTranslation())
-                    }
-                }
+                textWrapper.getChildAt(childIndex).fadeOutSet(getTextEndTranslation(), gravity)
 
         val imageFullAnimatorSet = AnimatorSet()
         imageFullAnimatorSet.play(closeToBottom).with(closeToTop)
