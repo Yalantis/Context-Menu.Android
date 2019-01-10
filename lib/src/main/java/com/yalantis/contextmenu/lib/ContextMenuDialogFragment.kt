@@ -3,10 +3,7 @@ package com.yalantis.contextmenu.lib
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.DialogFragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener
 import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
@@ -44,10 +41,14 @@ class ContextMenuDialogFragment : DialogFragment() {
             dropDownMenuAdapter.menuToggle()
         }, menuParams.animationDelay.toLong())
 
-        if (menuParams.isClosableOutside) {
-            root.setOnClickListener {
-                if (isAdded) {
-                    dismissAllowingStateLoss()
+        wrapperView.apply {
+            show(menuParams.gravity)
+
+            if (menuParams.isClosableOutside) {
+                rootRelativeLayout.setOnClickListener {
+                    if (isAdded) {
+                        dismissAllowingStateLoss()
+                    }
                 }
             }
         }
@@ -65,10 +66,11 @@ class ContextMenuDialogFragment : DialogFragment() {
         activity?.let {
             dropDownMenuAdapter = MenuAdapter(
                     it,
-                    wrapper_buttons,
-                    wrapper_text,
+                    wrapperView.wrapperButtons,
+                    wrapperView.wrapperText,
                     menuParams.menuObjects,
-                    menuParams.actionBarSize
+                    menuParams.actionBarSize,
+                    menuParams.gravity
             ).apply {
                 setAnimationDuration(menuParams.animationDuration)
 

@@ -3,70 +3,87 @@ package com.yalantis.contextmenu.lib.extensions
 import android.view.View
 import com.nineoldandroids.animation.AnimatorSet
 import com.nineoldandroids.animation.ObjectAnimator
+import com.yalantis.contextmenu.lib.MenuGravity
+
+const val ROTATION_ZERO_DEGREES = 0f
+const val ROTATION_NINETY_DEGREES = 90f
+const val ALPHA_INVISIBLE = 0f
+const val ALPHA_VISIBLE = 1f
+const val TRANSLATION_ZERO_VALUE = 0f
 
 private const val ROTATION_Y_PROPERTY = "rotationY"
 private const val ROTATION_X_PROPERTY = "rotationX"
 private const val ALPHA_PROPERTY = "alpha"
 private const val TRANSLATION_X_PROPERTY = "translationX"
 
-fun View.rotationCloseToEnd(): ObjectAnimator {
-    val from = 0f
-    var to = -90f
+internal fun View.rotationCloseHorizontal(gravity: MenuGravity): ObjectAnimator {
+    val from = ROTATION_ZERO_DEGREES
+    var to = when (gravity) {
+        MenuGravity.END -> -ROTATION_NINETY_DEGREES
+        MenuGravity.START -> ROTATION_NINETY_DEGREES
+    }
 
     if (context.isLayoutDirectionRtl()) {
-        to = 90f
+        to *= -1f
     }
 
     return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
 }
 
-fun View.rotationOpenFromEnd(): ObjectAnimator {
-    var from = -90f
-    val to = 0f
+internal fun View.rotationOpenHorizontal(gravity: MenuGravity): ObjectAnimator {
+    var from = when (gravity) {
+        MenuGravity.END -> -ROTATION_NINETY_DEGREES
+        MenuGravity.START -> ROTATION_NINETY_DEGREES
+    }
+    val to = ROTATION_ZERO_DEGREES
 
     if (context.isLayoutDirectionRtl()) {
-        from = 90f
+        from *= -1f
     }
 
     return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
 }
 
-fun View.rotationCloseVertical(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, 0f, -90f)
+internal fun View.rotationCloseVertical(): ObjectAnimator =
+        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, ROTATION_ZERO_DEGREES, -ROTATION_NINETY_DEGREES)
 
-fun View.rotationOpenVertical(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, -90f, 0f)
+internal fun View.rotationOpenVertical(): ObjectAnimator =
+        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, -ROTATION_NINETY_DEGREES, ROTATION_ZERO_DEGREES)
 
-fun View.alphaDisappear(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, 1f, 0f)
+internal fun View.alphaDisappear(): ObjectAnimator =
+        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, ALPHA_VISIBLE, ALPHA_INVISIBLE)
 
-fun View.alphaAppear(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, 0f, 1f)
+internal fun View.alphaAppear(): ObjectAnimator =
+        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, ALPHA_INVISIBLE, ALPHA_VISIBLE)
 
-fun View.translationEnd(x: Float): ObjectAnimator {
-    var from = 0f
+internal fun View.translationEnd(x: Float): ObjectAnimator {
+    var from = TRANSLATION_ZERO_VALUE
     var to = x
 
     if (context.isLayoutDirectionRtl()) {
         from = x
-        to = 0f
+        to = TRANSLATION_ZERO_VALUE
     }
 
     return ObjectAnimator.ofFloat(this, TRANSLATION_X_PROPERTY, from, to)
 }
 
-fun View.translationStart(x: Float): ObjectAnimator {
+internal fun View.translationStart(x: Float): ObjectAnimator {
     var from = x
-    var to = 0f
+    var to = TRANSLATION_ZERO_VALUE
 
     if (context.isLayoutDirectionRtl()) {
-        from = 0f
+        from = TRANSLATION_ZERO_VALUE
         to = x
     }
 
     return ObjectAnimator.ofFloat(this, TRANSLATION_X_PROPERTY, from, to)
 }
 
-fun View.fadeOutSet(x: Float): AnimatorSet = AnimatorSet().apply {
-    playTogether(alphaDisappear(), translationEnd(x))
+internal fun View.fadeOutSet(x: Float, gravity: MenuGravity): AnimatorSet = AnimatorSet().apply {
+    val translation = when (gravity) {
+        MenuGravity.END -> translationEnd(x)
+        MenuGravity.START -> translationStart(x)
+    }
+    playTogether(alphaDisappear(), translation)
 }

@@ -2,7 +2,7 @@ package com.yalantis.contextmenu.lib.extensions
 
 import com.nineoldandroids.animation.Animator
 
-fun Animator.onAnimationEnd(onAnimationEnd: (Animator?) -> Unit) {
+internal fun Animator.onAnimationEnd(onAnimationEnd: (Animator?) -> Unit) {
     this.addListener(object : Animator.AnimatorListener {
         override fun onAnimationRepeat(animation: Animator?) {
             // do nothing
