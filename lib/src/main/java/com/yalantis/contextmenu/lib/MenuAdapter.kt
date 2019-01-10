@@ -115,9 +115,9 @@ class MenuAdapter(
      */
     private fun resetVerticalAnimation(view: View, toTop: Boolean) {
         if (!isMenuOpen) {
-            ViewHelper.setRotation(view, 0f)
-            ViewHelper.setRotationY(view, 0f)
-            ViewHelper.setRotationX(view, -90f)
+            ViewHelper.setRotation(view, ROTATION_ZERO_DEGREES)
+            ViewHelper.setRotationY(view, ROTATION_ZERO_DEGREES)
+            ViewHelper.setRotationX(view, -ROTATION_NINETY_DEGREES)
         }
 
         ViewHelper.setPivotX(view, (actionBarSize / 2).toFloat())
@@ -129,9 +129,9 @@ class MenuAdapter(
      */
     private fun resetSideAnimation(view: View) {
         if (!isMenuOpen) {
-            ViewHelper.setRotation(view, 0f)
+            ViewHelper.setRotation(view, ROTATION_ZERO_DEGREES)
             ViewHelper.setRotationY(view, getRotationY())
-            ViewHelper.setRotationX(view, 0f)
+            ViewHelper.setRotationX(view, ROTATION_ZERO_DEGREES)
         }
 
         ViewHelper.setPivotX(view, getPivotX())
@@ -140,14 +140,30 @@ class MenuAdapter(
 
     private fun getRotationY() =
             when (gravity) {
-                MenuGravity.END -> if (context.isLayoutDirectionRtl()) 90f else -90f
-                MenuGravity.START -> if (context.isLayoutDirectionRtl()) -90f else 90f
+                MenuGravity.END -> if (context.isLayoutDirectionRtl()) {
+                    ROTATION_NINETY_DEGREES
+                } else {
+                    -ROTATION_NINETY_DEGREES
+                }
+                MenuGravity.START -> if (context.isLayoutDirectionRtl()) {
+                    -ROTATION_NINETY_DEGREES
+                } else {
+                    ROTATION_NINETY_DEGREES
+                }
             }
 
     private fun getPivotX() =
             when (gravity) {
-                MenuGravity.END -> if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
-                MenuGravity.START -> if (context.isLayoutDirectionRtl()) actionBarSize.toFloat() else 0f
+                MenuGravity.END -> if (context.isLayoutDirectionRtl()) {
+                    ROTATION_ZERO_DEGREES
+                } else {
+                    actionBarSize.toFloat()
+                }
+                MenuGravity.START -> if (context.isLayoutDirectionRtl()) {
+                    actionBarSize.toFloat()
+                } else {
+                    ROTATION_ZERO_DEGREES
+                }
             }
 
     /**
@@ -354,5 +370,8 @@ class MenuAdapter(
     companion object {
 
         const val ANIMATION_DURATION_MILLIS = 100L
+
+        private const val ROTATION_ZERO_DEGREES = 0f
+        private const val ROTATION_NINETY_DEGREES = 90f
     }
 }
