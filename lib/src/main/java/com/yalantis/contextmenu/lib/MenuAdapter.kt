@@ -170,8 +170,8 @@ class MenuAdapter(
      * Set starting params to text animations
      */
     private fun resetTextAnimation(view: View) {
-        ViewHelper.setAlpha(view, (if (!isMenuOpen) 0 else 1).toFloat())
-        ViewHelper.setTranslationX(view, (if (!isMenuOpen) actionBarSize else 0).toFloat())
+        ViewHelper.setAlpha(view, (if (!isMenuOpen) ALPHA_INVISIBLE else ALPHA_VISIBLE))
+        ViewHelper.setTranslationX(view, (if (!isMenuOpen) actionBarSize.toFloat() else TRANSLATION_ZERO_VALUE))
     }
 
     /**
@@ -370,8 +370,5 @@ class MenuAdapter(
     companion object {
 
         const val ANIMATION_DURATION_MILLIS = 100L
-
-        private const val ROTATION_ZERO_DEGREES = 0f
-        private const val ROTATION_NINETY_DEGREES = 90f
     }
 }

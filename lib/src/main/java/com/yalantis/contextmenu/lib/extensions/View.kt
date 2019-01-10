@@ -5,16 +5,22 @@ import com.nineoldandroids.animation.AnimatorSet
 import com.nineoldandroids.animation.ObjectAnimator
 import com.yalantis.contextmenu.lib.MenuGravity
 
+const val ROTATION_ZERO_DEGREES = 0f
+const val ROTATION_NINETY_DEGREES = 90f
+const val ALPHA_INVISIBLE = 0f
+const val ALPHA_VISIBLE = 1f
+const val TRANSLATION_ZERO_VALUE = 0f
+
 private const val ROTATION_Y_PROPERTY = "rotationY"
 private const val ROTATION_X_PROPERTY = "rotationX"
 private const val ALPHA_PROPERTY = "alpha"
 private const val TRANSLATION_X_PROPERTY = "translationX"
 
 internal fun View.rotationCloseHorizontal(gravity: MenuGravity): ObjectAnimator {
-    val from = 0f
+    val from = ROTATION_ZERO_DEGREES
     var to = when (gravity) {
-        MenuGravity.END -> -90f
-        MenuGravity.START -> 90f
+        MenuGravity.END -> -ROTATION_NINETY_DEGREES
+        MenuGravity.START -> ROTATION_NINETY_DEGREES
     }
 
     if (context.isLayoutDirectionRtl()) {
@@ -26,10 +32,10 @@ internal fun View.rotationCloseHorizontal(gravity: MenuGravity): ObjectAnimator 
 
 internal fun View.rotationOpenHorizontal(gravity: MenuGravity): ObjectAnimator {
     var from = when (gravity) {
-        MenuGravity.END -> -90f
-        MenuGravity.START -> 90f
+        MenuGravity.END -> -ROTATION_NINETY_DEGREES
+        MenuGravity.START -> ROTATION_NINETY_DEGREES
     }
-    val to = 0f
+    val to = ROTATION_ZERO_DEGREES
 
     if (context.isLayoutDirectionRtl()) {
         from *= -1f
@@ -39,24 +45,24 @@ internal fun View.rotationOpenHorizontal(gravity: MenuGravity): ObjectAnimator {
 }
 
 internal fun View.rotationCloseVertical(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, 0f, -90f)
+        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, ROTATION_ZERO_DEGREES, -ROTATION_NINETY_DEGREES)
 
 internal fun View.rotationOpenVertical(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, -90f, 0f)
+        ObjectAnimator.ofFloat(this, ROTATION_X_PROPERTY, -ROTATION_NINETY_DEGREES, ROTATION_ZERO_DEGREES)
 
 internal fun View.alphaDisappear(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, 1f, 0f)
+        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, ALPHA_VISIBLE, ALPHA_INVISIBLE)
 
 internal fun View.alphaAppear(): ObjectAnimator =
-        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, 0f, 1f)
+        ObjectAnimator.ofFloat(this, ALPHA_PROPERTY, ALPHA_INVISIBLE, ALPHA_VISIBLE)
 
 internal fun View.translationEnd(x: Float): ObjectAnimator {
-    var from = 0f
+    var from = TRANSLATION_ZERO_VALUE
     var to = x
 
     if (context.isLayoutDirectionRtl()) {
         from = x
-        to = 0f
+        to = TRANSLATION_ZERO_VALUE
     }
 
     return ObjectAnimator.ofFloat(this, TRANSLATION_X_PROPERTY, from, to)
@@ -64,10 +70,10 @@ internal fun View.translationEnd(x: Float): ObjectAnimator {
 
 internal fun View.translationStart(x: Float): ObjectAnimator {
     var from = x
-    var to = 0f
+    var to = TRANSLATION_ZERO_VALUE
 
     if (context.isLayoutDirectionRtl()) {
-        from = 0f
+        from = TRANSLATION_ZERO_VALUE
         to = x
     }
 
