@@ -1,8 +1,8 @@
 package com.yalantis.contextmenu.lib.extensions
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.view.View
-import com.nineoldandroids.animation.AnimatorSet
-import com.nineoldandroids.animation.ObjectAnimator
 import com.yalantis.contextmenu.lib.MenuGravity
 
 const val ROTATION_ZERO_DEGREES = 0f

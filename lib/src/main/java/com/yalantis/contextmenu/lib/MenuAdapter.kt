@@ -1,12 +1,11 @@
 package com.yalantis.contextmenu.lib
 
+import android.animation.Animator
+import android.animation.AnimatorSet
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.nineoldandroids.animation.Animator
-import com.nineoldandroids.animation.AnimatorSet
-import com.nineoldandroids.view.ViewHelper
 import com.yalantis.contextmenu.lib.extensions.*
 import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener
 import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener
@@ -114,28 +113,32 @@ class MenuAdapter(
      * Set starting params to vertical animations
      */
     private fun resetVerticalAnimation(view: View, toTop: Boolean) {
-        if (!isMenuOpen) {
-            ViewHelper.setRotation(view, ROTATION_ZERO_DEGREES)
-            ViewHelper.setRotationY(view, ROTATION_ZERO_DEGREES)
-            ViewHelper.setRotationX(view, -ROTATION_NINETY_DEGREES)
-        }
+        view.apply {
+            if (!isMenuOpen) {
+                rotation = ROTATION_ZERO_DEGREES
+                rotationY = ROTATION_ZERO_DEGREES
+                rotationX = -ROTATION_NINETY_DEGREES
+            }
 
-        ViewHelper.setPivotX(view, (actionBarSize / 2).toFloat())
-        ViewHelper.setPivotY(view, (if (!toTop) 0 else actionBarSize).toFloat())
+            pivotX = (actionBarSize / 2).toFloat()
+            pivotY = (if (!toTop) 0 else actionBarSize).toFloat()
+        }
     }
 
     /**
      * Set starting params to side animations
      */
     private fun resetSideAnimation(view: View) {
-        if (!isMenuOpen) {
-            ViewHelper.setRotation(view, ROTATION_ZERO_DEGREES)
-            ViewHelper.setRotationY(view, getRotationY())
-            ViewHelper.setRotationX(view, ROTATION_ZERO_DEGREES)
-        }
+        view.apply {
+            if (!isMenuOpen) {
+                rotation = ROTATION_ZERO_DEGREES
+                rotationY = this@MenuAdapter.getRotationY()
+                rotationX = ROTATION_ZERO_DEGREES
+            }
 
-        ViewHelper.setPivotX(view, getPivotX())
-        ViewHelper.setPivotY(view, (actionBarSize / 2).toFloat())
+            pivotX = this@MenuAdapter.getPivotX()
+            pivotY = (actionBarSize / 2).toFloat()
+        }
     }
 
     private fun getRotationY() =
@@ -170,8 +173,10 @@ class MenuAdapter(
      * Set starting params to text animations
      */
     private fun resetTextAnimation(view: View) {
-        ViewHelper.setAlpha(view, (if (!isMenuOpen) ALPHA_INVISIBLE else ALPHA_VISIBLE))
-        ViewHelper.setTranslationX(view, (if (!isMenuOpen) actionBarSize.toFloat() else TRANSLATION_ZERO_VALUE))
+        view.apply {
+            alpha = if (!isMenuOpen) ALPHA_INVISIBLE else ALPHA_VISIBLE
+            translationX = if (!isMenuOpen) actionBarSize.toFloat() else TRANSLATION_ZERO_VALUE
+        }
     }
 
     /**
@@ -349,9 +354,9 @@ class MenuAdapter(
         }
 
         AnimatorSet().apply {
-            playTogether(imageFullAnimatorSet, textFullAnimatorSet)
             duration = animationDurationMillis
-            setInterpolator(HesitateInterpolator())
+            interpolator = HesitateInterpolator()
+            playTogether(imageFullAnimatorSet, textFullAnimatorSet)
             start()
         }
     }

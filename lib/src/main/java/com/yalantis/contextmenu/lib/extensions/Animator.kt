@@ -1,6 +1,6 @@
 package com.yalantis.contextmenu.lib.extensions
 
-import com.nineoldandroids.animation.Animator
+import android.animation.Animator
 
 internal fun Animator.onAnimationEnd(onAnimationEnd: (Animator?) -> Unit) {
     this.addListener(object : Animator.AnimatorListener {
