@@ -19,7 +19,7 @@ data class MenuParams(
         var isFitsSystemWindow: Boolean = false,
         var isClipToPadding: Boolean = true,
         var isClosableOutside: Boolean = false,
-        var gravity: Gravity = Gravity.END
+        var gravity: MenuGravity = MenuGravity.END
 ) : Parcelable {
 
     private constructor(parcel: Parcel) : this(
@@ -30,7 +30,7 @@ data class MenuParams(
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
-            parcel.readSerializable() as? Gravity ?: Gravity.END
+            parcel.readSerializable() as? MenuGravity ?: MenuGravity.END
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

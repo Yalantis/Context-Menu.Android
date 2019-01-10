@@ -27,50 +27,38 @@ open class WrapperView @JvmOverloads constructor(
         setupWrappers()
     }
 
-    fun showOnTheStartSide() {
+    fun show(menuGravity: MenuGravity) {
         wrapperButtons.layoutParams =
                 RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 ).apply {
-                    addRule(RelativeLayout.ALIGN_PARENT_START)
+                    addRule(
+                            if (menuGravity == MenuGravity.START) {
+                                RelativeLayout.ALIGN_PARENT_START
+                            } else {
+                                RelativeLayout.ALIGN_PARENT_END
+                            }
+                    )
                 }
 
         wrapperText.apply {
-            gravity = Gravity.START
+            gravity = if (menuGravity == MenuGravity.START) {
+                Gravity.START
+            } else {
+                Gravity.END
+            }
             layoutParams =
                     RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT,
                             RelativeLayout.LayoutParams.WRAP_CONTENT
                     ).apply {
-                        addRule(RelativeLayout.END_OF, wrapperButtons.id)
-                        setMargins(
-                                0,
-                                0,
-                                context.getDimension(R.dimen.text_start_end_margin),
-                                0
-                        )
-                    }
-        }
-    }
-
-    fun showOnTheEndSide() {
-        wrapperButtons.layoutParams =
-                RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    addRule(RelativeLayout.ALIGN_PARENT_END)
-                }
-
-        wrapperText.apply {
-            gravity = Gravity.END
-            layoutParams =
-                    RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT
-                    ).apply {
-                        addRule(RelativeLayout.START_OF, wrapperButtons.id)
+                        val verb = if (menuGravity == MenuGravity.START) {
+                            RelativeLayout.END_OF
+                        } else {
+                            RelativeLayout.START_OF
+                        }
+                        addRule(verb, wrapperButtons.id)
                         setMargins(
                                 0,
                                 0,

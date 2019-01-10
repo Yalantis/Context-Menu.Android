@@ -13,7 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.yalantis.contextmenu.R
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
-import com.yalantis.contextmenu.lib.Gravity
+import com.yalantis.contextmenu.lib.MenuGravity
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.MenuParams
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
@@ -97,7 +97,7 @@ class SampleActivity : AppCompatActivity() {
 
         tvToolbarTitle.text = "Samantha"
         tvToolbarTitle.setOnClickListener {
-            menuParams = if (menuParams.gravity == Gravity.END) {
+            menuParams = if (menuParams.gravity == MenuGravity.END) {
                 getMenuParamsForStartSide()
             } else {
                 getMenuParamsForEndSide()
@@ -142,7 +142,7 @@ class SampleActivity : AppCompatActivity() {
                     actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
                     menuObjects = getMenuObjects(),
                     isClosableOutside = false,
-                    gravity = Gravity.START
+                    gravity = MenuGravity.START
             )
 
     private fun getMenuObjects() = mutableListOf<MenuObject>().apply {

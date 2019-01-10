@@ -3,18 +3,18 @@ package com.yalantis.contextmenu.lib.extensions
 import android.view.View
 import com.nineoldandroids.animation.AnimatorSet
 import com.nineoldandroids.animation.ObjectAnimator
-import com.yalantis.contextmenu.lib.Gravity
+import com.yalantis.contextmenu.lib.MenuGravity
 
 private const val ROTATION_Y_PROPERTY = "rotationY"
 private const val ROTATION_X_PROPERTY = "rotationX"
 private const val ALPHA_PROPERTY = "alpha"
 private const val TRANSLATION_X_PROPERTY = "translationX"
 
-internal fun View.rotationCloseHorizontal(gravity: Gravity): ObjectAnimator {
+internal fun View.rotationCloseHorizontal(gravity: MenuGravity): ObjectAnimator {
     val from = 0f
     var to = when (gravity) {
-        Gravity.END -> -90f
-        Gravity.START -> 90f
+        MenuGravity.END -> -90f
+        MenuGravity.START -> 90f
     }
 
     if (context.isLayoutDirectionRtl()) {
@@ -24,10 +24,10 @@ internal fun View.rotationCloseHorizontal(gravity: Gravity): ObjectAnimator {
     return ObjectAnimator.ofFloat(this, ROTATION_Y_PROPERTY, from, to)
 }
 
-internal fun View.rotationOpenHorizontal(gravity: Gravity): ObjectAnimator {
+internal fun View.rotationOpenHorizontal(gravity: MenuGravity): ObjectAnimator {
     var from = when (gravity) {
-        Gravity.END -> -90f
-        Gravity.START -> 90f
+        MenuGravity.END -> -90f
+        MenuGravity.START -> 90f
     }
     val to = 0f
 
@@ -74,10 +74,10 @@ internal fun View.translationStart(x: Float): ObjectAnimator {
     return ObjectAnimator.ofFloat(this, TRANSLATION_X_PROPERTY, from, to)
 }
 
-internal fun View.fadeOutSet(x: Float, gravity: Gravity): AnimatorSet = AnimatorSet().apply {
+internal fun View.fadeOutSet(x: Float, gravity: MenuGravity): AnimatorSet = AnimatorSet().apply {
     val translation = when (gravity) {
-        Gravity.END -> translationEnd(x)
-        Gravity.START -> translationStart(x)
+        MenuGravity.END -> translationEnd(x)
+        MenuGravity.START -> translationStart(x)
     }
     playTogether(alphaDisappear(), translation)
 }

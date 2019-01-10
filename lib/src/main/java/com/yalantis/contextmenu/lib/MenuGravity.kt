@@ -1,5 +1,5 @@
 package com.yalantis.contextmenu.lib
 
-enum class Gravity {
+enum class MenuGravity {
     END, START
 }

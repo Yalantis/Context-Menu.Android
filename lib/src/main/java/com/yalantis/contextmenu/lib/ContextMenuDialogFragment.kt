@@ -42,10 +42,7 @@ class ContextMenuDialogFragment : DialogFragment() {
         }, menuParams.animationDelay.toLong())
 
         wrapperView.apply {
-            when (menuParams.gravity) {
-                Gravity.END -> showOnTheEndSide()
-                Gravity.START -> showOnTheStartSide()
-            }
+            show(menuParams.gravity)
 
             if (menuParams.isClosableOutside) {
                 rootRelativeLayout.setOnClickListener {

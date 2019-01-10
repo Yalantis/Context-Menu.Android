@@ -17,7 +17,7 @@ class MenuAdapter(
         private val textWrapper: LinearLayout,
         private val menuObjects: List<MenuObject>,
         private val actionBarSize: Int,
-        private val gravity: Gravity
+        private val gravity: MenuGravity
 ) {
 
     private var onItemClickListener: OnItemClickListener? = null
@@ -140,14 +140,14 @@ class MenuAdapter(
 
     private fun getRotationY() =
             when (gravity) {
-                Gravity.END -> if (context.isLayoutDirectionRtl()) 90f else -90f
-                Gravity.START -> if (context.isLayoutDirectionRtl()) -90f else 90f
+                MenuGravity.END -> if (context.isLayoutDirectionRtl()) 90f else -90f
+                MenuGravity.START -> if (context.isLayoutDirectionRtl()) -90f else 90f
             }
 
     private fun getPivotX() =
             when (gravity) {
-                Gravity.END -> if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
-                Gravity.START -> if (context.isLayoutDirectionRtl()) actionBarSize.toFloat() else 0f
+                MenuGravity.END -> if (context.isLayoutDirectionRtl()) 0f else actionBarSize.toFloat()
+                MenuGravity.START -> if (context.isLayoutDirectionRtl()) actionBarSize.toFloat() else 0f
             }
 
     /**
@@ -222,13 +222,13 @@ class MenuAdapter(
 
                 val textTranslation = if (isCloseAnimation) {
                     when (gravity) {
-                        Gravity.END -> translationEnd(getTextEndTranslation())
-                        Gravity.START -> translationStart(getTextEndTranslation())
+                        MenuGravity.END -> translationEnd(getTextEndTranslation())
+                        MenuGravity.START -> translationStart(getTextEndTranslation())
                     }
                 } else {
                     when (gravity) {
-                        Gravity.END -> translationStart(getTextEndTranslation())
-                        Gravity.START -> translationEnd(getTextEndTranslation())
+                        MenuGravity.END -> translationStart(getTextEndTranslation())
+                        MenuGravity.START -> translationEnd(getTextEndTranslation())
                     }
                 }
 
