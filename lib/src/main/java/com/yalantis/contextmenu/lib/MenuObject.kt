@@ -89,41 +89,41 @@ open class MenuObject(var title: String = "") : Parcelable {
 
     override fun describeContents(): Int = 0
 
-    fun setBgDrawable(drawable: ColorDrawable) {
+    open fun setBgDrawable(drawable: ColorDrawable) {
         setBgDrawableInternal(drawable)
     }
 
-    fun setBgDrawable(drawable: BitmapDrawable) {
+    open fun setBgDrawable(drawable: BitmapDrawable) {
         setBgDrawableInternal(drawable)
     }
 
-    fun setBgColorValue(value: Int) {
+    open fun setBgColorValue(value: Int) {
         bgColor = value
         bgDrawable = null
         bgResource = 0
     }
 
-    fun setBgResourceValue(value: Int) {
+    open fun setBgResourceValue(value: Int) {
         bgResource = value
         bgDrawable = null
         bgColor = 0
     }
 
-    fun setColorValue(value: Int) {
+    open fun setColorValue(value: Int) {
         color = value
         drawable = null
         bitmap = null
         resource = 0
     }
 
-    fun setBitmapValue(value: Bitmap) {
+    open fun setBitmapValue(value: Bitmap) {
         bitmap = value
         drawable = null
         color = 0
         resource = 0
     }
 
-    fun setResourceValue(value: Int) {
+    open fun setResourceValue(value: Int) {
         resource = value
         drawable = null
         color = 0

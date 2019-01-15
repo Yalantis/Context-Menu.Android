@@ -10,7 +10,7 @@ import com.yalantis.contextmenu.lib.extensions.*
 import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener
 import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener
 
-class MenuAdapter(
+open class MenuAdapter(
         private val context: Context,
         private val menuWrapper: LinearLayout,
         private val textWrapper: LinearLayout,
@@ -49,21 +49,21 @@ class MenuAdapter(
         setViews()
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
+    open fun setOnItemClickListener(listener: OnItemClickListener) {
         onItemClickListener = listener
     }
 
-    fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
+    open fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
         onItemLongClickListener = listener
     }
 
-    fun setAnimationDuration(durationMillis: Int) {
+    open fun setAnimationDuration(durationMillis: Int) {
         animationDurationMillis = durationMillis.toLong()
         showMenuAnimatorSet.duration = animationDurationMillis
         hideMenuAnimatorSet.duration = animationDurationMillis
     }
 
-    fun menuToggle() {
+    open fun menuToggle() {
         if (!isAnimationRun) {
             resetAnimations()
             isAnimationRun = true
@@ -78,7 +78,7 @@ class MenuAdapter(
         }
     }
 
-    fun getItemCount() = menuObjects.size
+    open fun getItemCount() = menuObjects.size
 
     private fun getLastItemPosition() = getItemCount() - 1
 

@@ -10,7 +10,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener
 import kotlinx.android.synthetic.main.fragment_menu.*
 
-class ContextMenuDialogFragment : DialogFragment() {
+open class ContextMenuDialogFragment : DialogFragment() {
 
     private lateinit var menuParams: MenuParams
     private lateinit var dropDownMenuAdapter: MenuAdapter
