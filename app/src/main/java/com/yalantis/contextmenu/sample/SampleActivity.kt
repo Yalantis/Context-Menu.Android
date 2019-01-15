@@ -9,15 +9,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import com.yalantis.contextmenu.R
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
 import com.yalantis.contextmenu.lib.MenuGravity
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.MenuParams
-import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener
-import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener
 import kotlinx.android.synthetic.main.toolbar.*
 
 class SampleActivity : AppCompatActivity() {
@@ -109,24 +106,20 @@ class SampleActivity : AppCompatActivity() {
 
     private fun initMenuFragment() {
         contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams).apply {
-            setItemClickListener(object : OnMenuItemClickListener {
-                override fun onMenuItemClick(clickedView: View, position: Int) {
-                    Toast.makeText(
-                            this@SampleActivity,
-                            "Clicked on position: $position",
-                            Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
-            setItemLongClickListener(object : OnMenuItemLongClickListener {
-                override fun onMenuItemLongClick(clickedView: View, position: Int) {
-                    Toast.makeText(
-                            this@SampleActivity,
-                            "Long clicked on position: $position",
-                            Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
+            setItemClickListener { view, position ->
+                Toast.makeText(
+                        this@SampleActivity,
+                        "Clicked on position: $position",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
+            setItemLongClickListener { view, position ->
+                Toast.makeText(
+                        this@SampleActivity,
+                        "Long clicked on position: $position",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.yalantis.contextmenu.lib.extensions.*
-import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener
-import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener
 
 open class MenuAdapter(
         private val context: Context,
@@ -19,10 +17,10 @@ open class MenuAdapter(
         private val gravity: MenuGravity
 ) {
 
-    private var onItemClickListener: OnItemClickListener? = null
-    private var onItemLongClickListener: OnItemLongClickListener? = null
-    private var onItemClickListenerCalled: OnItemClickListener? = null
-    private var onItemLongClickListenerCalled: OnItemLongClickListener? = null
+    private var onItemClickListener: (view: View) -> Unit = {}
+    private var onItemLongClickListener: (view: View) -> Unit = {}
+    private var onItemClickListenerCalled: (view: View) -> Unit = {}
+    private var onItemLongClickListenerCalled: (view: View) -> Unit = {}
 
     private var clickedView: View? = null
 
@@ -49,11 +47,11 @@ open class MenuAdapter(
         setViews()
     }
 
-    open fun setOnItemClickListener(listener: OnItemClickListener) {
+    open fun setOnItemClickListener(listener: (view: View) -> Unit) {
         onItemClickListener = listener
     }
 
-    open fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
+    open fun setOnItemLongClickListener(listener: (view: View) -> Unit) {
         onItemLongClickListener = listener
     }
 
@@ -333,8 +331,8 @@ open class MenuAdapter(
             toggleIsAnimationRun()
 
             clickedView?.let { notNullView ->
-                onItemClickListenerCalled?.onClick(notNullView)
-                onItemLongClickListenerCalled?.onLongClick(notNullView)
+                onItemClickListenerCalled(notNullView)
+                onItemLongClickListenerCalled(notNullView)
             }
         }
         val fadeOutChosenText =
