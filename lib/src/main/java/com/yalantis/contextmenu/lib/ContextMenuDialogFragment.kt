@@ -3,16 +3,19 @@ package com.yalantis.contextmenu.lib
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.DialogFragment
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.fragment_menu.*
 
 open class ContextMenuDialogFragment : DialogFragment() {
 
+    var menuItemClickListener: (view: View, position: Int) -> Unit = { _, _ -> }
+    var menuItemLongClickListener: (view: View, position: Int) -> Unit = { _, _ -> }
+
     private lateinit var menuParams: MenuParams
     private lateinit var dropDownMenuAdapter: MenuAdapter
-
-    private var menuItemClickListener: (view: View, position: Int) -> Unit = { _, _ -> }
-    private var menuItemLongClickListener: (view: View, position: Int) -> Unit = { _, _ -> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +53,6 @@ open class ContextMenuDialogFragment : DialogFragment() {
         }
     }
 
-    fun setItemClickListener(itemClickListener: (view: View, position: Int) -> Unit) {
-        this.menuItemClickListener = itemClickListener
-    }
-
-    fun setItemLongClickListener(itemLongClickListener: (view: View, position: Int) -> Unit) {
-        this.menuItemLongClickListener = itemLongClickListener
-    }
-
     private fun initDropDownMenuAdapter() {
         activity?.let {
             dropDownMenuAdapter = MenuAdapter(
@@ -70,13 +65,13 @@ open class ContextMenuDialogFragment : DialogFragment() {
             ).apply {
                 setAnimationDuration(menuParams.animationDuration)
 
-                setOnItemClickListener { view ->
+                onItemClickListener = { view ->
                     val position = (view.parent as ViewGroup).indexOfChild(view)
                     menuItemClickListener(view, position)
                     close()
                 }
 
-                setOnItemLongClickListener { view ->
+                onItemLongClickListener = { view ->
                     val position = (view.parent as ViewGroup).indexOfChild(view)
                     menuItemLongClickListener(view, position)
                     close()

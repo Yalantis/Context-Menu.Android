@@ -2,11 +2,11 @@ package com.yalantis.contextmenu.sample
 
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -106,14 +106,14 @@ class SampleActivity : AppCompatActivity() {
 
     private fun initMenuFragment() {
         contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams).apply {
-            setItemClickListener { view, position ->
+            menuItemClickListener =  { view, position ->
                 Toast.makeText(
                         this@SampleActivity,
                         "Clicked on position: $position",
                         Toast.LENGTH_SHORT
                 ).show()
             }
-            setItemLongClickListener { view, position ->
+            menuItemLongClickListener =  { view, position ->
                 Toast.makeText(
                         this@SampleActivity,
                         "Long clicked on position: $position",

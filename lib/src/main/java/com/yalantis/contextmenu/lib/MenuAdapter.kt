@@ -17,8 +17,8 @@ open class MenuAdapter(
         private val gravity: MenuGravity
 ) {
 
-    private var onItemClickListener: (view: View) -> Unit = {}
-    private var onItemLongClickListener: (view: View) -> Unit = {}
+    var onItemClickListener: (view: View) -> Unit = {}
+    var onItemLongClickListener: (view: View) -> Unit = {}
     private var onItemClickListenerCalled: (view: View) -> Unit = {}
     private var onItemLongClickListenerCalled: (view: View) -> Unit = {}
 
@@ -47,21 +47,13 @@ open class MenuAdapter(
         setViews()
     }
 
-    open fun setOnItemClickListener(listener: (view: View) -> Unit) {
-        onItemClickListener = listener
-    }
-
-    open fun setOnItemLongClickListener(listener: (view: View) -> Unit) {
-        onItemLongClickListener = listener
-    }
-
     open fun setAnimationDuration(durationMillis: Int) {
         animationDurationMillis = durationMillis.toLong()
         showMenuAnimatorSet.duration = animationDurationMillis
         hideMenuAnimatorSet.duration = animationDurationMillis
     }
 
-    open fun menuToggle() {
+    fun menuToggle() {
         if (!isAnimationRun) {
             resetAnimations()
             isAnimationRun = true
@@ -76,7 +68,7 @@ open class MenuAdapter(
         }
     }
 
-    open fun getItemCount() = menuObjects.size
+    fun getItemCount() = menuObjects.size
 
     private fun getLastItemPosition() = getItemCount() - 1
 
