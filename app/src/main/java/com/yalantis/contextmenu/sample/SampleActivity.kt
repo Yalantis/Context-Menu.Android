@@ -3,9 +3,6 @@ package com.yalantis.contextmenu.sample
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -30,7 +27,6 @@ class SampleActivity : AppCompatActivity() {
 
         initToolbar()
         initMenuFragment()
-        addFragment(SampleFragment(), true, R.id.container)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,26 +51,6 @@ class SampleActivity : AppCompatActivity() {
             contextMenuDialogFragment.dismiss()
         } else {
             finish()
-        }
-    }
-
-    protected fun addFragment(
-            fragment: Fragment,
-            addToBackStack: Boolean,
-            @IdRes containerResId: Int
-    ) {
-        invalidateOptionsMenu()
-        val backStackName = fragment.javaClass.name
-        val fragmentPopped = supportFragmentManager.popBackStackImmediate(backStackName, 0)
-        if (!fragmentPopped) {
-            supportFragmentManager.beginTransaction().apply {
-                add(containerResId, fragment, backStackName)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                if (addToBackStack) {
-                    addToBackStack(backStackName)
-                }
-                commit()
-            }
         }
     }
 
