@@ -14,6 +14,7 @@ import android.widget.*
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.R
 
+@JvmName("getDefaultActionBarSize")
 fun Context.getDefaultActionBarSize(): Int {
     val styledAttrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
     val actionBarSize = styledAttrs.getDimension(0, 0f).toInt()

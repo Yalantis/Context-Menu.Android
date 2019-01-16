@@ -27,7 +27,7 @@ open class WrapperView @JvmOverloads constructor(
         setupWrappers()
     }
 
-    fun show(menuGravity: MenuGravity) {
+    open fun show(menuGravity: MenuGravity) {
         wrapperButtons.layoutParams =
                 RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT,

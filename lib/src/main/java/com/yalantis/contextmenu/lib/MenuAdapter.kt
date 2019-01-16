@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.yalantis.contextmenu.lib.extensions.*
-import com.yalantis.contextmenu.lib.interfaces.OnItemClickListener
-import com.yalantis.contextmenu.lib.interfaces.OnItemLongClickListener
 
-class MenuAdapter(
+open class MenuAdapter(
         private val context: Context,
         private val menuWrapper: LinearLayout,
         private val textWrapper: LinearLayout,
@@ -19,10 +17,10 @@ class MenuAdapter(
         private val gravity: MenuGravity
 ) {
 
-    private var onItemClickListener: OnItemClickListener? = null
-    private var onItemLongClickListener: OnItemLongClickListener? = null
-    private var onItemClickListenerCalled: OnItemClickListener? = null
-    private var onItemLongClickListenerCalled: OnItemLongClickListener? = null
+    var onItemClickListener: (view: View) -> Unit = {}
+    var onItemLongClickListener: (view: View) -> Unit = {}
+    private var onItemClickListenerCalled: (view: View) -> Unit = {}
+    private var onItemLongClickListenerCalled: (view: View) -> Unit = {}
 
     private var clickedView: View? = null
 
@@ -49,15 +47,7 @@ class MenuAdapter(
         setViews()
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        onItemClickListener = listener
-    }
-
-    fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
-        onItemLongClickListener = listener
-    }
-
-    fun setAnimationDuration(durationMillis: Int) {
+    open fun setAnimationDuration(durationMillis: Int) {
         animationDurationMillis = durationMillis.toLong()
         showMenuAnimatorSet.duration = animationDurationMillis
         hideMenuAnimatorSet.duration = animationDurationMillis
@@ -333,8 +323,8 @@ class MenuAdapter(
             toggleIsAnimationRun()
 
             clickedView?.let { notNullView ->
-                onItemClickListenerCalled?.onClick(notNullView)
-                onItemLongClickListenerCalled?.onLongClick(notNullView)
+                onItemClickListenerCalled(notNullView)
+                onItemLongClickListenerCalled(notNullView)
             }
         }
         val fadeOutChosenText =
