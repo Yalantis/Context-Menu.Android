@@ -121,14 +121,7 @@ Example:
     	gravity = MenuGravity.START
     )
     
-    contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams).apply {
-            menuItemClickListener = { view, position ->
-                // do something here
-            }
-            menuItemLongClickListener = { view, position ->
-                // do something here
-            }
-    }
+    val contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams)
 ```
 
 ####	4. Set menu with button, which will open `ContextMenuDialogFragment`.
@@ -149,6 +142,17 @@ Example:
         }
 
         return super.onOptionsItemSelected(item)
+    }
+```
+
+####	5. Add menu item listeners.
+```
+    contextMenuDialogFragment = menuItemClickListener = { view, position ->
+    	// do something here
+    }
+	    
+    contextMenuDialogFragment = menuItemLongClickListener = { view, position ->
+    	// do something here
     }
 ```
 
