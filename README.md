@@ -59,7 +59,7 @@ Now You can easily add text appearance style for menu titles:
         	<item name="android:textColor">#26D0EB</item>
 	</style>
 
-And set it's id to your MenuObject :	
+	And set it's id to your MenuObject :	
     
         val bitmapDrawable = BitmapDrawable(
                 resources,
