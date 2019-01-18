@@ -67,26 +67,25 @@ class SampleActivity : AppCompatActivity() {
         tvToolbarTitle.text = "Samantha"
     }
 
+    /**
+     * If you want to change the side you need to add 'gravity' parameter,
+     * by default it is MenuGravity.END.
+     *
+     * For example:
+     *
+     * MenuParams(
+     *     actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
+     *     menuObjects = getMenuObjects(),
+     *     isClosableOutside = false,
+     *     gravity = MenuGravity.START
+     * )
+     */
     private fun initMenuFragment() {
         val menuParams = MenuParams(
                 actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
                 menuObjects = getMenuObjects(),
                 isClosableOutside = false
         )
-
-        /*
-        If you want to change the side you need to add 'gravity' parameter,
-        by default it is MenuGravity.END.
-
-        For example:
-
-        MenuParams(
-                actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
-                menuObjects = getMenuObjects(),
-                isClosableOutside = false,
-                gravity = MenuGravity.START
-        )
-        */
 
         contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams).apply {
             menuItemClickListener = { view, position ->
@@ -106,27 +105,28 @@ class SampleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * You can use any (drawable, resource, bitmap, color) as image:
+     * menuObject.drawable = ...
+     * menuObject.setResourceValue(...)
+     * menuObject.setBitmapValue(...)
+     * menuObject.setColorValue(...)
+     *
+     * You can set image ScaleType:
+     * menuObject.scaleType = ScaleType.FIT_XY
+     *
+     * You can use any [resource, drawable, color] as background:
+     * menuObject.setBgResourceValue(...)
+     * menuObject.setBgDrawable(...)
+     * menuObject.setBgColorValue(...)
+     *
+     * You can use any (color) as text color:
+     * menuObject.textColor = ...
+     *
+     * You can set any (color) as divider color:
+     * menuObject.dividerColor = ...
+     */
     private fun getMenuObjects() = mutableListOf<MenuObject>().apply {
-        // You can use any [resource, bitmap, drawable, color] as image:
-        // item.setResourceValue(...)
-        // item.setBitmapValue(...)
-        // item.drawable = ...
-        // item.setColorValue(...)
-
-        // You can set image ScaleType:
-        // item.scaleType = ScaleType.FIT_XY
-
-        // You can use any [resource, drawable, color] as background:
-        // item.setBgResourceValue(...)
-        // item.setBgDrawable(...)
-        // item.setBgColorValue(...)
-
-        // You can use any [color] as text color:
-        // item.textColor = ...
-
-        // You can set any [color] as divider color:
-        // item.dividerColor = ...
-
         val close = MenuObject().apply { setResourceValue(R.drawable.icn_close) }
         val send = MenuObject("Send message").apply { setResourceValue(R.drawable.icn_1) }
         val like = MenuObject("Like profile").apply {

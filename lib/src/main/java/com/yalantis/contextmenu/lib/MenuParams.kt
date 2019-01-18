@@ -10,6 +10,10 @@ import android.os.Parcelable
  *
  * @property [isClosableOutside]
  * If option menu can be closed on touch to non-button area.
+ *
+ * @property [gravity]
+ * You can change the side. By default - MenuGravity.END
+ * @see MenuGravity
  */
 data class MenuParams(
         var actionBarSize: Int = 0,
