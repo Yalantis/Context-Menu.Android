@@ -284,37 +284,80 @@ open class MenuAdapter(
     private fun buildChosenAnimation(childIndex: Int) {
         val fadeOutTextTopAnimatorList = mutableListOf<Animator>()
         val closeToBottomImageAnimatorList = mutableListOf<Animator>()
-
-        for (i in 0 until childIndex) {
-            val menuWrapperChild = menuWrapper.getChildAt(i)
-            resetVerticalAnimation(menuWrapperChild, true)
-            closeToBottomImageAnimatorList.add(menuWrapperChild.rotationCloseVertical())
-            fadeOutTextTopAnimatorList.add(
-                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation(), gravity)
-            )
-        }
-
         val fadeOutTextBottomAnimatorList = mutableListOf<Animator>()
-        val closeToTopAnimatorObjects = mutableListOf<Animator>()
+        val closeToTopImageAnimatorList = mutableListOf<Animator>()
 
-        for (i in getLastItemPosition() downTo childIndex + 1) {
-            val menuWrapperChild = menuWrapper.getChildAt(i)
-            resetVerticalAnimation(menuWrapperChild, false)
-            closeToTopAnimatorObjects.add(menuWrapperChild.rotationCloseVertical())
-            fadeOutTextBottomAnimatorList.add(
-                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation(), gravity)
-            )
-        }
+        fillAnimatorLists(
+                childIndex,
+                fadeOutTextTopAnimatorList,
+                closeToBottomImageAnimatorList,
+                fadeOutTextBottomAnimatorList,
+                closeToTopImageAnimatorList
+        )
 
         resetSideAnimation(menuWrapper.getChildAt(childIndex))
 
+        val fullAnimatorSetPair = getFullAnimatorSetPair(
+                childIndex,
+                fadeOutTextTopAnimatorList,
+                closeToBottomImageAnimatorList,
+                fadeOutTextBottomAnimatorList,
+                closeToTopImageAnimatorList
+        )
+
+        AnimatorSet().apply {
+            duration = animationDurationMillis
+            interpolator = HesitateInterpolator()
+            playTogether(fullAnimatorSetPair.first, fullAnimatorSetPair.second)
+            start()
+        }
+    }
+
+    private fun fillAnimatorLists(
+            childIndex: Int,
+            fadeOutTextTopAnimatorList: MutableList<Animator>,
+            closeToBottomImageAnimatorList: MutableList<Animator>,
+            fadeOutTextBottomAnimatorList: MutableList<Animator>,
+            closeToTopImageAnimatorList: MutableList<Animator>
+    ) {
+        for (i in 0..getLastItemPosition()) {
+            val menuWrapperChild = menuWrapper.getChildAt(i)
+            val menuWrapperChildRotation = menuWrapperChild.rotationCloseVertical()
+            val textWrapperChildFadeOut =
+                    textWrapper.getChildAt(i).fadeOutSet(getTextEndTranslation(), gravity)
+
+            when (i) {
+                in 0 until childIndex -> {
+                    resetVerticalAnimation(menuWrapperChild, true)
+                    closeToBottomImageAnimatorList.add(menuWrapperChildRotation)
+                    fadeOutTextTopAnimatorList.add(textWrapperChildFadeOut)
+                }
+                in childIndex + 1..getLastItemPosition() -> {
+                    resetVerticalAnimation(menuWrapperChild, false)
+                    closeToTopImageAnimatorList.add(menuWrapperChildRotation)
+                    fadeOutTextBottomAnimatorList.add(textWrapperChildFadeOut)
+                }
+            }
+        }
+
+        closeToTopImageAnimatorList.reverse()
+        fadeOutTextBottomAnimatorList.reverse()
+    }
+
+    private fun getFullAnimatorSetPair(
+            childIndex: Int,
+            fadeOutTextTopAnimatorList: MutableList<Animator>,
+            closeToBottomImageAnimatorList: MutableList<Animator>,
+            fadeOutTextBottomAnimatorList: MutableList<Animator>,
+            closeToTopImageAnimatorList: MutableList<Animator>
+    ): Pair<AnimatorSet, AnimatorSet> {
         val closeToBottom = AnimatorSet()
         closeToBottom.playSequentially(closeToBottomImageAnimatorList)
         val fadeOutTop = AnimatorSet()
         fadeOutTop.playSequentially(fadeOutTextTopAnimatorList)
 
         val closeToTop = AnimatorSet()
-        closeToTop.playSequentially(closeToTopAnimatorObjects)
+        closeToTop.playSequentially(closeToTopImageAnimatorList)
         val fadeOutBottom = AnimatorSet()
         fadeOutBottom.playSequentially(fadeOutTextBottomAnimatorList)
 
@@ -335,7 +378,7 @@ open class MenuAdapter(
         val textFullAnimatorSet = AnimatorSet()
         textFullAnimatorSet.play(fadeOutTop).with(fadeOutBottom)
 
-        if (closeToBottomImageAnimatorList.size >= closeToTopAnimatorObjects.size) {
+        if (closeToBottomImageAnimatorList.size >= closeToTopImageAnimatorList.size) {
             imageFullAnimatorSet.play(closeToBottom).before(closeToEnd)
             textFullAnimatorSet.play(fadeOutTop).before(fadeOutChosenText)
         } else {
@@ -343,12 +386,7 @@ open class MenuAdapter(
             textFullAnimatorSet.play(fadeOutBottom).before(fadeOutChosenText)
         }
 
-        AnimatorSet().apply {
-            duration = animationDurationMillis
-            interpolator = HesitateInterpolator()
-            playTogether(imageFullAnimatorSet, textFullAnimatorSet)
-            start()
-        }
+        return Pair(imageFullAnimatorSet, textFullAnimatorSet)
     }
 
     private fun getTextEndTranslation() =
