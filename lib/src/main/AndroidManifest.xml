@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yalantis.contextmenu.lib">
 
-    <application android:allowBackup="true">
-    </application>
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true" />
 
 </manifest>
