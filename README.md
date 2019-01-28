@@ -4,17 +4,17 @@
 
 #### You can easily add awesome animated context menu to  your app. 
 
-Check this [project on dribbble] (https://dribbble.com/shots/1785274-Menu-Animation-for-Additional-Functions?list=users&offset=17)
+Check this [project on dribbble](https://dribbble.com/shots/1785274-Menu-Animation-for-Additional-Functions?list=users&offset=17)
 
-Check this [project on Behance] (https://www.behance.net/gallery/20411445/Mobile-Animations-Interactions)  
+Check this [project on Behance](https://www.behance.net/gallery/20411445/Mobile-Animations-Interactions)  
 
-![ContextMenu](https://d13yacurqjgara.cloudfront.net/users/125056/screenshots/1785274/99miles-profile-light_1-1-4.gif)
+<image src="https://cdn.dribbble.com/users/125056/screenshots/1785274/99miles-profile-light_1-1-4.gif"/>
 
 ### Usage:
 
 *For a working implementation, have a look at the ```app``` module*
 
-#### 	1. Clone repository and add sources into your project or use Gradle: 
+#### 	1. Clone repository and add sources into your project or use Gradle:
 
 Add it in your root build.gradle at the end of repositories:
 ```
@@ -28,106 +28,132 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 ```
 	dependencies {
-	        implementation 'com.github.Yalantis:Context-Menu.Android:1.0.8'
+	        implementation 'com.github.Yalantis:Context-Menu.Android:1.1.0'
 	}
 ```
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
-You can use any `resource, bitmap, drawable, color` as image:  
+You can use any `drawable, resource, bitmap, color` as image:
 ```
-    item.setResource(...)  
-    item.setBitmap(...)  
-    item.setDrawable(...)  
-    item.setColor(...)  
+    menuObject.drawable = ...
+    menuObject.setResourceValue(...)
+    menuObject.setBitmapValue(...)
+    menuObject.setColorValue(...)
    ```
-You can set image `ScaleType`:  
+You can set image `ScaleType`:
 ```
-    item.setScaleType(ScaleType.FIT_XY)
+    menuObject.scaleType = ScaleType.FIT_XY
 ```
-You can use any `resource, drawable, color` as background: 
+You can use any `resource, drawable, color` as background:
 ```
-    item.setBgResource(...)
-    item.setBgDrawable(...)
-    item.setBgColor(...)
+    menuObject.setBgResourceValue(...)
+    menuObject.setBgDrawable(...)
+    menuObject.setBgColorValue(...)
 ```
 Now You can easily add text appearance style for menu titles: 
 ```
 	In your project styles create style for text appearance
 	(For better visual effect extend it from TextView.DefaultStyle):
 	
-	 <style name="TextViewStyle" parent="TextView.DefaultStyle">
-        <item name="android:textStyle">italic|bold</item>
-        <item name="android:textColor">#26D0EB</item>
-	 </style>
+	<style name="TextViewStyle" parent="TextView.DefaultStyle">
+        	<item name="android:textStyle">italic|bold</item>
+        	<item name="android:textColor">#26D0EB</item>
+	</style>
 
-And set it's id to your MenuObject :	
+	And set it's id to your MenuObject :	
     
-        MenuObject addFr = new MenuObject("Add to friends");
-        BitmapDrawable bd = new BitmapDrawable(getResources(),
-                BitmapFactory.decodeResource(getResources(), R.drawable.icn_3));
-        addFr.setDrawable(bd);
-        addFr.setMenuTextAppearanceStyle(R.style.TextViewStyle);
+        val bitmapDrawable = BitmapDrawable(
+                resources,
+                BitmapFactory.decodeResource(resources, R.drawable.icn_3)
+        )
 
+        val menuObject = MenuObject("Add to friends").apply {
+            drawable = bitmapDrawable
+            menuTextAppearanceStyle = R.style.TextViewStyle
+        }
 ```
-You can set any `color` as divider color: 
+You can use any `color` as text color:
 ```
-    item.setDividerColor(...)
+    menuObject.textColor = ...
+```
+You can set any `color` as divider color:
+```
+    menuObject.dividerColor = ...
 ```
 Example:  
 ```
-    MenuObject close = new MenuObject();
-    close.setResource(R.drawable.icn_close);
+    val close = MenuObject().apply { setResourceValue(R.drawable.icn_close) }
 
-    MenuObject send = new MenuObject("Send message");
-    send.setResource(R.drawable.icn_1);
+    val send = MenuObject("Send message").apply { setResourceValue(R.drawable.icn_1) }
+    
+    val addFriend = MenuObject("Add to friends").apply {
+            drawable = BitmapDrawable(
+                    resources,
+                    BitmapFactory.decodeResource(resources, R.drawable.icn_3)
+            )
+    }
 
-    List<MenuObject> menuObjects = new ArrayList<>();
-    menuObjects.add(close);
-    menuObjects.add(send);
+    val menuObjects = mutableListOf<MenuObject>().apply {
+            add(close)
+            add(send)
+            add(addFriend)
+    }
 ```
 
 ####	3. Create `newInstance` of `ContextMenuDialogFragment`, which received `MenuParams` object.
 
 ```
-    MenuParams menuParams = new MenuParams();
-    menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
-    menuParams.setMenuObjects(getMenuObjects());
-    menuParams.setClosableOutside(true);
-    // set other settings to meet your needs
-    mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+    val menuParams = MenuParams(
+    	actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
+    	menuObjects = getMenuObjects(),
+    	isClosableOutside = false
+    	// set other settings to meet your needs
+    )
+    
+    // If you want to change the side you need to add 'gravity' parameter,
+    // by default it is MenuGravity.END.
+    
+    // For example:
+    
+    val menuParams = MenuParams(
+    	actionBarSize = resources.getDimension(R.dimen.tool_bar_height).toInt(),
+    	menuObjects = getMenuObjects(),
+    	isClosableOutside = false,
+    	gravity = MenuGravity.START
+    )
+    
+    val contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams)
 ```
 
 ####	4. Set menu with button, which will open `ContextMenuDialogFragment`.
 
 ```
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.context_menu:
-                mMenuDialogFragment.show(fragmentManager, "ContextMenuDialogFragment");
-                break;
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            when (it.itemId) {
+                R.id.context_menu -> {
+                    showContextMenuDialogFragment()
+                }
+            }
         }
-        return super.onOptionsItemSelected(item);
+
+        return super.onOptionsItemSelected(item)
     }
 ```
 
-####	5. Implement `OnMenuItemClickListener` interface with `onMenuItemClick` method.
-	
-```	
-public class MainActivity extends ActionBarActivity implements OnMenuItemClickListener
-…
-    @Override
-    public void onMenuItemClick(View clickedView, int position) {
-         //Do something here
+####	5. Add menu item listeners.
+```
+    contextMenuDialogFragment = menuItemClickListener = { view, position ->
+    	// do something here
     }
-…
-    mMenuDialogFragment.setItemClickListener(this);
+	    
+    contextMenuDialogFragment = menuItemLongClickListener = { view, position ->
+    	// do something here
+    }
 ```
 
 ## Customization: 
@@ -135,11 +161,11 @@ For better experience menu item size should be equal to `ActionBar` height.
 
 `newInstance` of `ContextMenuDialogFragment` receives `MenuParams` object that has the fields:
 
-`mMenuObjects` - list of MenuObject objects,
+`menuObjects` - list of MenuObject objects,
 
-`mAnimationDelay` - delay in millis after fragment opening and before closing, which will make animation smoother on slow devices,
+`animationDelay` - delay in millis after fragment opening and before closing, which will make animation smoother on slow devices,
 
-`nAnimationDuration` - duration of every piece of animation in millis,
+`animationDuration` - duration of every piece of animation in millis,
 
 `isClosableOutside` - if menu can be closed on touch to non-button area,
 
@@ -155,9 +181,15 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
 
 ## Compatibility
   
-  * Android Honeycomb 3.0+
+  * Android KitKat 4.4+
 
 # Changelog
+
+### Version: 1.1.0
+
+  * library rewrited on Kotlin
+  * added `rtl` support
+  * added `gravity` parameter for `MenuParams`
 
 ### Version: 1.0.8
 
