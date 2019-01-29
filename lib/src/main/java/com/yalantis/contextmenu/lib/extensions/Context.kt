@@ -62,13 +62,14 @@ internal fun Context.getItemTextView(
             getDimension(R.dimen.text_start_end_padding_small),
             0
     )
-    setTextColor(getColorCompat(textColor))
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
         setTextAppearance(context, styleResId)
     } else {
         setTextAppearance(styleResId)
     }
+
+    setTextColor(getColorCompat(textColor))
 }
 
 internal fun Context.getItemImageButton(menuItem: MenuObject): ImageView =
