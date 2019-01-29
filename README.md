@@ -59,7 +59,7 @@ Now You can easily add text appearance style for menu titles:
         	<item name="android:textColor">#26D0EB</item>
 	</style>
 
-And set it's id to your MenuObject :	
+	And set it's id to your MenuObject :	
     
         val bitmapDrawable = BitmapDrawable(
                 resources,
@@ -121,14 +121,7 @@ Example:
     	gravity = MenuGravity.START
     )
     
-    contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams).apply {
-            menuItemClickListener = { view, position ->
-                // do something here
-            }
-            menuItemLongClickListener = { view, position ->
-                // do something here
-            }
-    }
+    val contextMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams)
 ```
 
 ####	4. Set menu with button, which will open `ContextMenuDialogFragment`.
@@ -149,6 +142,17 @@ Example:
         }
 
         return super.onOptionsItemSelected(item)
+    }
+```
+
+####	5. Add menu item listeners.
+```
+    contextMenuDialogFragment = menuItemClickListener = { view, position ->
+    	// do something here
+    }
+	    
+    contextMenuDialogFragment = menuItemLongClickListener = { view, position ->
+    	// do something here
     }
 ```
 
