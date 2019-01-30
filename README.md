@@ -185,6 +185,10 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
 
 # Changelog
 
+### Version: 1.1.1
+
+  * bug with `menuObject.textColor` was fixed
+
 ### Version: 1.1.0
 
   * library rewrited on Kotlin
