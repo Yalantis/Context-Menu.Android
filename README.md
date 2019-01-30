@@ -28,7 +28,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 ```
 	dependencies {
-	        implementation 'com.github.Yalantis:Context-Menu.Android:1.1.0'
+	        implementation 'com.github.Yalantis:Context-Menu.Android:1.1.1'
 	}
 ```
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
