@@ -46,7 +46,7 @@ open class ContextMenuDialogFragment : DialogFragment() {
             if (menuParams.isClosableOutside) {
                 rootRelativeLayout.setOnClickListener {
                     if (isAdded) {
-                        dismissAllowingStateLoss()
+                        dropDownMenuAdapter.closeOutside()
                     }
                 }
             }
@@ -64,6 +64,10 @@ open class ContextMenuDialogFragment : DialogFragment() {
                     menuParams.gravity
             ).apply {
                 setAnimationDuration(menuParams.animationDuration)
+
+                onCloseOutsideClickListener = { _ ->
+                    close()
+                }
 
                 onItemClickListener = { view ->
                     val position = (view.parent as ViewGroup).indexOfChild(view)

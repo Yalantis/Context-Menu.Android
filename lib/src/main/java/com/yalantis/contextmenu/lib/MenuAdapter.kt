@@ -17,6 +17,7 @@ open class MenuAdapter(
         private val gravity: MenuGravity
 ) {
 
+    var onCloseOutsideClickListener: (view: View) -> Unit = {}
     var onItemClickListener: (view: View) -> Unit = {}
     var onItemLongClickListener: (view: View) -> Unit = {}
     private var onItemClickListenerCalled: (view: View) -> Unit = {}
@@ -65,6 +66,13 @@ open class MenuAdapter(
             }
 
             toggleIsMenuOpen()
+        }
+    }
+
+    fun closeOutside() {
+        onItemClickListenerCalled = onCloseOutsideClickListener
+        menuWrapper.getChildAt(FIRST_CHILD_INDEX)?.let {
+            viewClicked(it)
         }
     }
 
@@ -204,12 +212,12 @@ open class MenuAdapter(
         return AnimatorSet().apply {
             duration = animationDurationMillis
             startDelay = 0
+            interpolator = HesitateInterpolator()
 
             playTogether(
                     AnimatorSet().apply { playSequentially(textAnimations) },
                     AnimatorSet().apply { playSequentially(imageAnimations) }
             )
-            setInterpolator(HesitateInterpolator())
             onAnimationEnd { toggleIsAnimationRun() }
         }
     }
@@ -403,5 +411,7 @@ open class MenuAdapter(
     companion object {
 
         const val ANIMATION_DURATION_MILLIS = 100L
+
+        private const val FIRST_CHILD_INDEX = 0
     }
 }
