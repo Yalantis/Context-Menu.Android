@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import com.yalantis.contextmenu.lib.extensions.backgroundColorAppear
+import com.yalantis.contextmenu.lib.extensions.backgroundColorDisappear
 import kotlinx.android.synthetic.main.fragment_menu.*
 
 open class ContextMenuDialogFragment : DialogFragment() {
@@ -41,6 +43,7 @@ open class ContextMenuDialogFragment : DialogFragment() {
         }, menuParams.animationDelay.toLong())
 
         wrapperView.apply {
+            backgroundColorAppear(menuParams.backgroundColorAnimationDuration.toLong())
             show(menuParams.gravity)
 
             if (menuParams.isClosableOutside) {
@@ -85,9 +88,11 @@ open class ContextMenuDialogFragment : DialogFragment() {
     }
 
     private fun close() {
-        Handler().postDelayed({
-            dismissAllowingStateLoss()
-        }, menuParams.animationDelay.toLong())
+        wrapperView.backgroundColorDisappear(menuParams.backgroundColorAnimationDuration.toLong()) {
+            Handler().postDelayed({
+                dismissAllowingStateLoss()
+            }, menuParams.animationDelay.toLong())
+        }
     }
 
     companion object {

@@ -20,6 +20,8 @@ data class MenuParams(
         var menuObjects: List<MenuObject> = listOf(),
         var animationDelay: Int = 0,
         var animationDuration: Int = MenuAdapter.ANIMATION_DURATION_MILLIS.toInt(),
+        var backgroundColorAnimationDuration: Int =
+                MenuAdapter.BACKGROUND_COLOR_ANIMATION_DURATION_MILLIS.toInt(),
         var isFitsSystemWindow: Boolean = false,
         var isClipToPadding: Boolean = true,
         var isClosableOutside: Boolean = false,
@@ -29,6 +31,7 @@ data class MenuParams(
     private constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.createTypedArrayList(MenuObject.CREATOR) ?: listOf(),
+            parcel.readInt(),
             parcel.readInt(),
             parcel.readInt(),
             parcel.readByte() != 0.toByte(),
@@ -43,6 +46,7 @@ data class MenuParams(
             writeTypedList(menuObjects)
             writeInt(animationDelay)
             writeInt(animationDuration)
+            writeInt(backgroundColorAnimationDuration)
             writeByte(if (isFitsSystemWindow) 1 else 0)
             writeByte(if (isClipToPadding) 1 else 0)
             writeByte(if (isClosableOutside) 1 else 0)

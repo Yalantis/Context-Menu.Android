@@ -411,6 +411,7 @@ open class MenuAdapter(
     companion object {
 
         const val ANIMATION_DURATION_MILLIS = 100L
+        const val BACKGROUND_COLOR_ANIMATION_DURATION_MILLIS = 200L
 
         private const val FIRST_CHILD_INDEX = 0
     }
