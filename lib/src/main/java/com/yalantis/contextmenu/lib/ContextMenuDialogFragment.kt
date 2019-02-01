@@ -40,10 +40,10 @@ open class ContextMenuDialogFragment : DialogFragment() {
 
         Handler().postDelayed({
             dropDownMenuAdapter.menuToggle()
-        }, menuParams.animationDelay.toLong())
+        }, menuParams.animationDelay)
 
         wrapperView.apply {
-            backgroundColorAppear(menuParams.backgroundColorAnimationDuration.toLong())
+            backgroundColorAppear(menuParams.backgroundColorAnimationDuration)
             show(menuParams.gravity)
 
             if (menuParams.isClosableOutside) {
@@ -88,10 +88,10 @@ open class ContextMenuDialogFragment : DialogFragment() {
     }
 
     private fun close() {
-        wrapperView.backgroundColorDisappear(menuParams.backgroundColorAnimationDuration.toLong()) {
+        wrapperView.backgroundColorDisappear(menuParams.backgroundColorAnimationDuration) {
             Handler().postDelayed({
                 dismissAllowingStateLoss()
-            }, menuParams.animationDelay.toLong())
+            }, menuParams.animationDelay)
         }
     }
 

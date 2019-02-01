@@ -108,7 +108,6 @@ internal fun View.colorAnimation(
             start()
         }
 
-
 internal fun View.backgroundColorAppear(duration: Long): ObjectAnimator =
         colorAnimation(duration, android.R.color.transparent, R.color.menu_fragment_background)
 

@@ -31,7 +31,7 @@ open class MenuAdapter(
     private var isMenuOpen = false
     private var isAnimationRun = false
 
-    private var animationDurationMillis = ANIMATION_DURATION_MILLIS
+    private var animationDuration = MenuParams.ANIMATION_DURATION
 
     private val itemClickListener = View.OnClickListener { view ->
         onItemClickListenerCalled = onItemClickListener
@@ -48,10 +48,10 @@ open class MenuAdapter(
         setViews()
     }
 
-    open fun setAnimationDuration(durationMillis: Int) {
-        animationDurationMillis = durationMillis.toLong()
-        showMenuAnimatorSet.duration = animationDurationMillis
-        hideMenuAnimatorSet.duration = animationDurationMillis
+    open fun setAnimationDuration(duration: Long) {
+        animationDuration = duration
+        showMenuAnimatorSet.duration = animationDuration
+        hideMenuAnimatorSet.duration = animationDuration
     }
 
     fun menuToggle() {
@@ -210,7 +210,7 @@ open class MenuAdapter(
         }
 
         return AnimatorSet().apply {
-            duration = animationDurationMillis
+            duration = animationDuration
             startDelay = 0
             interpolator = HesitateInterpolator()
 
@@ -314,7 +314,7 @@ open class MenuAdapter(
         )
 
         AnimatorSet().apply {
-            duration = animationDurationMillis
+            duration = animationDuration
             interpolator = HesitateInterpolator()
             playTogether(fullAnimatorSetPair.first, fullAnimatorSetPair.second)
             start()
@@ -409,9 +409,6 @@ open class MenuAdapter(
     }
 
     companion object {
-
-        const val ANIMATION_DURATION_MILLIS = 100L
-        const val BACKGROUND_COLOR_ANIMATION_DURATION_MILLIS = 200L
 
         private const val FIRST_CHILD_INDEX = 0
     }
