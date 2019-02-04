@@ -28,7 +28,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 ```
 	dependencies {
-	        implementation 'com.github.Yalantis:Context-Menu.Android:1.1.3'
+	        implementation 'com.github.Yalantis:Context-Menu.Android:1.1.4'
 	}
 ```
 #### 	2. Create list of `MenuObject`, which consists of icon or icon and description.
@@ -185,7 +185,7 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
 
 # Changelog
 
-### Version: 1.1.3
+### Version: 1.1.4
 
   * added background color animation
 
