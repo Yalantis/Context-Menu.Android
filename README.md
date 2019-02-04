@@ -1,4 +1,4 @@
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Context--Menu.Android-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1387) [![Yalantis](https://github.com/Yalantis/Context-Menu.Android/blob/master/badge.png)](https://yalantis.com/?utm_source=github)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Context--Menu.Android-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1387) [![Yalantis](https://github.com/Yalantis/Context-Menu.Android/blob/master/badge.png)](https://yalantis.com/?utm_source=github) [![](https://jitpack.io/v/yalantis/context-menu.android.svg)](https://jitpack.io/#yalantis/context-menu.android)
 
 # ContextMenu 
 
