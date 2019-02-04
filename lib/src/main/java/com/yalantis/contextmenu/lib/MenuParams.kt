@@ -18,8 +18,9 @@ import android.os.Parcelable
 data class MenuParams(
         var actionBarSize: Int = 0,
         var menuObjects: List<MenuObject> = listOf(),
-        var animationDelay: Int = 0,
-        var animationDuration: Int = MenuAdapter.ANIMATION_DURATION_MILLIS.toInt(),
+        var animationDelay: Long = 0L,
+        var animationDuration: Long = ANIMATION_DURATION,
+        var backgroundColorAnimationDuration: Long = BACKGROUND_COLOR_ANIMATION_DURATION,
         var isFitsSystemWindow: Boolean = false,
         var isClipToPadding: Boolean = true,
         var isClosableOutside: Boolean = false,
@@ -29,8 +30,9 @@ data class MenuParams(
     private constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.createTypedArrayList(MenuObject.CREATOR) ?: listOf(),
-            parcel.readInt(),
-            parcel.readInt(),
+            parcel.readLong(),
+            parcel.readLong(),
+            parcel.readLong(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
@@ -41,8 +43,9 @@ data class MenuParams(
         parcel.apply {
             writeInt(actionBarSize)
             writeTypedList(menuObjects)
-            writeInt(animationDelay)
-            writeInt(animationDuration)
+            writeLong(animationDelay)
+            writeLong(animationDuration)
+            writeLong(backgroundColorAnimationDuration)
             writeByte(if (isFitsSystemWindow) 1 else 0)
             writeByte(if (isClipToPadding) 1 else 0)
             writeByte(if (isClosableOutside) 1 else 0)
@@ -52,9 +55,16 @@ data class MenuParams(
 
     override fun describeContents(): Int = 0
 
-    companion object CREATOR : Parcelable.Creator<MenuParams> {
-        override fun createFromParcel(parcel: Parcel): MenuParams = MenuParams(parcel)
+    companion object {
 
-        override fun newArray(size: Int): Array<MenuParams?> = arrayOfNulls(size)
+        const val ANIMATION_DURATION = 100L
+        const val BACKGROUND_COLOR_ANIMATION_DURATION = 200L
+
+        @JvmField
+        val CREATOR = object : Parcelable.Creator<MenuParams> {
+            override fun createFromParcel(parcel: Parcel): MenuParams = MenuParams(parcel)
+
+            override fun newArray(size: Int): Array<MenuParams?> = arrayOfNulls(size)
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.yalantis.contextmenu.lib
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.Gravity
@@ -70,7 +69,6 @@ open class WrapperView @JvmOverloads constructor(
     }
 
     private fun setupScrollView() {
-        setBackgroundColor(ContextCompat.getColor(context, R.color.menu_fragment_background))
         isFillViewport = true
     }
 
