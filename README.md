@@ -231,7 +231,7 @@ To stay `Context Menu` below Status Bar set `fitSystemWindows` to true and `clip
 
 ### Version: 1.0.3
 
-  * Added menu text appearence style. (Note: other text style methods are deprecated).
+  * Added menu text appearance style. (Note: other text style methods are deprecated).
 
 ### Version: 1.0.2
 
