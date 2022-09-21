@@ -1,13 +1,13 @@
 package com.yalantis.contextmenu.lib
 
 import android.content.Context
-import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.ScrollView
+import androidx.core.view.ViewCompat
 import com.yalantis.contextmenu.lib.extensions.getDimension
 
 open class WrapperView @JvmOverloads constructor(

@@ -2,17 +2,18 @@ package com.yalantis.contextmenu.lib
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.fragment.app.DialogFragment
+import com.yalantis.contextmenu.lib.databinding.FragmentMenuBinding
 import com.yalantis.contextmenu.lib.extensions.backgroundColorAppear
 import com.yalantis.contextmenu.lib.extensions.backgroundColorDisappear
-import kotlinx.android.synthetic.main.fragment_menu.*
 
 open class ContextMenuDialogFragment : DialogFragment() {
 
+    private lateinit var binding: FragmentMenuBinding
     var menuItemClickListener: (view: View, position: Int) -> Unit = { _, _ -> }
     var menuItemLongClickListener: (view: View, position: Int) -> Unit = { _, _ -> }
 
@@ -29,10 +30,14 @@ open class ContextMenuDialogFragment : DialogFragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_menu, container, false)?.apply {
-        fitsSystemWindows = menuParams.isFitsSystemWindow
-        (this as ViewGroup).clipToPadding = menuParams.isClipToPadding
-        dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+    ): View? {
+        binding = FragmentMenuBinding.inflate(layoutInflater, container, false)
+        binding.root.apply {
+            fitsSystemWindows = menuParams.isFitsSystemWindow
+            (this as ViewGroup).clipToPadding = menuParams.isClipToPadding
+            dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +47,7 @@ open class ContextMenuDialogFragment : DialogFragment() {
             dropDownMenuAdapter.menuToggle()
         }, menuParams.animationDelay)
 
-        wrapperView.apply {
+        binding.wrapperView.apply {
             backgroundColorAppear(menuParams.backgroundColorAnimationDuration)
             show(menuParams.gravity)
 
@@ -59,12 +64,12 @@ open class ContextMenuDialogFragment : DialogFragment() {
     private fun initDropDownMenuAdapter() {
         activity?.let {
             dropDownMenuAdapter = MenuAdapter(
-                    it,
-                    wrapperView.wrapperButtons,
-                    wrapperView.wrapperText,
-                    menuParams.menuObjects,
-                    menuParams.actionBarSize,
-                    menuParams.gravity
+                it,
+                binding.wrapperView.wrapperButtons,
+                binding.wrapperView.wrapperText,
+                menuParams.menuObjects,
+                menuParams.actionBarSize,
+                menuParams.gravity
             ).apply {
                 setAnimationDuration(menuParams.animationDuration)
 
@@ -88,7 +93,7 @@ open class ContextMenuDialogFragment : DialogFragment() {
     }
 
     private fun close() {
-        wrapperView.backgroundColorDisappear(menuParams.backgroundColorAnimationDuration) {
+        binding.wrapperView.backgroundColorDisappear(menuParams.backgroundColorAnimationDuration) {
             Handler().postDelayed({
                 dismissAllowingStateLoss()
             }, menuParams.animationDelay)

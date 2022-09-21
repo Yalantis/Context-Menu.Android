@@ -4,13 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.support.annotation.ColorRes
-import android.support.annotation.DimenRes
-import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.core.content.ContextCompat
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.R
 

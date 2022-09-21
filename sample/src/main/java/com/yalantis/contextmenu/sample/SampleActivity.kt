@@ -3,23 +3,24 @@ package com.yalantis.contextmenu.sample
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.yalantis.contextmenu.R
+import com.yalantis.contextmenu.databinding.ActivitySampleBinding
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment
 import com.yalantis.contextmenu.lib.MenuObject
 import com.yalantis.contextmenu.lib.MenuParams
-import kotlinx.android.synthetic.main.toolbar.*
 
 class SampleActivity : AppCompatActivity() {
 
+    private val binding: ActivitySampleBinding by lazy { ActivitySampleBinding.inflate(layoutInflater) }
     private lateinit var contextMenuDialogFragment: ContextMenuDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sample)
+        setContentView(binding.root)
 
         initToolbar()
         initMenuFragment()
@@ -30,12 +31,10 @@ class SampleActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        item?.let {
-            when (it.itemId) {
-                R.id.context_menu -> {
-                    showContextMenuDialogFragment()
-                }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.context_menu -> {
+                showContextMenuDialogFragment()
             }
         }
 
@@ -51,7 +50,7 @@ class SampleActivity : AppCompatActivity() {
     }
 
     private fun initToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.rootView)
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
@@ -59,12 +58,12 @@ class SampleActivity : AppCompatActivity() {
             setDisplayShowTitleEnabled(false)
         }
 
-        toolbar.apply {
+        binding.toolbar.rootView.apply {
             setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener { onBackPressed() }
         }
 
-        tvToolbarTitle.text = "Samantha"
+        binding.toolbar.tvToolbarTitle.text = "Samantha"
     }
 
     /**
