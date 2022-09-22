@@ -3,8 +3,8 @@ package com.yalantis.contextmenu.lib.extensions
 import android.animation.AnimatorSet
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
-import android.support.annotation.ColorRes
 import android.view.View
+import androidx.annotation.ColorRes
 import com.yalantis.contextmenu.lib.MenuGravity
 import com.yalantis.contextmenu.lib.R
 
@@ -93,9 +93,9 @@ internal fun View.fadeOutSet(x: Float, gravity: MenuGravity): AnimatorSet = Anim
 }
 
 internal fun View.colorAnimation(
-        duration: Long,
-        @ColorRes startColorResId: Int,
-        @ColorRes endColorResId: Int
+    duration: Long,
+    @ColorRes startColorResId: Int,
+    @ColorRes endColorResId: Int
 ): ObjectAnimator =
         ObjectAnimator.ofObject(
                 this,

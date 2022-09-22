@@ -5,8 +5,12 @@
     android:background="@color/menu_item_background"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
-    <include layout="@layout/scrollable_content" />
+    <include
+        android:id="@+id/scrollableContent"
+        layout="@layout/scrollable_content" />
 
 </LinearLayout>
